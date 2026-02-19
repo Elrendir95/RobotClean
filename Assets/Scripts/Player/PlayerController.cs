@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
     [SerializeField] private bool canSwitchCorridorsInJump = true;
 
-    private bool isJumping = false;
-    private bool canJump = true;
+    private bool _isJumping = false;
+    private bool _canJump = true;
 
     private void OnEnable()
     {
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="obj"></param>
     private void Jump(InputAction.CallbackContext obj)
     {
-        if (isJumping) return; // No doble Jump, early return if already Jumping
+        if (_isJumping || !_canJump) return; // No doble Jump, early return if already Jumping
         StartCoroutine(JumpCoroutine());
     }
 
@@ -51,18 +51,18 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     IEnumerator JumpCoroutine()
     {
-        isJumping = true;
+        _isJumping = true;
         transform.Translate(new Vector3(0,jumpHeight,0));
         yield return new WaitForSeconds(jumpDuration);
         transform.Translate(new Vector3(0,-jumpHeight,0));
-        isJumping = false;
+        _isJumping = false;
     }
 
     /// <summary>
     /// Check condition if player can change corridor
     /// </summary>
     /// <returns>true if it can</returns>
-    private bool CanSwitchCorridors() => canSwitchCorridorsInJump || !isJumping;
+    private bool CanSwitchCorridors() => canSwitchCorridorsInJump || !_isJumping;
 
     /// <summary>
     /// Handle Right Direction pressed
