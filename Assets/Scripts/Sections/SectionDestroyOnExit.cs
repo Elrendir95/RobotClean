@@ -6,7 +6,7 @@ namespace Sections
     {
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player")) Destroy(gameObject);
+            if (other.CompareTag("Player")) Destroy(gameObject, .1f);
         }
     }
 }
