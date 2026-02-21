@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Input References")]
@@ -27,6 +28,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 _destination; // Corridor destination
     private Vector3 _startPosition; // Start corridor for the transtion
 
+    // References of copomonents
+    private Rigidbody _rigidbody;
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
     private void OnEnable()
     {
         left.action.performed += GoLeft;
@@ -47,21 +55,10 @@ public class PlayerController : MonoBehaviour
     /// <param name="obj"></param>
     private void Jump(InputAction.CallbackContext obj)
     {
-        if (_isJumping || !_canJump) return; // No doble Jump, early return if already Jumping
-        StartCoroutine(JumpCoroutine());
-    }
-
-    /// <summary>
-    /// Coroutine that simulates the Jump behaviour
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator JumpCoroutine()
-    {
-        _isJumping = true;
-        transform.Translate(new Vector3(0,jumpHeight,0));
-        yield return new WaitForSeconds(jumpDuration);
-        transform.Translate(new Vector3(0,-jumpHeight,0));
-        _isJumping = false;
+        if (_isJumping || !_canJump) return; // No double Jump, early return if already Jumping
+        Debug.Log("Jump");
+        _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        _canJump = false;
     }
 
     /// <summary>
@@ -107,10 +104,35 @@ public class PlayerController : MonoBehaviour
         _startPosition = new Vector3(transform.position.x, 0f, 0f);
     }
 
+    private float _jumpingTime = 0f;
     private void Update()
     {
         SmoothCorridorTransition();
+        // Check velocity on Y to know if we are jumping
+        if (_isJumping)
+        {
+            _jumpingTime += Time.deltaTime;
+            _isJumping = Mathf.Abs(_rigidbody.linearVelocity.y) > 0.01f;
+            if (!_isJumping) StartCoroutine(JumpCooldownCoroutine());
+        }
+        else
+        {
+            _isJumping = Mathf.Abs(_rigidbody.linearVelocity.y) > 0.01f;
+        }
     }
+
+    /// <summary>
+    /// Jump cooldown, set _canJump to true after jumpCooldown seconds
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator JumpCooldownCoroutine()
+    {
+        Debug.Log($"Landed Start CoolDown: Jump duration {_jumpingTime}");
+        _jumpingTime = 0f;
+        yield return new WaitForSeconds(jumpCooldown);
+        _canJump = true;
+    }
+
 
     /// <summary>
     /// Handle the transition beetween the corridors
