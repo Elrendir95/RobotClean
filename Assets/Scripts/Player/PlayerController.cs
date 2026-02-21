@@ -16,24 +16,21 @@ namespace Player
         [SerializeField] private float corridorTransitionSpeed = 0.12f;
         [SerializeField][Tooltip("Size in meters")] private float corridorSize = 2.5f;
         [Header("Jump Settings")]
-        [SerializeField] private float jumpForce = 500f;
         [SerializeField] private float jumpCooldown = 0.2f;
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
         [SerializeField] private bool canSwitchCorridorsInJump = true;
 
+        // Jumping States
         private bool _isJumping = false;
         private bool _canJump = true;
-
+        private float _groudY; // Saved ground positions
+        private float _jumpingTime = 0f; // Tack jumping time
 
         // Variable used in the transition
         private float _transitionTime = 0f; // Internal variable to keep track of current corridor transition
         private Vector3 _destination; // Corridor destination
         private Vector3 _startPosition; // Start corridor for the transtion
-
-        private float _jumpY;
-        private float _groudY;
-        private float _jumpingTime = 0f;
 
         // References of copomonents
         private Rigidbody _rigidbody;
@@ -65,10 +62,45 @@ namespace Player
         {
             if (_isJumping || !_canJump) return; // No double Jump, early return if already Jumping
             Debug.Log("Jump");
-            //_rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            StartCoroutine(JumpCoroutine());
+        }
+
+        /// <summary>
+        /// Calculate the position in jumps using a Sinusoid
+        /// Start the jumpCouldownCoroutine when finished
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator JumpCoroutine()
+        {
             _canJump = false;
             _isJumping = true;
-            _jumpY = _groudY + jumpHeight;
+            _jumpingTime = 0f;
+            while (_jumpingTime < jumpDuration)
+            {
+                _jumpingTime += Time.deltaTime;
+                // Use Pi to get the Up part of the sin and a have curve from 0 to 0 passing by 1
+                float p = Mathf.Sin(_jumpingTime / jumpDuration * Mathf.PI);
+                p = Mathf.Pow(p, 2);
+                // Set Y position
+                transform.position = new Vector3(transform.position.x, p *  jumpHeight, transform.position.z);
+                // Return and resume at next frame
+                yield return null;
+            }
+            transform.position = new Vector3(transform.position.x, _groudY, transform.position.z);
+            _isJumping = false;
+            StartCoroutine(JumpCooldownCoroutine());
+        }
+
+        /// <summary>
+        /// Jump cooldown, set _canJump to true after jumpCooldown seconds
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator JumpCooldownCoroutine()
+        {
+            Debug.Log($"Landed Start CoolDown: Jump duration {_jumpingTime}");
+            _jumpingTime = 0f;
+            yield return new WaitForSeconds(jumpCooldown);
+            _canJump = true;
         }
 
         /// <summary>
@@ -89,6 +121,7 @@ namespace Player
                 SetDestination(new Vector3(corridorSize, 0, 0));
             }
         }
+
         /// <summary>
         /// Handle left direction pressed
         /// </summary>
@@ -114,52 +147,10 @@ namespace Player
             _startPosition = new Vector3(transform.position.x, 0f, 0f);
         }
 
-        private bool goingDown = false;
         private void Update()
         {
             SmoothCorridorTransition();
-            // Check velocity on Y to know if we are jumping
-            if (_isJumping)
-            {
-                Debug.Log("Jumping");
-                float y;
-                if (_jumpingTime <= jumpDuration / 2)
-                {
-                    goingDown = false;
-                    y = Mathf.Lerp(_groudY, _jumpY, _jumpingTime / (jumpDuration/2));
-                    Debug.Log($"Jump to heigh : {y}/{_jumpY}");
-                }
-                else
-                {
-                    if (!goingDown)
-                    {
-                        _jumpY = transform.position.y;
-                        goingDown = true;
-                    }
-                    y = Mathf.Lerp(_jumpY, _groudY, _jumpingTime / jumpDuration);
-                    Debug.Log($"Jump to ground : {y}/{_groudY}");
-
-                    _isJumping = !Mathf.Approximately(y, _groudY);
-                    Debug.Log($"_isJumping : {_isJumping}");
-                }
-                _jumpingTime += Time.deltaTime;
-                transform.position = new Vector3(transform.position.x, y, transform.position.z);
-                if (!_isJumping) StartCoroutine(JumpCooldownCoroutine());
-            }
         }
-
-        /// <summary>
-        /// Jump cooldown, set _canJump to true after jumpCooldown seconds
-        /// </summary>
-        /// <returns></returns>
-        IEnumerator JumpCooldownCoroutine()
-        {
-            Debug.Log($"Landed Start CoolDown: Jump duration {_jumpingTime}");
-            _jumpingTime = 0f;
-            yield return new WaitForSeconds(jumpCooldown);
-            _canJump = true;
-        }
-
 
         /// <summary>
         /// Handle the transition beetween the corridors
