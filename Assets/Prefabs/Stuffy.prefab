@@ -108,11 +108,11 @@ MonoBehaviour:
   jump: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   corridorTransitionSpeed: 0.12
   corridorSize: 2.5
-  jumpForce: 60
+  canSwitchCorridorsInJump: 1
   jumpCooldown: 0.2
   jumpDuration: 0.9
   jumpHeight: 1.8
-  canSwitchCorridorsInJump: 1
+  jumpPower: 2
 --- !u!136 &6513831682529711347
 CapsuleCollider:
   m_ObjectHideFlags: 0

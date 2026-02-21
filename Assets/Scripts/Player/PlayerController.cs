@@ -15,17 +15,18 @@ namespace Player
         [Header("Corridor Switch Settings")]
         [SerializeField] private float corridorTransitionSpeed = 0.12f;
         [SerializeField][Tooltip("Size in meters")] private float corridorSize = 2.5f;
+        [SerializeField] private bool canSwitchCorridorsInJump = true;
         [Header("Jump Settings")]
         [SerializeField] private float jumpCooldown = 0.2f;
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
-        [SerializeField] private bool canSwitchCorridorsInJump = true;
+        [SerializeField][Range(0.1f,5f)] private float jumpPower = 2f;
 
         // Jumping States
         private bool _isJumping = false;
         private bool _canJump = true;
         private float _groudY; // Saved ground positions
-        private float _jumpingTime = 0f; // Tack jumping time
+        private float _jumpingTime = 0f; // Track jump duration
 
         // Variable used in the transition
         private float _transitionTime = 0f; // Internal variable to keep track of current corridor transition
@@ -79,8 +80,8 @@ namespace Player
             {
                 _jumpingTime += Time.deltaTime;
                 // Use Pi to get the Up part of the sin and a have curve from 0 to 0 passing by 1
-                float p = Mathf.Sin(_jumpingTime / jumpDuration * Mathf.PI);
-                p = Mathf.Pow(p, 2);
+                float p = Mathf.Clamp01(Mathf.Sin(_jumpingTime / jumpDuration * Mathf.PI));
+                p = Mathf.Pow(p, jumpPower);
                 // Set Y position
                 transform.position = new Vector3(transform.position.x, p *  jumpHeight, transform.position.z);
                 // Return and resume at next frame
