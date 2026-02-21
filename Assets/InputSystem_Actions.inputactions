@@ -629,6 +629,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Debug",
+            "id": "9eec32af-07f6-4629-92bc-96a76036139f",
+            "actions": [
+                {
+                    "name": "IncreaseSpeed",
+                    "type": "Button",
+                    "id": "d337fc95-865f-41eb-ad77-ed5bb726bf51",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DecreaseSpeed",
+                    "type": "Button",
+                    "id": "4b51e219-3b1d-4280-af54-3d31fd7e11cd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ff92e6ad-b1ab-4702-81be-7e24d236b4e3",
+                    "path": "<Keyboard>/numpadPlus",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "IncreaseSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afecd7fd-ad2e-40d0-bf90-0d865a8bee74",
+                    "path": "<Keyboard>/numpadMinus",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DecreaseSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
