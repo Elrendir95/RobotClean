@@ -21,6 +21,12 @@ public class PlayerController : MonoBehaviour
     private bool _isJumping = false;
     private bool _canJump = true;
 
+
+    // Variable used in the transition
+    private float _transitionTime = 0f; // Internal variable to keep track of current corridor transition
+    private Vector3 _destination; // Corridor destination
+    private Vector3 _startPosition; // Start corridor for the transtion
+
     private void OnEnable()
     {
         left.action.performed += GoLeft;
@@ -62,7 +68,7 @@ public class PlayerController : MonoBehaviour
     /// Check condition if player can change corridor
     /// </summary>
     /// <returns>true if it can</returns>
-    private bool CanSwitchCorridors() => canSwitchCorridorsInJump || !_isJumping;
+    private bool CanSwitchCorridors() => (canSwitchCorridorsInJump || !_isJumping) && _transitionTime == .0f;
 
     /// <summary>
     /// Handle Right Direction pressed
@@ -73,7 +79,7 @@ public class PlayerController : MonoBehaviour
         if (!CanSwitchCorridors()) return;
         if (transform.position.x < corridorSize)
         {
-            transform.Translate(new Vector3(corridorSize, 0, 0));
+            SetDestination(new Vector3(corridorSize, 0, 0));
         }
     }
     /// <summary>
@@ -85,7 +91,44 @@ public class PlayerController : MonoBehaviour
         if (!CanSwitchCorridors()) return;
         if (transform.position.x > -corridorSize)
         {
-            transform.Translate(new Vector3(-corridorSize, 0, 0));
+            SetDestination(new Vector3(-corridorSize, 0, 0));
+        }
+    }
+
+    /// <summary>
+    /// The de destination corridor, to handle a smooth transition
+    /// </summary>
+    /// <param name="destination"></param>
+    private void SetDestination(Vector3 destination)
+    {
+        _destination = transform.position + destination;
+        _destination.y = 0f;
+        _destination.z = 0f;
+        _startPosition = new Vector3(transform.position.x, 0f, 0f);
+    }
+
+    private void Update()
+    {
+        SmoothCorridorTransition();
+    }
+
+    /// <summary>
+    /// Handle the transition beetween the corridors
+    /// </summary>
+    private void SmoothCorridorTransition()
+    {
+        if (transform.position.x == _destination.x) return;
+
+        if (_transitionTime > corridorTransitionSpeed)
+        {
+            transform.position = new Vector3(_destination.x, transform.position.y, transform.position.z);
+            _transitionTime = 0f;
+        }
+        else
+        {
+            Vector3 current = Vector3.Lerp(_startPosition, _destination, _transitionTime / corridorTransitionSpeed);
+            transform.position = new Vector3(current.x, transform.position.y, transform.position.z);
+            _transitionTime += Time.deltaTime;
         }
     }
 }
