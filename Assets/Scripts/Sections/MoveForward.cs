@@ -8,7 +8,7 @@ namespace Sections
     {
         [Header("Settings")]
         [SerializeField] private float moveSpeed = 7f;
-#if UNITY_DEVELOPMENT_BUILD || UNITY_EDITOR
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
         [Header("Debug Action References")]
         [SerializeField] private InputActionReference increaseSpeed;
         [SerializeField] private InputActionReference decreaseSpeed;

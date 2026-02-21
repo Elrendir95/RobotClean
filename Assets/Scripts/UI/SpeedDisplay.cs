@@ -14,7 +14,7 @@ namespace UI
         {
             _text = GetComponent<TextMeshProUGUI>();
         }
-#if UNITY_DEVELOPMENT_BUILD || UNITY_EDITOR
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
         [Header("Debug Action References")]
         [SerializeField] private InputActionReference increaseSpeed;
         [SerializeField] private InputActionReference decreaseSpeed;
