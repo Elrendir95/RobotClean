@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,11 +31,16 @@ namespace Player
         private Vector3 _destination; // Corridor destination
         private Vector3 _startPosition; // Start corridor for the transtion
 
+        private float _jumpY;
+        private float _groudY;
+        private float _jumpingTime = 0f;
+
         // References of copomonents
         private Rigidbody _rigidbody;
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            _groudY = transform.position.y;
         }
 
         private void OnEnable()
@@ -59,8 +65,10 @@ namespace Player
         {
             if (_isJumping || !_canJump) return; // No double Jump, early return if already Jumping
             Debug.Log("Jump");
-            _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            //_rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             _canJump = false;
+            _isJumping = true;
+            _jumpY = _groudY + jumpHeight;
         }
 
         /// <summary>
@@ -106,20 +114,37 @@ namespace Player
             _startPosition = new Vector3(transform.position.x, 0f, 0f);
         }
 
-        private float _jumpingTime = 0f;
+        private bool goingDown = false;
         private void Update()
         {
             SmoothCorridorTransition();
             // Check velocity on Y to know if we are jumping
             if (_isJumping)
             {
+                Debug.Log("Jumping");
+                float y;
+                if (_jumpingTime <= jumpDuration / 2)
+                {
+                    goingDown = false;
+                    y = Mathf.Lerp(_groudY, _jumpY, _jumpingTime / (jumpDuration/2));
+                    Debug.Log($"Jump to heigh : {y}/{_jumpY}");
+                }
+                else
+                {
+                    if (!goingDown)
+                    {
+                        _jumpY = transform.position.y;
+                        goingDown = true;
+                    }
+                    y = Mathf.Lerp(_jumpY, _groudY, _jumpingTime / jumpDuration);
+                    Debug.Log($"Jump to ground : {y}/{_groudY}");
+
+                    _isJumping = !Mathf.Approximately(y, _groudY);
+                    Debug.Log($"_isJumping : {_isJumping}");
+                }
                 _jumpingTime += Time.deltaTime;
-                _isJumping = Mathf.Abs(_rigidbody.linearVelocity.y) > 0.01f;
+                transform.position = new Vector3(transform.position.x, y, transform.position.z);
                 if (!_isJumping) StartCoroutine(JumpCooldownCoroutine());
-            }
-            else
-            {
-                _isJumping = Mathf.Abs(_rigidbody.linearVelocity.y) > 0.01f;
             }
         }
 
