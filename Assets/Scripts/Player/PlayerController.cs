@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -158,7 +157,7 @@ namespace Player
         /// </summary>
         private void SmoothCorridorTransition()
         {
-            if (transform.position.x == _destination.x) return;
+            if (Mathf.Approximately(transform.position.x, _destination.x)) return;
 
             if (_transitionTime > corridorTransitionSpeed)
             {
