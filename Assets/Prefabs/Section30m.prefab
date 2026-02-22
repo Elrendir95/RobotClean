@@ -1068,9 +1068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b8d01d75214b2dab774056c4d55b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sections.MoveForward
-  moveSpeed: 7
-  increaseSpeed: {fileID: 890213178143929306, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  decreaseSpeed: {fileID: 5337842760981898578, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  moveSpeed: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
 --- !u!114 &2837947812874669566
 MonoBehaviour:
   m_ObjectHideFlags: 0

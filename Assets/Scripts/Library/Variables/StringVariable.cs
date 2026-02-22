@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Variable/String")]
-public class StringVariable : BaseVariable<string>
+namespace Library.Variables
 {
+    [CreateAssetMenu(menuName = "Variable/String")]
+    public class StringVariable : BaseVariable<string>
+    {
+    }
 }

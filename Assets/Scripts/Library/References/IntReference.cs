@@ -1,7 +1,10 @@
 ﻿using System;
 
-[Serializable]
-public class IntReference : BaseReference<int>
+namespace Library.References
 {
-    public IntReference(int i) : base(i) {}
+    [Serializable]
+    public class IntReference : BaseReference<int>
+    {
+        public IntReference(int i) : base(i) {}
+    }
 }

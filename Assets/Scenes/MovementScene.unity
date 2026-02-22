@@ -594,6 +594,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5246801100554389234, guid: 1811c518b70127d4d84c215787643351, type: 3}
+      propertyPath: moveSpeed
+      value: 
+      objectReference: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
     - target: {fileID: 5472746285758312755, guid: 1811c518b70127d4d84c215787643351, type: 3}
       propertyPath: m_Name
       value: Section30m (4)
@@ -660,6 +664,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5246801100554389234, guid: 1811c518b70127d4d84c215787643351, type: 3}
+      propertyPath: moveSpeed
+      value: 
+      objectReference: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
     - target: {fileID: 5472746285758312755, guid: 1811c518b70127d4d84c215787643351, type: 3}
       propertyPath: m_Name
       value: Section30m (2)
@@ -1037,6 +1045,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5246801100554389234, guid: 1811c518b70127d4d84c215787643351, type: 3}
+      propertyPath: moveSpeed
+      value: 
+      objectReference: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
     - target: {fileID: 5472746285758312755, guid: 1811c518b70127d4d84c215787643351, type: 3}
       propertyPath: m_Name
       value: Section30m (3)
@@ -1283,9 +1295,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd45ada71d9a428792e38f9fd03327e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.SpeedDisplay
-  moveSpeed: 7
-  increaseSpeed: {fileID: 890213178143929306, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  decreaseSpeed: {fileID: 5337842760981898578, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  speed:
+    UseConstante: 0
+    ConstanteValue: 0
+    variable: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
 --- !u!1 &1838553727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,6 +1450,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5246801100554389234, guid: 1811c518b70127d4d84c215787643351, type: 3}
+      propertyPath: moveSpeed
+      value: 
+      objectReference: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
     - target: {fileID: 5472746285758312755, guid: 1811c518b70127d4d84c215787643351, type: 3}
       propertyPath: m_Name
       value: Section30m (1)
@@ -1447,6 +1464,72 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1811c518b70127d4d84c215787643351, type: 3}
+--- !u!1 &1971285639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1971285640}
+  - component: {fileID: 1971285641}
+  m_Layer: 0
+  m_Name: SpeedManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1971285640
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971285639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1971285641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971285639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43fb46a505ee44944b684d27b6341df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeedManager
+  startSpeed:
+    UseConstante: 1
+    ConstanteValue: 7
+    variable: {fileID: 0}
+  maxSpeed:
+    UseConstante: 1
+    ConstanteValue: 14
+    variable: {fileID: 0}
+  runtimeSpeed:
+    UseConstante: 0
+    ConstanteValue: 0
+    variable: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
+  increaseSpeedTime:
+    UseConstante: 1
+    ConstanteValue: 15
+    variable: {fileID: 0}
+  increaseSpeedAmount:
+    UseConstante: 1
+    ConstanteValue: 0.1
+    variable: {fileID: 0}
+  increaseSpeed: {fileID: 890213178143929306, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  decreaseSpeed: {fileID: 5337842760981898578, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &2051385886
 GameObject:
   m_ObjectHideFlags: 0
@@ -1609,6 +1692,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5246801100554389234, guid: 1811c518b70127d4d84c215787643351, type: 3}
+      propertyPath: moveSpeed
+      value: 
+      objectReference: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
     - target: {fileID: 5472746285758312755, guid: 1811c518b70127d4d84c215787643351, type: 3}
       propertyPath: m_Name
       value: Section30m
@@ -1694,3 +1781,4 @@ SceneRoots:
   - {fileID: 1115775308}
   - {fileID: 1838553731}
   - {fileID: 1277951082}
+  - {fileID: 1971285640}

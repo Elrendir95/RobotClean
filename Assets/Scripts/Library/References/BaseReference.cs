@@ -1,33 +1,37 @@
 ﻿using System;
+using Library.Variables;
 
-[Serializable]
-public class BaseReference<Type>
+namespace Library.References
 {
-    public bool UseConstante = true;
-    public Type ConstanteValue;
-    public BaseVariable<Type> variable;
-
-    public  BaseReference()
-    {}
-
-    public BaseReference(Type value)
+    [Serializable]
+    public class BaseReference<Type>
     {
-        UseConstante = true;
-        ConstanteValue = value;
-    }
+        public bool UseConstante = true;
+        public Type ConstanteValue;
+        public BaseVariable<Type> variable;
 
-    public Type Value
-    {
-        get { return UseConstante ? ConstanteValue : variable.Value; }
-        set
+        public  BaseReference()
+        {}
+
+        public BaseReference(Type value)
         {
-            if (UseConstante) ConstanteValue = value;
-            else variable.Value = value;
+            UseConstante = true;
+            ConstanteValue = value;
         }
-    }
 
-    public static implicit operator Type(BaseReference<Type> reference)
-    {
-        return reference.Value;
+        public Type Value
+        {
+            get { return UseConstante ? ConstanteValue : variable.Value; }
+            set
+            {
+                if (UseConstante) ConstanteValue = value;
+                else variable.Value = value;
+            }
+        }
+
+        public static implicit operator Type(BaseReference<Type> reference)
+        {
+            return reference.Value;
+        }
     }
 }
