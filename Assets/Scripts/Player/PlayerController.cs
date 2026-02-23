@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 namespace Player
 {
-    [RequireComponent(typeof(Rigidbody), typeof(Collider))]
     public class PlayerController : MonoBehaviour
     {
         [Header("Input References")]
@@ -33,11 +32,8 @@ namespace Player
         private Vector3 _startPosition; // Start corridor for the transtion
         private Coroutine switchCorridorCoroutine = null;
 
-        // References of copomonents
-        private Rigidbody _rigidbody;
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
             _groudY = transform.position.y;
         }
 
