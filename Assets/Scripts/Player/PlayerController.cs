@@ -31,6 +31,7 @@ namespace Player
         private float _transitionTime = 0f; // Internal variable to keep track of current corridor transition
         private Vector3 _destination; // Corridor destination
         private Vector3 _startPosition; // Start corridor for the transtion
+        private Coroutine switchCorridorCoroutine = null;
 
         // References of copomonents
         private Rigidbody _rigidbody;
@@ -107,7 +108,7 @@ namespace Player
         /// Check condition if player can change corridor
         /// </summary>
         /// <returns>true if it can</returns>
-        private bool CanSwitchCorridors() => (canSwitchCorridorsInJump || !_isJumping) && Mathf.Approximately(_transitionTime, 0f);
+        private bool CanSwitchCorridors() => (canSwitchCorridorsInJump || !_isJumping) && switchCorridorCoroutine == null;
 
         /// <summary>
         /// Handle Right Direction pressed
@@ -145,31 +146,24 @@ namespace Player
             _destination.y = 0f;
             _destination.z = 0f;
             _startPosition = new Vector3(transform.position.x, 0f, 0f);
-        }
-
-        private void Update()
-        {
-            SmoothCorridorTransition();
+            switchCorridorCoroutine = StartCoroutine(SmoothCorridorTransitionCoroutine());
         }
 
         /// <summary>
         /// Handle the transition beetween the corridors
         /// </summary>
-        private void SmoothCorridorTransition()
+        private IEnumerator SmoothCorridorTransitionCoroutine()
         {
-            if (Mathf.Approximately(transform.position.x, _destination.x)) return;
-
-            if (_transitionTime > corridorTransitionSpeed)
-            {
-                transform.position = new Vector3(_destination.x, transform.position.y, transform.position.z);
-                _transitionTime = 0f;
-            }
-            else
+            _transitionTime = 0f;
+            while (_transitionTime < corridorTransitionSpeed)
             {
                 Vector3 current = Vector3.Lerp(_startPosition, _destination, _transitionTime / corridorTransitionSpeed);
                 transform.position = new Vector3(current.x, transform.position.y, transform.position.z);
                 _transitionTime += Time.deltaTime;
+                yield return null;
             }
+            transform.position = new Vector3(_destination.x, transform.position.y, transform.position.z);
+            switchCorridorCoroutine = null;
         }
     }
 }
