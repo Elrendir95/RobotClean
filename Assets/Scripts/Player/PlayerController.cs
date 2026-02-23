@@ -107,7 +107,7 @@ namespace Player
         /// Check condition if player can change corridor
         /// </summary>
         /// <returns>true if it can</returns>
-        private bool CanSwitchCorridors() => (canSwitchCorridorsInJump || !_isJumping) && _transitionTime == .0f;
+        private bool CanSwitchCorridors() => (canSwitchCorridorsInJump || !_isJumping) && Mathf.Approximately(_transitionTime, 0f);
 
         /// <summary>
         /// Handle Right Direction pressed
