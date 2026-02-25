@@ -112,7 +112,57 @@ MonoBehaviour:
   jumpCooldown: 0.2
   jumpDuration: 0.9
   jumpHeight: 1.8
-  jumpPower: 2
+  jumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.16858959
+      value: 0.53234494
+      inSlope: 2.987569
+      outSlope: 2.987569
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0.027504938
+      outSlope: 0.027504938
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.3462603
+    - serializedVersion: 3
+      time: 0.7946748
+      value: 0.68773633
+      inSlope: -2.78287
+      outSlope: -2.78287
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!136 &6513831682529711347
 CapsuleCollider:
   m_ObjectHideFlags: 0

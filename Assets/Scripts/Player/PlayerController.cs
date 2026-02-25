@@ -18,7 +18,7 @@ namespace Player
         [SerializeField] private float jumpCooldown = 0.2f;
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
-        [SerializeField][Range(0.1f,5f)] private float jumpPower = 2f;
+        [SerializeField] private AnimationCurve jumpCurve;
 
         // Jumping States
         private bool _isJumping = false;
@@ -76,8 +76,9 @@ namespace Player
             {
                 _jumpingTime += Time.deltaTime;
                 // Use Pi to get the Up part of the sin and a have curve from 0 to 0 passing by 1
-                float p = Mathf.Clamp01(Mathf.Sin(_jumpingTime / jumpDuration * Mathf.PI));
-                p = Mathf.Pow(p, jumpPower);
+                //float p = Mathf.Clamp01(Mathf.Sin(_jumpingTime / jumpDuration * Mathf.PI));
+                //p = Mathf.Pow(p, jumpPower);
+                float p = jumpCurve.Evaluate(_jumpingTime / jumpDuration);
                 // Set Y position
                 transform.position = new Vector3(transform.position.x, p *  jumpHeight, transform.position.z);
                 // Return and resume at next frame
@@ -161,5 +162,19 @@ namespace Player
             transform.position = new Vector3(_destination.x, transform.position.y, transform.position.z);
             switchCorridorCoroutine = null;
         }
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// Initialize the curve
+        /// </summary>
+        private void Reset()
+        {
+            Keyframe[] keys = new Keyframe[3];
+            keys[0] = new Keyframe(0f, 0f);
+            keys[1] = new Keyframe(.5f, 1f);
+            keys[2] = new Keyframe(1f, 0f);
+            jumpCurve = new AnimationCurve(keys);
+        }
+#endif
     }
 }
