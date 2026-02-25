@@ -30,7 +30,7 @@ namespace Player
         private float _transitionTime = 0f; // Internal variable to keep track of current corridor transition
         private Vector3 _destination; // Corridor destination
         private Vector3 _startPosition; // Start corridor for the transtion
-        private Coroutine switchCorridorCoroutine = null;
+        private bool _isSwithingCorridor = false;
 
         private void Awake()
         {
@@ -105,7 +105,7 @@ namespace Player
         /// Check condition if player can change corridor
         /// </summary>
         /// <returns>true if it can</returns>
-        private bool CanSwitchCorridors() => (canSwitchCorridorsInJump || !_isJumping) && switchCorridorCoroutine == null;
+        private bool CanSwitchCorridors() => (canSwitchCorridorsInJump || !_isJumping) && !_isSwithingCorridor;
 
         /// <summary>
         /// Handle Right Direction pressed
@@ -143,7 +143,7 @@ namespace Player
             _destination.y = 0f;
             _destination.z = 0f;
             _startPosition = new Vector3(transform.position.x, 0f, 0f);
-            switchCorridorCoroutine = StartCoroutine(SmoothCorridorTransitionCoroutine());
+            StartCoroutine(SmoothCorridorTransitionCoroutine());
         }
 
         /// <summary>
@@ -151,6 +151,7 @@ namespace Player
         /// </summary>
         private IEnumerator SmoothCorridorTransitionCoroutine()
         {
+            _isSwithingCorridor = true;
             _transitionTime = 0f;
             while (_transitionTime < corridorTransitionSpeed)
             {
@@ -160,7 +161,7 @@ namespace Player
                 yield return null;
             }
             transform.position = new Vector3(_destination.x, transform.position.y, transform.position.z);
-            switchCorridorCoroutine = null;
+            _isSwithingCorridor = false;
         }
 
 #if UNITY_EDITOR
