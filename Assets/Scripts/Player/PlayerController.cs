@@ -10,10 +10,10 @@ namespace Player
         [SerializeField] private InputActionReference left;
         [SerializeField] private InputActionReference right;
         [SerializeField] private InputActionReference jump;
-        [Header("Corridor Switch Settings")]
-        [SerializeField] private float corridorTransitionSpeed = 0.12f;
-        [SerializeField][Tooltip("Size in meters")] private float corridorSize = 2.5f;
-        [SerializeField] private bool canSwitchCorridorsInJump = true;
+        [Header("Lane Switch Settings")]
+        [SerializeField] private float laneTransitionSpeed = 0.12f;
+        [SerializeField] private Transform[] lanes;
+        [SerializeField] private bool canSwitchLanesInJump = true;
         [Header("Jump Settings")]
         [SerializeField] private float jumpCooldown = 0.2f;
         [SerializeField] private float jumpDuration = 0.9f;
@@ -24,13 +24,9 @@ namespace Player
         private bool _isJumping = false;
         private bool _canJump = true;
         private float _groudY; // Saved ground positions
-        private float _jumpingTime = 0f; // Track jump duration
 
-        // Variable used in the transition
-        private float _transitionTime = 0f; // Internal variable to keep track of current corridor transition
-        private Vector3 _destination; // Corridor destination
-        private Vector3 _startPosition; // Start corridor for the transtion
-        private bool _isSwithingCorridor = false;
+        private int currentLane = 1;
+        private bool _isSwithingLane = false;
 
         private void Awake()
         {
@@ -58,7 +54,6 @@ namespace Player
         private void Jump(InputAction.CallbackContext obj)
         {
             if (_isJumping || !_canJump) return; // No double Jump, early return if already Jumping
-            Debug.Log("Jump");
             StartCoroutine(JumpCoroutine());
         }
 
@@ -69,19 +64,16 @@ namespace Player
         /// <returns></returns>
         IEnumerator JumpCoroutine()
         {
+            float jumpingTime = 0f;
+            
             _canJump = false;
             _isJumping = true;
-            _jumpingTime = 0f;
-            while (_jumpingTime < jumpDuration)
+            
+            while (jumpingTime < jumpDuration)
             {
-                _jumpingTime += Time.deltaTime;
-                // Use Pi to get the Up part of the sin and a have curve from 0 to 0 passing by 1
-                //float p = Mathf.Clamp01(Mathf.Sin(_jumpingTime / jumpDuration * Mathf.PI));
-                //p = Mathf.Pow(p, jumpPower);
-                float p = jumpCurve.Evaluate(_jumpingTime / jumpDuration);
-                // Set Y position
+                jumpingTime += Time.deltaTime;
+                float p = jumpCurve.Evaluate(jumpingTime / jumpDuration);
                 transform.position = new Vector3(transform.position.x, p *  jumpHeight, transform.position.z);
-                // Return and resume at next frame
                 yield return null;
             }
             transform.position = new Vector3(transform.position.x, _groudY, transform.position.z);
@@ -95,17 +87,15 @@ namespace Player
         /// <returns></returns>
         IEnumerator JumpCooldownCoroutine()
         {
-            Debug.Log($"Landed Start CoolDown: Jump duration {_jumpingTime}");
-            _jumpingTime = 0f;
             yield return new WaitForSeconds(jumpCooldown);
             _canJump = true;
         }
 
         /// <summary>
-        /// Check condition if player can change corridor
+        /// Check condition if player can change lane
         /// </summary>
         /// <returns>true if it can</returns>
-        private bool CanSwitchCorridors() => (canSwitchCorridorsInJump || !_isJumping) && !_isSwithingCorridor;
+        private bool CanSwitchLanes() => (canSwitchLanesInJump || !_isJumping) && !_isSwithingLane;
 
         /// <summary>
         /// Handle Right Direction pressed
@@ -113,10 +103,10 @@ namespace Player
         /// <param name="obj"></param>
         private void GoRight(InputAction.CallbackContext obj)
         {
-            if (!CanSwitchCorridors()) return;
-            if (transform.position.x < corridorSize)
+            if (!CanSwitchLanes()) return;
+            if (currentLane < lanes.Length - 1)
             {
-                SetDestination(new Vector3(corridorSize, 0, 0));
+                StartCoroutine(SmoothLaneTransitionCoroutine(currentLane + 1));
             }
         }
 
@@ -126,42 +116,32 @@ namespace Player
         /// <param name="obj"></param>
         private void GoLeft(InputAction.CallbackContext obj)
         {
-            if (!CanSwitchCorridors()) return;
-            if (transform.position.x > -corridorSize)
+            if (!CanSwitchLanes()) return;
+            if (currentLane > 0)
             {
-                SetDestination(new Vector3(-corridorSize, 0, 0));
+                StartCoroutine(SmoothLaneTransitionCoroutine(currentLane - 1));
             }
         }
 
         /// <summary>
-        /// The de destination corridor, to handle a smooth transition
+        /// Handle the transition beetween the lanes
         /// </summary>
-        /// <param name="destination"></param>
-        private void SetDestination(Vector3 destination)
+        private IEnumerator SmoothLaneTransitionCoroutine(int destinationIndex)
         {
-            _destination = transform.position + destination;
-            _destination.y = 0f;
-            _destination.z = 0f;
-            _startPosition = new Vector3(transform.position.x, 0f, 0f);
-            StartCoroutine(SmoothCorridorTransitionCoroutine());
-        }
-
-        /// <summary>
-        /// Handle the transition beetween the corridors
-        /// </summary>
-        private IEnumerator SmoothCorridorTransitionCoroutine()
-        {
-            _isSwithingCorridor = true;
-            _transitionTime = 0f;
-            while (_transitionTime < corridorTransitionSpeed)
+            _isSwithingLane = true;
+            float transitionTime = 0f;
+            while (transitionTime < laneTransitionSpeed)
             {
-                Vector3 current = Vector3.Lerp(_startPosition, _destination, _transitionTime / corridorTransitionSpeed);
-                transform.position = new Vector3(current.x, transform.position.y, transform.position.z);
-                _transitionTime += Time.deltaTime;
+                Vector3 current = Vector3.Lerp(lanes[currentLane].position, lanes[destinationIndex].position, transitionTime / laneTransitionSpeed);
+                transform.position = new Vector3(current.x, transform.position.y, current.z);
+                transitionTime += Time.deltaTime;
                 yield return null;
             }
-            transform.position = new Vector3(_destination.x, transform.position.y, transform.position.z);
-            _isSwithingCorridor = false;
+            transform.position = new Vector3(lanes[destinationIndex].position.x,
+                                             transform.position.y,
+                                             lanes[destinationIndex].position.z);
+            currentLane = destinationIndex;
+            _isSwithingLane = false;
         }
 
 #if UNITY_EDITOR
