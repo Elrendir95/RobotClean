@@ -497,11 +497,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!4 &433279676 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4572919061800724140, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
-  m_PrefabInstance: {fileID: 5279108875291302335}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,11 +546,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &835948495 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4668381177385421408, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
-  m_PrefabInstance: {fileID: 5279108875291302335}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &923515603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1148,11 +1138,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1450266970 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3306312555073743126, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
-  m_PrefabInstance: {fileID: 5279108875291302335}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1486275569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4614046542338214006, guid: 1811c518b70127d4d84c215787643351, type: 3}
@@ -1869,22 +1854,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7032448601435353627, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
-      propertyPath: lanes.Array.size
-      value: 3
+    - target: {fileID: 3407636647483458849, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+      propertyPath: m_Height
+      value: 2.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7032448601435353627, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
-      propertyPath: 'lanes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 835948495}
-    - target: {fileID: 7032448601435353627, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
-      propertyPath: 'lanes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 433279676}
-    - target: {fileID: 7032448601435353627, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
-      propertyPath: 'lanes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 1450266970}
+    - target: {fileID: 3407636647483458849, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+      propertyPath: m_Center.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672171157357984488, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672171157357984488, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8353013158590311474, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 9030410903784521345, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
       propertyPath: m_Name
       value: Player
