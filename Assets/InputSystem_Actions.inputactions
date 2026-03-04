@@ -667,8 +667,30 @@
                 },
                 {
                     "name": "",
+                    "id": "c3e95da8-fbeb-4dcc-ba39-04090eca2761",
+                    "path": "<Keyboard>/equals",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "IncreaseSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "afecd7fd-ad2e-40d0-bf90-0d865a8bee74",
                     "path": "<Keyboard>/numpadMinus",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DecreaseSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74c1dc4e-71cf-47ec-9e4e-3cc0f29ac2af",
+                    "path": "<Keyboard>/minus",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
