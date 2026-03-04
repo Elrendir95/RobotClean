@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -19,6 +20,8 @@ namespace Player
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
         [SerializeField] private AnimationCurve jumpCurve;
+        [Header("Components")]
+        [SerializeField] private Animator animator;
 
         // Jumping States
         private bool _isJumping = false;
@@ -68,6 +71,7 @@ namespace Player
             
             _canJump = false;
             _isJumping = true;
+            animator.SetBool("IsJumping", true);
             
             while (jumpingTime < jumpDuration)
             {
@@ -78,6 +82,7 @@ namespace Player
             }
             transform.position = new Vector3(transform.position.x, _groudY, transform.position.z);
             _isJumping = false;
+            animator.SetBool("IsJumping", false);
             StartCoroutine(JumpCooldownCoroutine());
         }
 
