@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 464590381}
   - component: {fileID: 464590380}
   - component: {fileID: 464590379}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -906,7 +906,7 @@ GameObject:
   - component: {fileID: 541361420}
   - component: {fileID: 541361419}
   - component: {fileID: 541361418}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2485,7 +2485,7 @@ GameObject:
   - component: {fileID: 1113294728}
   - component: {fileID: 1113294727}
   - component: {fileID: 1113294726}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3160,7 +3160,7 @@ GameObject:
   - component: {fileID: 1459879940}
   - component: {fileID: 1459879939}
   - component: {fileID: 1459879938}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4063,7 +4063,7 @@ GameObject:
   - component: {fileID: 1816269155}
   - component: {fileID: 1816269154}
   - component: {fileID: 1816269153}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4508,11 +4508,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeedManager
   startSpeed:
-    UseConstante: 1
+    UseConstante: 0
     ConstanteValue: 7
     variable: {fileID: 0}
   maxSpeed:
-    UseConstante: 1
+    UseConstante: 0
     ConstanteValue: 14
     variable: {fileID: 0}
   runtimeSpeed:
@@ -4520,11 +4520,11 @@ MonoBehaviour:
     ConstanteValue: 0
     variable: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
   increaseSpeedTime:
-    UseConstante: 1
+    UseConstante: 0
     ConstanteValue: 15
     variable: {fileID: 0}
   increaseSpeedAmount:
-    UseConstante: 1
+    UseConstante: 0
     ConstanteValue: 0.1
     variable: {fileID: 0}
   increaseSpeed: {fileID: 890213178143929306, guid: 052faaac586de48259a63d0c4782560b, type: 3}
@@ -4903,7 +4903,7 @@ GameObject:
   - component: {fileID: 2133542370}
   - component: {fileID: 2133542369}
   - component: {fileID: 2133542368}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5086,8 +5086,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
     - target: {fileID: 6892087631986890909, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
-      propertyPath: startSpeed.UseConstante
+      propertyPath: startSpeed.UseConstant
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892087631986890909, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+      propertyPath: startSpeed.UseConstante
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6892087631986890909, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
       propertyPath: startSpeed.ConstanteValue
