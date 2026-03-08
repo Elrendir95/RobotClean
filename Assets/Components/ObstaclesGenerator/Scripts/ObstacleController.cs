@@ -7,14 +7,57 @@ public class ObstacleController : MonoBehaviour
     [Header("Settings")]
     [SerializeField, Tooltip("Translation speed of chunks in m/s")] private FloatReference translationSpeed;
     [SerializeField] private IntReference activeChunkCount;
+    [SerializeField] private IntReference behindChunkCount = new IntReference(1);
+
     [Header("Components")]
     [SerializeField] private ChunkController[] chunksPool;
 
-    private List<ChunkController> instatiatedChunks = new();
+    private readonly List<ChunkController> _instantiatedChunks = new();
 
     private void Start()
     {
         AddBaseChunk();
+    }
+
+    private void Update()
+    {
+        foreach (ChunkController chunk in _instantiatedChunks)
+        {
+            chunk.transform.Translate(translationSpeed.Value * Time.deltaTime * Vector3.back);
+        }
+
+        UpdateChunks();
+    }
+
+    private void UpdateChunks()
+    {
+        List<ChunkController> behindChunks = new List<ChunkController>();
+        foreach (ChunkController chunk in _instantiatedChunks)
+        {
+            if (chunk.IsBehindPlayer)
+            {
+                behindChunks.Add(chunk);
+            }
+        }
+
+        // Delete chunks behind player
+        if (behindChunks.Count > behindChunkCount.Value)
+        {
+            int chunkToDeleteCount = behindChunks.Count - behindChunkCount.Value;
+            for (int i = 0; i < chunkToDeleteCount; i++)
+            {
+                ChunkController chunkToDelete = behindChunks[i];
+                _instantiatedChunks.Remove(chunkToDelete);
+                Destroy(chunkToDelete.gameObject);
+            }
+        }
+
+        int missingChunkCount = activeChunkCount.Value - _instantiatedChunks.Count;
+        for (int i = 0; i < missingChunkCount; i++)
+        {
+            var chunk = AddChunk(LastChunk.EndAnchor);
+            _instantiatedChunks.Add(chunk);
+        }
     }
 
     private void AddBaseChunk()
@@ -25,11 +68,11 @@ public class ObstacleController : MonoBehaviour
             if (i == 0)
             {
                 chunk = AddChunk(transform.position);
-                instatiatedChunks.Add(chunk);
+                _instantiatedChunks.Add(chunk);
                 continue;
             }
             chunk = AddChunk(LastChunk.EndAnchor);
-            instatiatedChunks.Add(chunk);
+            _instantiatedChunks.Add(chunk);
         }
     }
 
@@ -45,5 +88,5 @@ public class ObstacleController : MonoBehaviour
         return chunk;
     }
 
-    private ChunkController LastChunk => instatiatedChunks[^1];
+    private ChunkController LastChunk => _instantiatedChunks[^1];
 }
