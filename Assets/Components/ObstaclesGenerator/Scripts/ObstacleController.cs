@@ -7,7 +7,7 @@ public class ObstacleController : MonoBehaviour
     [Header("Settings")]
     [SerializeField, Tooltip("Translation speed of chunks in m/s")] private FloatReference translationSpeed;
     [SerializeField] private IntReference activeChunkCount;
-    [SerializeField] private IntReference behindChunkCount = new IntReference(1);
+    [SerializeField] private IntReference behindChunkCount;
 
     [Header("Components")]
     [SerializeField] private ChunkController[] chunksPool;
