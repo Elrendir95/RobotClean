@@ -4510,21 +4510,21 @@ MonoBehaviour:
   startSpeed:
     UseConstante: 0
     ConstanteValue: 7
-    variable: {fileID: 0}
+    variable: {fileID: 11400000, guid: 9b3a1865ac6cd41418472e346e5edfdc, type: 2}
   maxSpeed:
     UseConstante: 0
     ConstanteValue: 14
-    variable: {fileID: 0}
+    variable: {fileID: 11400000, guid: 7c0790f716b491b4384d9f395049447f, type: 2}
   runtimeSpeed:
     UseConstante: 0
     ConstanteValue: 0
     variable: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
   increaseSpeedTime:
-    UseConstante: 0
+    UseConstante: 1
     ConstanteValue: 15
     variable: {fileID: 0}
   increaseSpeedAmount:
-    UseConstante: 0
+    UseConstante: 1
     ConstanteValue: 0.1
     variable: {fileID: 0}
   increaseSpeed: {fileID: 890213178143929306, guid: 052faaac586de48259a63d0c4782560b, type: 3}
