@@ -1,7 +1,7 @@
 ﻿using System.Collections;
+using Library.References;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -20,6 +20,9 @@ namespace Player
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
         [SerializeField] private AnimationCurve jumpCurve;
+        [Header("Speed")]
+        [SerializeField] private FloatReference currentSpeed;
+        [SerializeField] private FloatReference startSpeed;
         [Header("Components")]
         [SerializeField] private Animator animator;
 
@@ -68,15 +71,17 @@ namespace Player
         IEnumerator JumpCoroutine()
         {
             float jumpingTime = 0f;
-            
+            float duration = jumpDuration * (startSpeed.Value / currentSpeed.Value);
+            Debug.Log($"Jump duration: {duration} as speed dependant default is {jumpDuration}");
+
             _canJump = false;
             _isJumping = true;
             animator.SetBool("IsJumping", true);
-            
-            while (jumpingTime < jumpDuration)
+
+            while (jumpingTime < duration)
             {
                 jumpingTime += Time.deltaTime;
-                float p = jumpCurve.Evaluate(jumpingTime / jumpDuration);
+                float p = jumpCurve.Evaluate(jumpingTime / duration);
                 transform.position = new Vector3(transform.position.x, p *  jumpHeight, transform.position.z);
                 yield return null;
             }
