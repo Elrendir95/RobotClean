@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(CollectableTrigger))]
 public class TrashCollectable : Collectable
 {
     public override void OnCollect(GameObject collector)

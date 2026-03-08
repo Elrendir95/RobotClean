@@ -184,9 +184,6 @@ PrefabInstance:
       addedObject: {fileID: 8533119255366447248}
     - targetCorrespondingSourceObject: {fileID: 1330125631714119511, guid: fd9efd1339d6937448e34e62640f6621, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3407817977230792090}
-    - targetCorrespondingSourceObject: {fileID: 1330125631714119511, guid: fd9efd1339d6937448e34e62640f6621, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3683401204985272866}
   m_SourcePrefab: {fileID: 100100000, guid: fd9efd1339d6937448e34e62640f6621, type: 3}
 --- !u!4 &1894360623820631092 stripped
@@ -220,18 +217,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6788702, y: 1.1058664, z: 0.812479}
   m_Center: {x: 0.008203983, y: 0.4654795, z: -0.023439884}
---- !u!114 &3407817977230792090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8841482697815082168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8be8c7122f1148bbbe4fbc743705257f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CollectableTrigger
 --- !u!114 &3683401204985272866
 MonoBehaviour:
   m_ObjectHideFlags: 0
