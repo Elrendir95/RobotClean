@@ -52,6 +52,7 @@ namespace Manager
             while (true)
             {
                 yield return new WaitForSeconds(increaseSpeedTime.Value);
+                if (runtimeSpeed.Value > maxSpeed.Value) continue;
                 runtimeSpeed.Value += increaseSpeedAmount.Value;
                 runtimeSpeed.Value = Mathf.Clamp(runtimeSpeed.Value, startSpeed, maxSpeed.Value);
             }
