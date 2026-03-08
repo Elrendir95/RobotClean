@@ -1,5 +1,8 @@
-﻿using System;
-using Components.EventSystem;
+﻿using Components.EventSystem;
+#if UNITY_EDITOR
+using Player;
+using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace Player
@@ -8,7 +11,10 @@ namespace Player
     {
         [Header("Settings")]
         [SerializeField] private Vector3 sphereCenter;
-        [SerializeField] private float sphereRadius;
+        [SerializeField, Tooltip("Obstacle sphere radius")] private float obstacleSphereRadius = 0.5f;
+        [SerializeField, Tooltip("Collectable sphere radius")] private float collectableSphereRadius = 1f;
+        [SerializeField] private LayerMask collectableLayer;
+        [SerializeField] private LayerMask obstacleLayer;
 
         private bool _isHit = false;
 
@@ -26,7 +32,22 @@ namespace Player
 
         private void Update()
         {
-            Collider[] hitColliders = Physics.OverlapSphere(PlayerSpherePosition, sphereRadius);
+            CheckObstacle();
+            CheckCollectable();
+        }
+
+        private void CheckCollectable()
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(PlayerSpherePosition, collectableSphereRadius, collectableLayer);
+            foreach (Collider hitCollider in hitColliders)
+            {
+                hitCollider.gameObject.GetComponent<Collectable>().OnCollect(gameObject);
+            }
+        }
+
+        private void CheckObstacle()
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(PlayerSpherePosition, obstacleSphereRadius, obstacleLayer);
             if (hitColliders.Length > 0 && !_isHit)
             {
                 _isHit = true;
@@ -39,10 +60,12 @@ namespace Player
         }
 
 #if UNITY_EDITOR
-        private void OnDrawGizmos()
+        public void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(PlayerSpherePosition, sphereRadius);
+            Gizmos.DrawWireSphere(PlayerSpherePosition, obstacleSphereRadius);
+            Gizmos.color = Color.lightGreen;
+            Gizmos.DrawWireSphere(PlayerSpherePosition, collectableSphereRadius);
         }
 #endif
     }
