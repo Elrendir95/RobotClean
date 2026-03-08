@@ -290,6 +290,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  currentSpeed:
+    UseConstante: 0
+    ConstanteValue: 0
+    variable: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
+  startSpeed:
+    UseConstante: 0
+    ConstanteValue: 0
+    variable: {fileID: 11400000, guid: 9b3a1865ac6cd41418472e346e5edfdc, type: 2}
   animator: {fileID: 6730581612633110498}
 --- !u!114 &5711902211253112337
 MonoBehaviour:
