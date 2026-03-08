@@ -1,8 +1,5 @@
 ﻿using Components.EventSystem;
-#if UNITY_EDITOR
-using Player;
-using UnityEditor;
-#endif
+using System.Collections;
 using UnityEngine;
 
 namespace Player
@@ -15,8 +12,10 @@ namespace Player
         [SerializeField, Tooltip("Collectable sphere radius")] private float collectableSphereRadius = 1f;
         [SerializeField] private LayerMask collectableLayer;
         [SerializeField] private LayerMask obstacleLayer;
+        [SerializeField, Tooltip("Invincibility time after obstacle hits in seconds")]
+        private float invincibilityTime = 1.5f;
 
-        private bool _isHit = false;
+        private bool _isInvincible = false;
 
         private Vector3 PlayerSpherePosition => transform.position + sphereCenter;
 
@@ -47,16 +46,22 @@ namespace Player
 
         private void CheckObstacle()
         {
+            // If we are invincible do an early return
+            if (_isInvincible) return;
+
             Collider[] hitColliders = Physics.OverlapSphere(PlayerSpherePosition, obstacleSphereRadius, obstacleLayer);
-            if (hitColliders.Length > 0 && !_isHit)
+            if (hitColliders.Length > 0)
             {
-                _isHit = true;
                 Debug.Log("Player Hit something");
+                StartCoroutine(InvincibilityCoroutine());
             }
-            if (hitColliders.Length == 0)
-            {
-                _isHit = false;
-            }
+        }
+
+        IEnumerator InvincibilityCoroutine()
+        {
+            _isInvincible = true;
+            yield return new WaitForSeconds(invincibilityTime);
+            _isInvincible = false;
         }
 
 #if UNITY_EDITOR
