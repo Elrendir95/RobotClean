@@ -12,6 +12,7 @@ namespace Player
         [SerializeField, Tooltip("Collectable sphere radius")] private float collectableSphereRadius = 1f;
         [SerializeField] private LayerMask collectableLayer;
         [SerializeField] private LayerMask obstacleLayer;
+        [SerializeField] private float obstacleDamaged = 25f;
         [SerializeField, Tooltip("Invincibility time after obstacle hits in seconds")]
         private float invincibilityTime = 1.5f;
 
@@ -43,6 +44,7 @@ namespace Player
             if (hitColliders.Length > 0)
             {
                 Debug.Log("Player Hit something");
+                Events.UpdateLife(-obstacleDamaged);
                 StartCoroutine(InvincibilityCoroutine());
             }
         }

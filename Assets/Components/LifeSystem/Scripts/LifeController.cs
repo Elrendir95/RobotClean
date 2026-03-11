@@ -25,7 +25,7 @@ namespace Components.LifeSystem
 
         private void UpdateLife(float lifeAmount)
         {
-            lifeCount.Value += lifeAmount;
+            lifeCount.Value = Mathf.Clamp(lifeCount.Value + lifeAmount, 0, maxLifeCount.Value);
         }
 
         private void Start()
@@ -40,6 +40,7 @@ namespace Components.LifeSystem
             {
                 yield return new WaitForSeconds(lifeDecreaseRate.Value);
                 lifeCount.Value -= lifeDecreaseAmount.Value;
+                Events.OnLifeCountChanged?.Invoke(lifeCount.Value);
             }
         }
     }

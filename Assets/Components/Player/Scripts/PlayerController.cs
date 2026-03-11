@@ -32,8 +32,9 @@ namespace Player
         private bool _canJump = true;
         private float _groudY; // Saved ground positions
 
-        private int currentLane = 1;
-        private bool _isSwithingLane = false;
+        private int _currentLane = 1;
+        private bool _isSwitchingLane;
+        private bool _isDead;
 
         private void Awake()
         {
@@ -48,11 +49,19 @@ namespace Player
             Events.OnLifeCountChanged += OnLifeCountChanged;
         }
 
-        private void OnLifeCountChanged(int currentLife)
+        private void OnDisabled()
         {
+            Events.OnLifeCountChanged -= OnLifeCountChanged;
+        }
+
+        private void OnLifeCountChanged(float currentLife)
+        {
+            Debug.Log($"Life count: {currentLife}");
             if (currentLife <= 0)
             {
-                // TODO handle health
+                Debug.Log($"Life count: {currentLife} = IsDead");
+                animator.SetTrigger("IsDead");
+                _isDead = true;
             }
         }
 
@@ -69,7 +78,7 @@ namespace Player
         /// <param name="obj"></param>
         private void Jump(InputAction.CallbackContext obj)
         {
-            if (_isJumping || !_canJump) return; // No double Jump, early return if already Jumping
+            if (_isJumping || !_canJump || _isDead) return;
             StartCoroutine(JumpCoroutine());
         }
 
@@ -115,7 +124,7 @@ namespace Player
         /// Check condition if player can change lane
         /// </summary>
         /// <returns>true if it can</returns>
-        private bool CanSwitchLanes() => (canSwitchLanesInJump || !_isJumping) && !_isSwithingLane;
+        private bool CanSwitchLanes() => (canSwitchLanesInJump || !_isJumping) && !_isSwitchingLane && !_isDead;
 
         /// <summary>
         /// Handle Right Direction pressed
@@ -124,9 +133,9 @@ namespace Player
         private void GoRight(InputAction.CallbackContext obj)
         {
             if (!CanSwitchLanes()) return;
-            if (currentLane < lanes.Length - 1)
+            if (_currentLane < lanes.Length - 1)
             {
-                StartCoroutine(SmoothLaneTransitionCoroutine(currentLane + 1));
+                StartCoroutine(SmoothLaneTransitionCoroutine(_currentLane + 1));
             }
         }
 
@@ -137,9 +146,9 @@ namespace Player
         private void GoLeft(InputAction.CallbackContext obj)
         {
             if (!CanSwitchLanes()) return;
-            if (currentLane > 0)
+            if (_currentLane > 0)
             {
-                StartCoroutine(SmoothLaneTransitionCoroutine(currentLane - 1));
+                StartCoroutine(SmoothLaneTransitionCoroutine(_currentLane - 1));
             }
         }
 
@@ -148,11 +157,11 @@ namespace Player
         /// </summary>
         private IEnumerator SmoothLaneTransitionCoroutine(int destinationIndex)
         {
-            _isSwithingLane = true;
+            _isSwitchingLane = true;
             float transitionTime = 0f;
             while (transitionTime < laneTransitionSpeed)
             {
-                Vector3 current = Vector3.Lerp(lanes[currentLane].position, lanes[destinationIndex].position, transitionTime / laneTransitionSpeed);
+                Vector3 current = Vector3.Lerp(lanes[_currentLane].position, lanes[destinationIndex].position, transitionTime / laneTransitionSpeed);
                 transform.position = new Vector3(current.x, transform.position.y, current.z);
                 transitionTime += Time.deltaTime;
                 yield return null;
@@ -160,8 +169,8 @@ namespace Player
             transform.position = new Vector3(lanes[destinationIndex].position.x,
                                              transform.position.y,
                                              lanes[destinationIndex].position.z);
-            currentLane = destinationIndex;
-            _isSwithingLane = false;
+            _currentLane = destinationIndex;
+            _isSwitchingLane = false;
         }
 
 #if UNITY_EDITOR
