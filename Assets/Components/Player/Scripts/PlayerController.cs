@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Library.References;
+using Components.EventSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -44,6 +45,15 @@ namespace Player
             left.action.performed += GoLeft;
             right.action.performed += GoRight;
             jump.action.performed += Jump;
+            Events.OnLifeCountChanged += OnLifeCountChanged;
+        }
+
+        private void OnLifeCountChanged(int currentLife)
+        {
+            if (currentLife <= 0)
+            {
+                // TODO handle health
+            }
         }
 
         private void OnDisable()

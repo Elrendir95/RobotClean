@@ -368,8 +368,44 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8353013158590311474, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1857293784}
   m_SourcePrefab: {fileID: 100100000, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+--- !u!1 &1857293783 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8353013158590311474, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+  m_PrefabInstance: {fileID: 1857293782}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1857293784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857293783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0b801182a04030abfdb35265f626e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.LifeSystem.LifeController
+  lifeCount:
+    UseConstante: 0
+    ConstanteValue: 0
+    variable: {fileID: 11400000, guid: 0e0882aa0f868a042bf052c3de37689c, type: 2}
+  maxLifeCount:
+    UseConstante: 0
+    ConstanteValue: 0
+    variable: {fileID: 11400000, guid: e94c30f652ce47a4b95efbbc4e1de3f0, type: 2}
+  lifeDecreaseRate:
+    UseConstante: 1
+    ConstanteValue: 1
+    variable: {fileID: 0}
+  lifeDecreaseAmount:
+    UseConstante: 1
+    ConstanteValue: 2.5
+    variable: {fileID: 0}
 --- !u!1 &2068111862
 GameObject:
   m_ObjectHideFlags: 0

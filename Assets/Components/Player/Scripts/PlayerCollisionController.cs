@@ -19,16 +19,6 @@ namespace Player
 
         private Vector3 PlayerSpherePosition => transform.position + sphereCenter;
 
-        private void Start()
-        {
-            EventSystem.OnPlayerSlideDown += OnPlayerSlideDown;
-        }
-
-        private void OnPlayerSlideDown(bool isSlidingDown)
-        {
-
-        }
-
         private void Update()
         {
             CheckObstacle();

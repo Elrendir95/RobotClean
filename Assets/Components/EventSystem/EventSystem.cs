@@ -2,8 +2,9 @@
 
 namespace Components.EventSystem
 {
-    public class EventSystem
+    public static class Events
     {
-        public static Action<bool> OnPlayerSlideDown;
+        public static Action<int> OnLifeCountChanged;
+        public static Action<float> UpdateLife;
     }
 }

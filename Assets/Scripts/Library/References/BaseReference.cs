@@ -1,5 +1,6 @@
 ﻿using System;
 using Library.Variables;
+using UnityEngine.Events;
 
 namespace Library.References
 {
@@ -9,6 +10,7 @@ namespace Library.References
         public bool UseConstante = true;
         public Type ConstanteValue;
         public BaseVariable<Type> variable;
+        public UnityEvent<Type> OnValueChanged => variable.onValueChanged;
 
         public  BaseReference()
         {}
