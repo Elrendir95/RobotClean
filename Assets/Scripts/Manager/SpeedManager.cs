@@ -1,4 +1,5 @@
 using System.Collections;
+using Components.EventSystem;
 using Library.References;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,6 +23,14 @@ namespace Manager
         {
             increaseSpeed.action.performed += IncreaseSpeed;
             decreaseSpeed.action.performed += DecreaseSpeed;
+            Events.OnLifeCountChanged += OnLifeCountChanged;
+        }
+
+        private void OnLifeCountChanged(float currentLife)
+        {
+            if (currentLife > 0) return;
+            runtimeSpeed.Value = 0;
+            gameObject.SetActive(false);
         }
 
         private void OnDisable()
