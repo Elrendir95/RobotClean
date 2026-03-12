@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0ee9fc58a5e40eeb04271ce77f7d7e2, type: 3}
   m_Name: Distance
   m_EditorClassIdentifier: Assembly-CSharp::Library.Variables.FloatVariable
-  _value: 0
+  _value: 0.41999984
   _registerInPlayMode: 0
   onValueChanged:
     m_PersistentCalls:

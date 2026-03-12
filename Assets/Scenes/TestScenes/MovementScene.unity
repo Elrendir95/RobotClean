@@ -1015,6 +1015,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 612865622}
+  - component: {fileID: 612865623}
   m_Layer: 0
   m_Name: DistanceManager
   m_TagString: Untagged
@@ -1037,6 +1038,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &612865623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612865621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba51c0b8fe849b48e479685ebf8322b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Manager.DistanceManager
+  runtimeSpeed:
+    UseConstante: 0
+    ConstanteValue: 0
+    variable: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
+  runDistance:
+    UseConstante: 0
+    ConstanteValue: 0
+    variable: {fileID: 11400000, guid: f24ce8835fa06ea4eb9be9e375793c90, type: 2}
 --- !u!1 &647928712
 GameObject:
   m_ObjectHideFlags: 0
