@@ -49,27 +49,23 @@ namespace Player
             Events.OnLifeCountChanged += OnLifeCountChanged;
         }
 
-        private void OnDisabled()
+        private void OnDisable()
         {
+            left.action.performed -= GoLeft;
+            right.action.performed -= GoRight;
+            jump.action.performed -= Jump;
             Events.OnLifeCountChanged -= OnLifeCountChanged;
         }
 
         private void OnLifeCountChanged(float currentLife)
         {
             Debug.Log($"Life count: {currentLife}");
-            if (currentLife <= 0)
+            if (currentLife <= 0 && !_isDead)
             {
                 Debug.Log($"Life count: {currentLife} = IsDead");
                 animator.SetTrigger("IsDead");
                 _isDead = true;
             }
-        }
-
-        private void OnDisable()
-        {
-            left.action.performed -= GoLeft;
-            right.action.performed -= GoRight;
-            jump.action.performed -= Jump;
         }
 
         /// <summary>
