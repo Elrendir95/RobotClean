@@ -22,6 +22,8 @@ namespace Player
 
         private void Update()
         {
+            // If we are invincible can't Collect, and can't hit an other obstacle
+            if (_isInvincible) return;
             CheckObstacle();
             CheckCollectable();
         }
