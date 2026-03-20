@@ -13,19 +13,29 @@ namespace Components.LifeSystem
         [SerializeField, Tooltip("Life decrease rate in seconds")] private FloatReference lifeDecreaseRate;
         [SerializeField, Tooltip("Life decrease amount")] private FloatReference lifeDecreaseAmount;
 
+        private bool _isInvincible;
+
         private void OnEnable()
         {
             Events.UpdateLife += UpdateLife;
+            Events.OnPlayerInvincible += HandleOnPlayerInvincible;
+        }
+
+        private void HandleOnPlayerInvincible(bool isInvincible)
+        {
+            _isInvincible = isInvincible;
         }
 
         private void OnDisable()
         {
            Events.UpdateLife -= UpdateLife;
+           Events.OnPlayerInvincible -= HandleOnPlayerInvincible;
         }
 
         private void UpdateLife(float lifeAmount)
         {
             lifeCount.Value = Mathf.Clamp(lifeCount.Value + lifeAmount, 0, maxLifeCount.Value);
+            Events.OnLifeCountChanged?.Invoke(lifeCount.Value);
         }
 
         private void Start()
@@ -39,8 +49,10 @@ namespace Components.LifeSystem
             while (lifeCount.Value > 0)
             {
                 yield return new WaitForSeconds(lifeDecreaseRate.Value);
-                lifeCount.Value -= lifeDecreaseAmount.Value;
-                Events.OnLifeCountChanged?.Invoke(lifeCount.Value);
+
+                if (_isInvincible) continue;
+
+                UpdateLife(-lifeDecreaseAmount.Value);
             }
         }
     }
