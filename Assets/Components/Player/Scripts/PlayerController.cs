@@ -59,10 +59,8 @@ namespace Player
 
         private void OnLifeCountChanged(float currentLife)
         {
-            Debug.Log($"Life count: {currentLife}");
             if (currentLife <= 0 && !_isDead)
             {
-                Debug.Log($"Life count: {currentLife} = IsDead");
                 animator.SetTrigger("IsDead");
                 _isDead = true;
             }
@@ -87,7 +85,6 @@ namespace Player
         {
             float jumpingTime = 0f;
             float duration = jumpDuration * (startSpeed.Value / currentSpeed.Value);
-            Debug.Log($"Jump duration: {duration} as speed dependant default is {jumpDuration}");
 
             _canJump = false;
             _isJumping = true;
