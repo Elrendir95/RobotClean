@@ -6,5 +6,6 @@ namespace Components.EventSystem
     {
         public static Action<float> OnLifeCountChanged;
         public static Action<float> UpdateLife;
+        public static Action<bool> OnPlayerInvincible;
     }
 }

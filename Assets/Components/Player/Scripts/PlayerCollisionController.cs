@@ -43,7 +43,6 @@ namespace Player
             Collider[] hitColliders = Physics.OverlapSphere(PlayerSpherePosition, obstacleSphereRadius, obstacleLayer);
             if (hitColliders.Length > 0)
             {
-                Debug.Log("Player Hit something");
                 Events.UpdateLife(-obstacleDamaged);
                 StartCoroutine(InvincibilityCoroutine());
             }
@@ -52,8 +51,10 @@ namespace Player
         IEnumerator InvincibilityCoroutine()
         {
             _isInvincible = true;
+            Events.OnPlayerInvincible.Invoke(_isInvincible);
             yield return new WaitForSeconds(invincibilityTime);
             _isInvincible = false;
+            Events.OnPlayerInvincible.Invoke(_isInvincible);
         }
 
 #if UNITY_EDITOR
