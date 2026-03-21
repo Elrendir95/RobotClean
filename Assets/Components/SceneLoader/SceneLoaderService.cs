@@ -12,6 +12,7 @@ namespace Components.SceneLoader
         public static void LoadGame()
         {
             SceneManager.LoadScene("Game",  LoadSceneMode.Single);
+            SceneManager.LoadScene("Countdown", LoadSceneMode.Additive);
             SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
         }
     }

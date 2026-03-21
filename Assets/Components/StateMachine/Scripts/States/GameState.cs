@@ -1,8 +1,8 @@
 ﻿namespace Components.StateMachine.States
 {
-    public class GameOver : State
+    public class GameState : State
     {
-        public GameOver(StateMachine stateMachine) : base(stateMachine) {}
+        public GameState(StateMachine stateMachine) : base(stateMachine) {}
 
         public override void Enter()
         {

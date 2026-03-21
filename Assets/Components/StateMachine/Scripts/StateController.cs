@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Components.StateMachine.States;
+using UnityEngine;
 
 namespace Components.StateMachine
 {
@@ -9,8 +11,13 @@ namespace Components.StateMachine
         public void Start()
         {
             _stateMachine = new StateMachine();
-            var initialState = new States.CountDown(_stateMachine);
+            var initialState = new CountDownState(_stateMachine);
             _stateMachine.ChangeState(initialState);
+        }
+
+        public void Update()
+        {
+            _stateMachine.Update();
         }
     }
 }
