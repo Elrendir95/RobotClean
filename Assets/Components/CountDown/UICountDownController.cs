@@ -12,6 +12,7 @@ namespace Components.CountDown
         [SerializeField] TMP_Text countDownText;
 
         private CountDownState _countDownState;
+        private bool _inCountDown;
 
         private void OnEnable()
         {
@@ -30,14 +31,16 @@ namespace Components.CountDown
             {
                 window.SetActive(true);
                 _countDownState = countDownState;
+                _inCountDown = true;
                 return;
             }
             window.SetActive(false);
+            _inCountDown = false;
         }
 
         private void Update()
         {
-            if (!window.activeSelf) return;
+            if (!_inCountDown) return;
 
             countDownText.text = _countDownState.Timer.ToString("0");
         }

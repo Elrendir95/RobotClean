@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using Library.References;
 using Components.EventSystem;
+using Components.StateMachine;
+using Components.StateMachine.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -43,18 +45,29 @@ namespace Player
 
         private void OnEnable()
         {
-            left.action.performed += GoLeft;
-            right.action.performed += GoRight;
-            jump.action.performed += Jump;
             Events.OnLifeCountChanged += OnLifeCountChanged;
+            Events.OnStateChanged += OnStateChanged;
         }
 
         private void OnDisable()
         {
-            left.action.performed -= GoLeft;
-            right.action.performed -= GoRight;
-            jump.action.performed -= Jump;
             Events.OnLifeCountChanged -= OnLifeCountChanged;
+            Events.OnStateChanged -= OnStateChanged;
+        }
+
+        private void OnStateChanged(State newState)
+        {
+            if (newState is not GameState)
+            {
+                left.action.performed -= GoLeft;
+                right.action.performed -= GoRight;
+                jump.action.performed -= Jump;
+                return;
+            }
+            left.action.performed += GoLeft;
+            right.action.performed += GoRight;
+            jump.action.performed += Jump;
+            animator.SetTrigger("IsRunning");
         }
 
         private void OnLifeCountChanged(float currentLife)

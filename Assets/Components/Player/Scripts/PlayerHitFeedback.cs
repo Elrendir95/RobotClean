@@ -13,27 +13,23 @@ public class PlayerHitFeedback : MonoBehaviour
     {
         _meshRenderer = GetComponent<Renderer>();
         _baseMaterial = _meshRenderer.sharedMaterial;
-    }
-
-    private void OnEnable()
-    {
         Events.OnPlayerInvincible += HandleOnPlayerInvincible;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         Events.OnPlayerInvincible -= HandleOnPlayerInvincible;
     }
 
     private void HandleOnPlayerInvincible(bool isInvincible)
     {
+        StopAllCoroutines();
         if (isInvincible)
         {
             StartCoroutine(HitFeedbackCoroutine());
         }
         else
         {
-            StopAllCoroutines();
             _meshRenderer.sharedMaterial = _baseMaterial;
         }
     }

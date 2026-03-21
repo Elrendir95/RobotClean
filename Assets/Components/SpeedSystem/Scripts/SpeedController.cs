@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using Components.EventSystem;
+using Components.StateMachine;
+using Components.StateMachine.States;
 using Library.References;
 using UnityEngine;
 
@@ -17,6 +19,19 @@ namespace Components
         private void OnEnable()
         {
             Events.OnLifeCountChanged += OnLifeCountChanged;
+            Events.OnStateChanged += OnStateChanged;
+        }
+
+        private void OnStateChanged(State newState)
+        {
+            if (newState is not GameState)
+            {
+                runtimeSpeed.Value = 0;
+                StopCoroutine(SpeedCoroutine());
+                return;
+            }
+            runtimeSpeed.Value = startSpeed.Value;
+            StartCoroutine(SpeedCoroutine());
         }
 
         private void OnDisable()
@@ -33,8 +48,7 @@ namespace Components
 
         private void Start()
         {
-            runtimeSpeed.Value = startSpeed.Value;
-            StartCoroutine(SpeedCoroutine());
+            runtimeSpeed.Value = 0;
         }
 
         IEnumerator SpeedCoroutine()

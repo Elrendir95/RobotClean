@@ -1,5 +1,8 @@
-﻿using Components.EventSystem;
+﻿using System;
+using Components.EventSystem;
 using System.Collections;
+using Components.StateMachine;
+using Components.StateMachine.States;
 using UnityEngine;
 
 namespace Player
@@ -17,13 +20,25 @@ namespace Player
         private float invincibilityTime = 1.5f;
 
         private bool _isInvincible = false;
+        private bool _isActive = false;
 
         private Vector3 PlayerSpherePosition => transform.position + sphereCenter;
+
+        private void OnEnable()
+        {
+            Events.OnStateChanged += OnStateChanged;
+        }
+
+        private void OnStateChanged(State newState)
+        {
+            _isActive = newState is GameState;
+            if (!_isActive) Events.OnPlayerInvincible.Invoke(false);
+        }
 
         private void Update()
         {
             // If we are invincible can't Collect, and can't hit an other obstacle
-            if (_isInvincible) return;
+            if (_isInvincible || !_isActive) return;
             CheckObstacle();
             CheckCollectable();
         }
