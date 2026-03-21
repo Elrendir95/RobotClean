@@ -703,42 +703,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7009300096219453682, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
-      propertyPath: chunksPool.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7009300096219453682, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
-      propertyPath: 'chunksPool.Array.data[2]'
-      value: 
-      objectReference: {fileID: 5857535558997658796, guid: 9d3183f8969a05c4ebff3200f8f9c75d, type: 3}
-    - target: {fileID: 7009300096219453682, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
-      propertyPath: 'chunksPool.Array.data[3]'
-      value: 
-      objectReference: {fileID: 5857535558997658796, guid: daf8745475232c240a9c7a4933273624, type: 3}
-    - target: {fileID: 7009300096219453682, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
-      propertyPath: 'chunksPool.Array.data[4]'
-      value: 
-      objectReference: {fileID: 5857535558997658796, guid: cfce3a31b2217c24393e467f9d69249f, type: 3}
-    - target: {fileID: 7009300096219453682, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
-      propertyPath: 'chunksPool.Array.data[5]'
-      value: 
-      objectReference: {fileID: 5857535558997658796, guid: 0df5d0ed0c8a8834eb791193e8b6291d, type: 3}
-    - target: {fileID: 7009300096219453682, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
-      propertyPath: activeChunkCount.ConstanteValue
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 7009300096219453682, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
-      propertyPath: 'timeToNextDensity.Array.data[0]'
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7009300096219453682, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
-      propertyPath: 'timeToNextDensity.Array.data[1]'
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 7009300096219453682, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
-      propertyPath: 'timeToNextDensity.Array.data[2]'
-      value: 60
-      objectReference: {fileID: 0}
     - target: {fileID: 8830411965791070222, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
       propertyPath: m_Name
       value: ObstacleControler

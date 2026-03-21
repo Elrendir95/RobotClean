@@ -50,7 +50,7 @@ MonoBehaviour:
     variable: {fileID: 11400000, guid: cac16922fd2a01944b39903894d9cb2a, type: 2}
   activeChunkCount:
     UseConstante: 1
-    ConstanteValue: 25
+    ConstanteValue: 16
     variable: {fileID: 0}
   behindChunkCount:
     UseConstante: 1
@@ -60,6 +60,10 @@ MonoBehaviour:
   chunksPool:
   - {fileID: 5857535558997658796, guid: 3ccbeeb889a2410459749f309e50bea9, type: 3}
   - {fileID: 5857535558997658796, guid: 0aeb43f2592385d43a1d2baddc521cc6, type: 3}
+  - {fileID: 5857535558997658796, guid: 9d3183f8969a05c4ebff3200f8f9c75d, type: 3}
+  - {fileID: 5857535558997658796, guid: daf8745475232c240a9c7a4933273624, type: 3}
+  - {fileID: 5857535558997658796, guid: cfce3a31b2217c24393e467f9d69249f, type: 3}
+  - {fileID: 5857535558997658796, guid: 0df5d0ed0c8a8834eb791193e8b6291d, type: 3}
   obstacleDistances:
   - 14
   - 10
