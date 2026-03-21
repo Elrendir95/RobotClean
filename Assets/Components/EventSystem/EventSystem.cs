@@ -1,4 +1,5 @@
 ﻿using System;
+using Components.StateMachine;
 
 namespace Components.EventSystem
 {
@@ -7,5 +8,6 @@ namespace Components.EventSystem
         public static Action<float> OnLifeCountChanged;
         public static Action<float> UpdateLife;
         public static Action<bool> OnPlayerInvincible;
+        public static Action<State> OnStateChanged;
     }
 }
