@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using Library.References;
 using UnityEngine;
 
-public class ObstacleController : MonoBehaviour
+public class ChunkSpawner : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField, Tooltip("Translation speed of chunks in m/s")] private FloatReference translationSpeed;
     [SerializeField] private IntReference activeChunkCount;
     [SerializeField] private IntReference behindChunkCount;
+    [SerializeField] protected float distanceToNextChunk;
 
     [Header("Components")]
     [SerializeField] private ChunkController[] chunksPool;
@@ -19,7 +20,7 @@ public class ObstacleController : MonoBehaviour
         AddBaseChunk();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         foreach (ChunkController chunk in _instantiatedChunks)
         {
@@ -55,7 +56,7 @@ public class ObstacleController : MonoBehaviour
         int missingChunkCount = activeChunkCount.Value - _instantiatedChunks.Count;
         for (int i = 0; i < missingChunkCount; i++)
         {
-            var chunk = AddChunk(LastChunk.EndAnchor);
+            var chunk = AddChunk(LastChunk.EndAnchor + new Vector3(0f, 0f, distanceToNextChunk));
             _instantiatedChunks.Add(chunk);
         }
     }
@@ -67,11 +68,11 @@ public class ObstacleController : MonoBehaviour
             ChunkController chunk;
             if (i == 0)
             {
-                chunk = AddChunk(transform.position);
+                chunk = AddChunk(transform.position + new Vector3(0f, 0f, distanceToNextChunk));
                 _instantiatedChunks.Add(chunk);
                 continue;
             }
-            chunk = AddChunk(LastChunk.EndAnchor);
+            chunk = AddChunk(LastChunk.EndAnchor + new Vector3(0f, 0f, distanceToNextChunk));
             _instantiatedChunks.Add(chunk);
         }
     }
