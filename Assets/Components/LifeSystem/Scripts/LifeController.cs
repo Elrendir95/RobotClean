@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using Library.References;
 using Components.EventSystem;
+using Components.StateMachine;
+using Components.StateMachine.States;
 using UnityEngine;
 
 namespace Components.LifeSystem
@@ -19,6 +21,19 @@ namespace Components.LifeSystem
         {
             Events.UpdateLife += UpdateLife;
             Events.OnPlayerInvincible += HandleOnPlayerInvincible;
+            Events.OnStateChanged += OnStateChanged;
+        }
+
+        private void OnDisable()
+        {
+           Events.UpdateLife -= UpdateLife;
+           Events.OnPlayerInvincible -= HandleOnPlayerInvincible;
+           Events.OnStateChanged -= OnStateChanged;
+        }
+
+        private void Start()
+        {
+            lifeCount.Value = maxLifeCount.Value;
         }
 
         private void HandleOnPlayerInvincible(bool isInvincible)
@@ -26,22 +41,20 @@ namespace Components.LifeSystem
             _isInvincible = isInvincible;
         }
 
-        private void OnDisable()
+        private void OnStateChanged(State newState)
         {
-           Events.UpdateLife -= UpdateLife;
-           Events.OnPlayerInvincible -= HandleOnPlayerInvincible;
+            if (newState is not GameState)
+            {
+                StopCoroutine(LifeDecreaseCoroutine());
+                return;
+            }
+            StartCoroutine(LifeDecreaseCoroutine());
         }
 
         private void UpdateLife(float lifeAmount)
         {
             lifeCount.Value = Mathf.Clamp(lifeCount.Value + lifeAmount, 0, maxLifeCount.Value);
             Events.OnLifeCountChanged?.Invoke(lifeCount.Value);
-        }
-
-        private void Start()
-        {
-            lifeCount.Value = maxLifeCount.Value;
-            StartCoroutine(LifeDecreaseCoroutine());
         }
 
         IEnumerator LifeDecreaseCoroutine()
