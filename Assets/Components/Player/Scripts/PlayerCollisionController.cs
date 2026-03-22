@@ -3,6 +3,7 @@ using Components.EventSystem;
 using System.Collections;
 using Components.StateMachine;
 using Components.StateMachine.States;
+using Library.References;
 using UnityEngine;
 
 namespace Player
@@ -15,18 +16,45 @@ namespace Player
         [SerializeField, Tooltip("Collectable sphere radius")] private float collectableSphereRadius = 1f;
         [SerializeField] private LayerMask collectableLayer;
         [SerializeField] private LayerMask obstacleLayer;
-        [SerializeField] private float obstacleDamaged = 25f;
+
+        [Header("Damage Progression")]
+        [SerializeField] private FloatReference distance;
+        [SerializeField, Tooltip("Damage values for each level")]
+        private float[] damageSteps = { 12f, 16f, 20f, 25f, 30f };
+        [SerializeField, Tooltip("Distance thresholds to reach each damage step")]
+        private float[] distanceThresholds = { 0f, 500f, 1000f, 2000f, 4000f };
+
+        [Header("Invincibility")]
         [SerializeField, Tooltip("Invincibility time after obstacle hits in seconds")]
         private float invincibilityTime = 1.5f;
 
         private bool _isInvincible = false;
         private bool _isActive = false;
+        private int _currentDamageIndex;
+        private float _obstacleDamage => damageSteps[_currentDamageIndex];
 
         private Vector3 PlayerSpherePosition => transform.position + sphereCenter;
 
-        private void OnEnable()
+        private void Awake()
         {
             Events.OnStateChanged += OnStateChanged;
+            distance.OnValueChanged.AddListener(OnDistanceUpdate);
+        }
+
+        private void OnDistanceUpdate(float newDistance)
+        {
+            if (_currentDamageIndex + 1 >= distanceThresholds.Length) return;
+            if (newDistance >= distanceThresholds[_currentDamageIndex + 1])
+            {
+                _currentDamageIndex++;
+                Debug.Log($"New Damage = {_obstacleDamage}");
+            }
+        }
+
+        private void OnDestroy()
+        {
+            Events.OnStateChanged -= OnStateChanged;
+            distance.OnValueChanged.RemoveListener(OnDistanceUpdate);
         }
 
         private void OnStateChanged(State newState)
@@ -60,7 +88,7 @@ namespace Player
             Collider[] hitColliders = Physics.OverlapSphere(PlayerSpherePosition, obstacleSphereRadius, obstacleLayer);
             if (hitColliders.Length > 0)
             {
-                Events.UpdateLife(-obstacleDamaged);
+                Events.UpdateLife(-_obstacleDamage);
                 StartCoroutine(InvincibilityCoroutine());
             }
         }
