@@ -15,8 +15,11 @@ EditorBuildSettings:
     path: Assets/Scenes/UI/HUD.unity
     guid: 95d8874fe7190b04bafa948c5e1798dd
   - enabled: 1
-    path: Assets/Scenes/UI/Contdown.unity
+    path: Assets/Scenes/UI/Countdown.unity
     guid: 4f123648c1120a24d8b87f2255f93c71
+  - enabled: 1
+    path: Assets/Scenes/UI/GameOver.unity
+    guid: 7ec4fef4509098e4f8d681498822bc47
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

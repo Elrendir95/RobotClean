@@ -14,6 +14,7 @@ namespace Components.SceneLoader
             SceneManager.LoadScene("Game",  LoadSceneMode.Single);
             SceneManager.LoadScene("Countdown", LoadSceneMode.Additive);
             SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
+            SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
         }
     }
 }

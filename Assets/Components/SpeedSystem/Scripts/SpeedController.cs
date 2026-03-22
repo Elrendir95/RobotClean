@@ -16,7 +16,7 @@ namespace Components
         [SerializeField] private FloatReference increaseSpeedTime;
         [SerializeField] private FloatReference increaseSpeedAmount;
 
-        private void OnEnable()
+        private void Awake()
         {
             Events.OnLifeCountChanged += OnLifeCountChanged;
             Events.OnStateChanged += OnStateChanged;
@@ -34,7 +34,7 @@ namespace Components
             StartCoroutine(SpeedCoroutine());
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             Events.OnLifeCountChanged -= OnLifeCountChanged;
         }
