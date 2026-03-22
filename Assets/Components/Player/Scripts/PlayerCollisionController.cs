@@ -71,12 +71,18 @@ namespace Player
             CheckCollectable();
         }
 
+        private Collider[] _collectableHits = new Collider[4];
+
         private void CheckCollectable()
         {
-            Collider[] hitColliders = Physics.OverlapSphere(PlayerSpherePosition, collectableSphereRadius, collectableLayer);
-            foreach (Collider hitCollider in hitColliders)
+            int hitCount = Physics.OverlapSphereNonAlloc(PlayerSpherePosition, collectableSphereRadius, _collectableHits, collectableLayer);
+
+            for (int i = 0; i < hitCount; i++)
             {
-                hitCollider.gameObject.GetComponent<Collectable>().OnCollect(gameObject);
+                if (_collectableHits[i].TryGetComponent<Collectable>(out var collectable))
+                {
+                    collectable.OnCollect(gameObject);
+                }
             }
         }
 
