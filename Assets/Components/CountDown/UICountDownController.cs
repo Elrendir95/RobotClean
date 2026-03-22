@@ -26,7 +26,6 @@ namespace Components.CountDown
 
         private void OnStateChanged(State newState)
         {
-            Debug.Log("UICountDownController:Countdown state changed to " + newState);
             if (newState is CountDownState countDownState)
             {
                 window.SetActive(true);

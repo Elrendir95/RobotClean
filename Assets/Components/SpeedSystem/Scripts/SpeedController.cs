@@ -37,6 +37,7 @@ namespace Components
         private void OnDestroy()
         {
             Events.OnLifeCountChanged -= OnLifeCountChanged;
+            Events.OnStateChanged -= OnStateChanged;
         }
 
         private void OnLifeCountChanged(float currentLife)

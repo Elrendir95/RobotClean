@@ -12,7 +12,6 @@ namespace Components.StateMachine.States
 
         public override void Enter()
         {
-            Debug.Log("CountDownState:Enter");
             Timer = _initialTime;
         }
 
@@ -24,15 +23,11 @@ namespace Components.StateMachine.States
 
                 return;
             }
-            Debug.Log("CountDownState:Update:Finished");
             // Countdown finished go to GameState
             var gameState = new GameState(StateMachine);
             StateMachine.ChangeState(gameState);
         }
 
-        public override void Exit()
-        {
-            Debug.Log("CountDownState:Exit");
-        }
+        public override void Exit()  {}
     }
 }
