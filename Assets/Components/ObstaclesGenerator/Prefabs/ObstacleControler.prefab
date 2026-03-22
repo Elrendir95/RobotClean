@@ -58,12 +58,12 @@ MonoBehaviour:
     variable: {fileID: 0}
   distanceToNextChunk: 18
   chunksPool:
-  - {fileID: 5857535558997658796, guid: 3ccbeeb889a2410459749f309e50bea9, type: 3}
-  - {fileID: 5857535558997658796, guid: 0aeb43f2592385d43a1d2baddc521cc6, type: 3}
-  - {fileID: 5857535558997658796, guid: 9d3183f8969a05c4ebff3200f8f9c75d, type: 3}
-  - {fileID: 5857535558997658796, guid: daf8745475232c240a9c7a4933273624, type: 3}
-  - {fileID: 5857535558997658796, guid: cfce3a31b2217c24393e467f9d69249f, type: 3}
-  - {fileID: 5857535558997658796, guid: 0df5d0ed0c8a8834eb791193e8b6291d, type: 3}
+  - {fileID: 8009061186025400593, guid: 9d3183f8969a05c4ebff3200f8f9c75d, type: 3}
+  - {fileID: 778608723434659919, guid: 3ccbeeb889a2410459749f309e50bea9, type: 3}
+  - {fileID: 5719865510100061984, guid: 0aeb43f2592385d43a1d2baddc521cc6, type: 3}
+  - {fileID: 5322560232866451148, guid: 0df5d0ed0c8a8834eb791193e8b6291d, type: 3}
+  - {fileID: 3343575156597435511, guid: daf8745475232c240a9c7a4933273624, type: 3}
+  - {fileID: 5784879130898440580, guid: cfce3a31b2217c24393e467f9d69249f, type: 3}
   obstacleDistances:
   - 14
   - 10
@@ -72,3 +72,6 @@ MonoBehaviour:
   - 60
   - 180
   - 360
+  collectablesToSpawn:
+  - {fileID: 696927818049514086, guid: 03ffd48e54869e44786479e1d005ce46, type: 3}
+  collectableDistance: 5

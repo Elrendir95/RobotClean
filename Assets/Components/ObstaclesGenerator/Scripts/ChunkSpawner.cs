@@ -77,7 +77,7 @@ public class ChunkSpawner : MonoBehaviour
         }
     }
 
-    private ChunkController AddChunk(Vector3 position)
+    protected virtual ChunkController AddChunk(Vector3 position)
     {
         if (chunksPool == null || chunksPool.Length == 0)
         {
