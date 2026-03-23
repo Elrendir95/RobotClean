@@ -211,9 +211,6 @@ PrefabInstance:
       addedObject: {fileID: 2632092224211936482}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34c239b5a1bdebe49b06411fb8d51051, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6240566579328725600}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34c239b5a1bdebe49b06411fb8d51051, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6730581612633110498}
     - targetCorrespondingSourceObject: {fileID: -6123439192357387638, guid: 34c239b5a1bdebe49b06411fb8d51051, type: 3}
       insertIndex: -1
@@ -374,7 +371,10 @@ MonoBehaviour:
   - {fileID: 4572919061800724140}
   - {fileID: 3306312555073743126}
   canSwitchLanesInJump: 1
-  jumpCooldown: 0.2
+  jumpCooldown:
+    UseConstante: 1
+    ConstanteValue: 0.2
+    variable: {fileID: 0}
   jumpDuration: 0.9
   jumpHeight: 1.8
   jumpCurve:
@@ -476,34 +476,6 @@ MonoBehaviour:
   - 4000
   invincibilityTime: 1.5
 --- !u!114 &2632092224211936482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8353013158590311474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c0b801182a04030abfdb35265f626e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Components.LifeSystem.LifeController
-  lifeCount:
-    UseConstante: 0
-    ConstanteValue: 0
-    variable: {fileID: 11400000, guid: 0e0882aa0f868a042bf052c3de37689c, type: 2}
-  maxLifeCount:
-    UseConstante: 0
-    ConstanteValue: 0
-    variable: {fileID: 11400000, guid: e94c30f652ce47a4b95efbbc4e1de3f0, type: 2}
-  lifeDecreaseRate:
-    UseConstante: 1
-    ConstanteValue: 1
-    variable: {fileID: 0}
-  lifeDecreaseAmount:
-    UseConstante: 1
-    ConstanteValue: 2.5
-    variable: {fileID: 0}
---- !u!114 &6240566579328725600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
