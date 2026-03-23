@@ -23,6 +23,7 @@ public class ObstacleSpawner : ChunkSpawner
     {
         Events.OnStateChanged += OnStateChanged;
         _lastCollectibleDistance = collectableDistance;
+        if (collectablesToSpawn.Length == 0) collectableDistance = 0f;
     }
 
     private void OnDestroy()

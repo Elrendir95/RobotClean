@@ -19,7 +19,7 @@ namespace Player
         [SerializeField] private Transform[] lanes;
         [SerializeField] private bool canSwitchLanesInJump = true;
         [Header("Jump Settings")]
-        [SerializeField] private float jumpCooldown = 0.2f;
+        [SerializeField] private FloatReference jumpCooldown;
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
         [SerializeField] private AnimationCurve jumpCurve;

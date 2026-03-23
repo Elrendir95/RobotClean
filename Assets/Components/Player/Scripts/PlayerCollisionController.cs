@@ -60,7 +60,7 @@ namespace Player
         private void OnStateChanged(State newState)
         {
             _isActive = newState is GameState;
-            if (!_isActive) Events.OnPlayerInvincible.Invoke(false);
+            if (!_isActive) Events.OnPlayerInvincible?.Invoke(false);
         }
 
         private void Update()
@@ -94,7 +94,7 @@ namespace Player
             Collider[] hitColliders = Physics.OverlapSphere(PlayerSpherePosition, obstacleSphereRadius, obstacleLayer);
             if (hitColliders.Length > 0)
             {
-                Events.UpdateLife(-_obstacleDamage);
+                Events.UpdateLife?.Invoke(-_obstacleDamage);
                 StartCoroutine(InvincibilityCoroutine());
             }
         }
@@ -102,10 +102,10 @@ namespace Player
         IEnumerator InvincibilityCoroutine()
         {
             _isInvincible = true;
-            Events.OnPlayerInvincible.Invoke(_isInvincible);
+            Events.OnPlayerInvincible?.Invoke(_isInvincible);
             yield return new WaitForSeconds(invincibilityTime);
             _isInvincible = false;
-            Events.OnPlayerInvincible.Invoke(_isInvincible);
+            Events.OnPlayerInvincible?.Invoke(_isInvincible);
         }
 
 #if UNITY_EDITOR
