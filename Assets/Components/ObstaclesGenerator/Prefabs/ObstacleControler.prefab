@@ -64,6 +64,7 @@ MonoBehaviour:
   - {fileID: 5322560232866451148, guid: 0df5d0ed0c8a8834eb791193e8b6291d, type: 3}
   - {fileID: 3343575156597435511, guid: daf8745475232c240a9c7a4933273624, type: 3}
   - {fileID: 5784879130898440580, guid: cfce3a31b2217c24393e467f9d69249f, type: 3}
+  - {fileID: 5322560232866451148, guid: 4eb03e4f8f04a4642abe00fccb30d7b3, type: 3}
   obstacleDistances:
   - 14
   - 10
