@@ -10,10 +10,12 @@ namespace Player
 {
     public class PlayerCollisionController : MonoBehaviour
     {
-        [Header("Settings")]
+        [Header("Running Settings")]
         [SerializeField] private Vector3 sphereCenter;
-        [SerializeField, Tooltip("Obstacle sphere radius")] private float obstacleSphereRadius = 0.5f;
-        [SerializeField, Tooltip("Collectable sphere radius")] private float collectableSphereRadius = 1f;
+        [SerializeField, Tooltip("Center when sliding")] private Vector3 slidingCenter;
+        [SerializeField, Tooltip("Obstacle sphere radius (red sphere)")] private float obstacleSphereRadius = 0.5f;
+        [SerializeField, Tooltip("Collectable sphere radius(green sphere)")] private float collectableSphereRadius = 1f;
+        [Header("Layers Settings")]
         [SerializeField] private LayerMask collectableLayer;
         [SerializeField] private LayerMask obstacleLayer;
 
@@ -31,13 +33,16 @@ namespace Player
         private bool _isInvincible = false;
         private bool _isActive = false;
         private int _currentDamageIndex;
+        private bool _isSliding = false;
+
         private float _obstacleDamage => damageSteps[_currentDamageIndex];
 
-        private Vector3 PlayerSpherePosition => transform.position + sphereCenter;
+        private Vector3 PlayerSpherePosition => transform.position + (_isSliding ? slidingCenter : sphereCenter);
 
         private void Awake()
         {
             Events.OnStateChanged += OnStateChanged;
+            Events.OnPlayerSlidingDown += OnPlayerSlidingDown;
             distance.OnValueChanged.AddListener(OnDistanceUpdate);
         }
 
@@ -54,7 +59,13 @@ namespace Player
         private void OnDestroy()
         {
             Events.OnStateChanged -= OnStateChanged;
+            Events.OnPlayerSlidingDown -= OnPlayerSlidingDown;
             distance.OnValueChanged.RemoveListener(OnDistanceUpdate);
+        }
+
+        private void OnPlayerSlidingDown(bool sliding)
+        {
+            _isSliding = sliding;
         }
 
         private void OnStateChanged(State newState)
@@ -112,7 +123,9 @@ namespace Player
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(PlayerSpherePosition, obstacleSphereRadius);
+            Gizmos.DrawWireSphere(transform.position + sphereCenter, obstacleSphereRadius);
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position + slidingCenter, obstacleSphereRadius);
             Gizmos.color = Color.lightGreen;
             Gizmos.DrawWireSphere(PlayerSpherePosition, collectableSphereRadius);
         }
