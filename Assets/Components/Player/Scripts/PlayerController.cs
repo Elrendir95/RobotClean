@@ -14,6 +14,7 @@ namespace Player
         [SerializeField] private InputActionReference left;
         [SerializeField] private InputActionReference right;
         [SerializeField] private InputActionReference jump;
+        [SerializeField] private InputActionReference slideDown;
         [Header("Lane Switch Settings")]
         [SerializeField] private float laneTransitionSpeed = 0.12f;
         [SerializeField] private Transform[] lanes;
@@ -23,6 +24,8 @@ namespace Player
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
         [SerializeField] private AnimationCurve jumpCurve;
+        [Header("Sliding Down Settings")]
+        [SerializeField] private FloatReference slidingDownDuration;
         [Header("Speed")]
         [SerializeField] private FloatReference currentSpeed;
         [SerializeField] private FloatReference startSpeed;
@@ -30,9 +33,11 @@ namespace Player
         [SerializeField] private Animator animator;
 
         // Jumping States
-        private bool _isJumping = false;
+        private bool _isJumping;
         private bool _canJump = true;
         private float _groudY; // Saved ground positions
+
+        private bool _isSlidingDown;
 
         private int _currentLane = 1;
         private bool _isSwitchingLane;
@@ -62,6 +67,7 @@ namespace Player
                 left.action.performed -= GoLeft;
                 right.action.performed -= GoRight;
                 jump.action.performed -= Jump;
+                slideDown.action.performed -= SlideDown;
                 if (newState is PauseState)
                 {
                     animator.speed = 0;
@@ -72,7 +78,14 @@ namespace Player
             left.action.performed += GoLeft;
             right.action.performed += GoRight;
             jump.action.performed += Jump;
+            slideDown.action.performed += SlideDown;
             animator.SetTrigger("IsRunning");
+        }
+
+        private void SlideDown(InputAction.CallbackContext obj)
+        {
+            if (_isJumping || _isDead || _isSlidingDown) return;
+            StartCoroutine(SlideDownCoroutine());
         }
 
         private void OnLifeCountChanged(float currentLife)
@@ -90,7 +103,7 @@ namespace Player
         /// <param name="obj"></param>
         private void Jump(InputAction.CallbackContext obj)
         {
-            if (_isJumping || !_canJump || _isDead) return;
+            if (_isJumping || !_canJump || _isDead || _isSlidingDown) return;
             StartCoroutine(JumpCoroutine());
         }
 
@@ -184,6 +197,26 @@ namespace Player
                                              lanes[destinationIndex].position.z);
             _currentLane = destinationIndex;
             _isSwitchingLane = false;
+        }
+
+        private IEnumerator SlideDownCoroutine()
+        {
+            _isSlidingDown = true;
+            animator.SetBool("IsSlidingDown", true);
+            Events.OnPlayerSlidingDown?.Invoke(true);
+
+            var slideTimer = 0f;
+            var duration = slidingDownDuration * (startSpeed.Value / currentSpeed.Value);
+
+            while (slideTimer <= duration)
+            {
+                slideTimer += Time.deltaTime;
+                yield return null;
+            }
+
+            _isSlidingDown = false;
+            animator.SetBool("IsSlidingDown", false);
+            Events.OnPlayerSlidingDown?.Invoke(false);
         }
 
 #if UNITY_EDITOR
