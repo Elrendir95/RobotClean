@@ -15,6 +15,16 @@ namespace Components.SceneLoader
             SceneManager.LoadScene("Countdown", LoadSceneMode.Additive);
             SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
             SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
+            SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
+        }
+
+        public static void QuitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }

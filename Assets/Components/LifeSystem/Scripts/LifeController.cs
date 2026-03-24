@@ -16,6 +16,8 @@ namespace Components.LifeSystem
         [SerializeField, Tooltip("Life decrease amount")] private FloatReference lifeDecreaseAmount;
 
         private bool _isInvincible;
+        private Coroutine _coroutine;
+        private GameState _gameState;
 
         private void OnEnable()
         {
@@ -43,12 +45,13 @@ namespace Components.LifeSystem
 
         private void OnStateChanged(State newState)
         {
-            if (newState is not GameState)
+            if (newState is not GameState gameState)
             {
-                StopCoroutine(LifeDecreaseCoroutine());
+                if (_coroutine != null) StopCoroutine(_coroutine);
                 return;
             }
-            StartCoroutine(LifeDecreaseCoroutine());
+            _gameState = gameState;
+            _coroutine = StartCoroutine(LifeDecreaseCoroutine());
         }
 
         private void UpdateLife(float lifeAmount)
@@ -59,13 +62,16 @@ namespace Components.LifeSystem
 
         IEnumerator LifeDecreaseCoroutine()
         {
+            float delay = lifeDecreaseRate.Value - _gameState.Timer % 15;
             while (lifeCount.Value > 0)
             {
-                yield return new WaitForSeconds(lifeDecreaseRate.Value);
+                yield return new WaitForSeconds(delay);
 
                 if (_isInvincible) continue;
 
                 UpdateLife(-lifeDecreaseAmount.Value);
+
+                delay = lifeDecreaseRate.Value;
             }
         }
     }

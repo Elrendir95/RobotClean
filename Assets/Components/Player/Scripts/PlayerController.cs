@@ -62,8 +62,13 @@ namespace Player
                 left.action.performed -= GoLeft;
                 right.action.performed -= GoRight;
                 jump.action.performed -= Jump;
+                if (newState is PauseState)
+                {
+                    animator.speed = 0;
+                }
                 return;
             }
+            animator.speed = 1;
             left.action.performed += GoLeft;
             right.action.performed += GoRight;
             jump.action.performed += Jump;
@@ -105,7 +110,8 @@ namespace Player
 
             while (jumpingTime < duration)
             {
-                jumpingTime += Time.deltaTime;
+                // Mutiply by animator speed to pause the jump during pause
+                jumpingTime += Time.deltaTime * animator.speed;
                 float p = jumpCurve.Evaluate(jumpingTime / duration);
                 transform.position = new Vector3(transform.position.x, p *  jumpHeight, transform.position.z);
                 yield return null;
@@ -169,7 +175,8 @@ namespace Player
             {
                 Vector3 current = Vector3.Lerp(lanes[_currentLane].position, lanes[destinationIndex].position, transitionTime / laneTransitionSpeed);
                 transform.position = new Vector3(current.x, transform.position.y, current.z);
-                transitionTime += Time.deltaTime;
+                // Mutiply by animator speed to pause the transition during pause
+                transitionTime += Time.deltaTime * animator.speed;
                 yield return null;
             }
             transform.position = new Vector3(lanes[destinationIndex].position.x,

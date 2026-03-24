@@ -1,5 +1,6 @@
 ﻿using Components.EventSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Components.StateMachine.States
 {
@@ -7,12 +8,11 @@ namespace Components.StateMachine.States
     {
         public float Timer { get; private set;  }
 
-        public GameState(StateMachine stateMachine) : base(stateMachine) {}
+        public GameState(StateMachine stateMachine, float lastTimer = 0) : base(stateMachine) {Timer = lastTimer;}
 
         public override void Enter()
         {
             Events.OnLifeCountChanged += OnLifeCountChanged;
-            Timer = 0f;
         }
 
         private void OnLifeCountChanged(float lifeCount)
@@ -26,6 +26,10 @@ namespace Components.StateMachine.States
         public override void Update()
         {
             Timer += Time.deltaTime;
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+            {
+                StateMachine.ChangeState(new PauseState(StateMachine, Timer));
+            }
         }
 
         public override void Exit()
