@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Components.EventSystem;
 using Library.References;
 using UnityEngine;
 
@@ -86,6 +87,7 @@ public class ChunkSpawner : MonoBehaviour
         }
         var index = Random.Range(0, chunksPool.Length);
         ChunkController chunk = Instantiate(chunksPool[index], position, Quaternion.identity);
+        Events.OnChunkSpawned?.Invoke(chunk);
         return chunk;
     }
 

@@ -654,11 +654,108 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorControler
       objectReference: {fileID: 0}
+    - target: {fileID: 6542114472747533029, guid: 788cd06bbd0b9e14d853182e8fc356df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 788cd06bbd0b9e14d853182e8fc356df, type: 3}
+--- !u!1001 &7934511101702616021
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 844754086458306025, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: distancesTriggers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 844754086458306025, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: distancesIntervals.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 844754086458306025, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: 'distancesTriggers.Array.data[1]'
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 844754086458306025, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: 'distancesTriggers.Array.data[2]'
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 844754086458306025, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: 'distancesTriggers.Array.data[3]'
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 844754086458306025, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: 'distancesIntervals.Array.data[0]'
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 844754086458306025, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: 'distancesIntervals.Array.data[1]'
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 844754086458306025, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: 'distancesIntervals.Array.data[2]'
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 844754086458306025, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: 'distancesIntervals.Array.data[3]'
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 2445433692809754787, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708528066938516736, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708528066938516736, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708528066938516736, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708528066938516736, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708528066938516736, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708528066938516736, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708528066938516736, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708528066938516736, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708528066938516736, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708528066938516736, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: edda9a7b8491eb2469774bd3e83a89c9, type: 3}
 --- !u!1001 &8843823664535103621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -711,6 +808,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObstacleControler
       objectReference: {fileID: 0}
+    - target: {fileID: 8830411965791070222, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -728,3 +829,4 @@ SceneRoots:
   - {fileID: 1214990061}
   - {fileID: 1578143229}
   - {fileID: 605982651}
+  - {fileID: 7934511101702616021}

@@ -112,6 +112,70 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1537880869783956479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 243310116844203601}
+  m_Layer: 0
+  m_Name: EnemySpawnPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &243310116844203601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537880869783956479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5313356529722296206}
+  - {fileID: 251965323317536630}
+  m_Father: {fileID: 4388736494973987706}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1824821756203639889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 251965323317536630}
+  m_Layer: 0
+  m_Name: Target_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &251965323317536630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824821756203639889}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7930119, z: -0, w: -0.6092062}
+  m_LocalPosition: {x: 6.76, y: 0, z: 15.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 243310116844203601}
+  m_LocalEulerAnglesHint: {x: 0, y: 255.064, z: 0}
 --- !u!1 &2126212633255327492
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +497,37 @@ Transform:
   - {fileID: 3886722881322951613}
   m_Father: {fileID: 7695655968794099319}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2998765519378262532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5313356529722296206}
+  m_Layer: 0
+  m_Name: Target_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5313356529722296206
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2998765519378262532}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.8009296, z: -0, w: 0.5987586}
+  m_LocalPosition: {x: -7.7, y: 0, z: 19.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 243310116844203601}
+  m_LocalEulerAnglesHint: {x: 0, y: 106.438, z: 0}
 --- !u!1 &3754438307362117129
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,6 +1088,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4388736494973987706}
   - component: {fileID: 5857535558997658796}
+  - component: {fileID: 1222862614719137956}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -1015,6 +1111,7 @@ Transform:
   m_Children:
   - {fileID: 7695655968794099319}
   - {fileID: 5072068694898528326}
+  - {fileID: 243310116844203601}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5857535558997658796
@@ -1030,6 +1127,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChunkController
   endAnchor: {fileID: 5072068694898528326}
+--- !u!114 &1222862614719137956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7174006747727415931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f635603e4a44364a3ec7b8dbb94b285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.Enemy.EnemyChunkController
+  spawnPoints:
+  - {fileID: 5313356529722296206}
+  - {fileID: 251965323317536630}
 --- !u!1 &7438677085773304050
 GameObject:
   m_ObjectHideFlags: 0

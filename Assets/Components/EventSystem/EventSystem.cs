@@ -11,5 +11,6 @@ namespace Components.EventSystem
         public static Action<bool> OnPlayerSlidingDown;
         public static Action<State> OnStateChanged;
         public static Action OnResumeGame;
+        public static Action<ChunkController> OnChunkSpawned;
     }
 }

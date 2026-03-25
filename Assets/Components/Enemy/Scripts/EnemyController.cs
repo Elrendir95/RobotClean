@@ -9,8 +9,11 @@ namespace Components.Enemy
         [SerializeField] private ProjectileController projectilePrefab;
         [SerializeField] private Transform spawnProjectilePosition;
         [SerializeField] private float projectileDelay = 1f;
-        
+        [SerializeField] private float attackRange = 70f;
+        [SerializeField] private float playerSafeZone = 5f;
         [SerializeField] private Animator animator;
+
+        private int _currentDamageIndex;
 
         private Transform _player;
         private bool _isActive;
@@ -32,11 +35,14 @@ namespace Components.Enemy
         {
             ProjectileController projectile = Instantiate(projectilePrefab, spawnProjectilePosition.position, Quaternion.identity);
             projectile.SetTarget(_player.position);
+            projectile.transform.SetParent(null, true);
         }
 
         private void Update()
         {
             if (!_isActive) return;
+            if (transform.position.z <= _player.position.z + playerSafeZone) _isActive = false;
+            if (Vector3.Distance(transform.position, _player.position) > attackRange) return;
 
             _timer += Time.deltaTime;
             if (_timer >= projectileDelay)

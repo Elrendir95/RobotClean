@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6713424704027323868}
+  - component: {fileID: 6877227250913464515}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -33,6 +34,23 @@ Transform:
   - {fileID: 3837691672242769681}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6877227250913464515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698878914846626987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be4551ad25484c2e84ebaeebc425bf9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.Enemy.EnemyController
+  projectilePrefab: {fileID: 5323483638493221943, guid: d2771474231af784790d13e25a12521c, type: 3}
+  spawnProjectilePosition: {fileID: 3837691672242769681}
+  projectileDelay: 1
+  attackRange: 75
+  animator: {fileID: 1150843640319762636}
 --- !u!1 &5073723438011549612
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,37 +141,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3681b15fa0a0ad4e936d65ce5c2a0fb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7227416878511705433}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3681b15fa0a0ad4e936d65ce5c2a0fb, type: 3}
 --- !u!95 &1150843640319762636 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: b3681b15fa0a0ad4e936d65ce5c2a0fb, type: 3}
   m_PrefabInstance: {fileID: 6814521935750651229}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5932193202442035212 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b3681b15fa0a0ad4e936d65ce5c2a0fb, type: 3}
-  m_PrefabInstance: {fileID: 6814521935750651229}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7227416878511705433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5932193202442035212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be4551ad25484c2e84ebaeebc425bf9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Components.Enemy.EnemyController
-  projectilePrefab: {fileID: 0}
-  spawnProjectilePosition: {fileID: 3837691672242769681}
-  projectileDelay: 1
-  animator: {fileID: 1150843640319762636}
 --- !u!4 &6420077965437778614 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b3681b15fa0a0ad4e936d65ce5c2a0fb, type: 3}

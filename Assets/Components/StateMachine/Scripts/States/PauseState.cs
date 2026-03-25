@@ -1,4 +1,5 @@
-﻿using UnityEngine.InputSystem;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Components.StateMachine.States
 {
@@ -17,6 +18,7 @@ namespace Components.StateMachine.States
 
         public override void Enter()
         {
+            Time.timeScale = 0;
             EventSystem.Events.OnResumeGame += ResumeGame;
         }
 
@@ -30,6 +32,7 @@ namespace Components.StateMachine.States
 
         public override void Exit()
         {
+            Time.timeScale = 1;
             EventSystem.Events.OnResumeGame -= ResumeGame;
         }
     }
