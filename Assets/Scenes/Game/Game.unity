@@ -498,7 +498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6892087631986890909, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
       propertyPath: jumpCooldown.ConstanteValue
-      value: 0.06
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9030410903784521345, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
       propertyPath: m_Name

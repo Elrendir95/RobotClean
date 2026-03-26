@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Library.References;
 using Components.EventSystem;
 using Components.InputBuffer;
@@ -12,25 +13,19 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        [Header("Input References")]
-        [SerializeField] private InputActionReference left;
-        [SerializeField] private InputActionReference right;
-        [SerializeField] private InputActionReference jump;
-        [SerializeField] private InputActionReference slideDown;
+        [Header("Inputs")]
+        [SerializeField] private List<InputMapping> inputMappings;
         [Header("Lane Switch Settings")]
         [SerializeField] private float laneTransitionSpeed = 0.12f;
         [SerializeField] private Transform[] lanes;
         [SerializeField] private bool canSwitchLanesInJump = true;
-        [SerializeField] private float translateBuffering = 0.2f;
         [Header("Jump Settings")]
         [SerializeField] private FloatReference jumpCooldown;
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
         [SerializeField] private AnimationCurve jumpCurve;
-        [SerializeField] private float jumpBuffering = 0.2f;
         [Header("Sliding Down Settings")]
         [SerializeField] private FloatReference slidingDownDuration;
-        [SerializeField] private float slidingDownBuffering = 0.2f;
         [Header("Speed")]
         [SerializeField] private FloatReference currentSpeed;
         [SerializeField] private FloatReference startSpeed;
@@ -48,12 +43,12 @@ namespace Player
         private bool _isSwitchingLane;
         private bool _isDead;
 
-        private InputBufferHandler _inputBuffer;
+        private readonly InputBufferHandler _inputBuffer= new();
+        private readonly Dictionary<Guid, InputMapping> _inputMappings = new();
 
         private void Awake()
         {
             _groudY = transform.position.y;
-            _inputBuffer = new InputBufferHandler();
         }
 
         private void OnEnable()
@@ -70,50 +65,52 @@ namespace Player
 
         private void Update()
         {
-            JumpCheck();
-            SlideDownCheck();
-            CheckGoLeft();
-            CheckGoRight();
+            // Handle translations
+            ProcessBufferedInput(ActionType.Left, () => CanSwitchLanes() && _currentLane > 0, SmoothLaneTransitionCoroutine(_currentLane - 1));
+            ProcessBufferedInput(ActionType.Right, () => CanSwitchLanes() && _currentLane < lanes.Length - 1, SmoothLaneTransitionCoroutine(_currentLane + 1));
+
+            // Handle Jumps
+            ProcessBufferedInput(ActionType.Jump, () => !_isJumping && _canJump && !_isDead && !_isSlidingDown, JumpCoroutine());
+            // Handle SlideDown
+            ProcessBufferedInput(ActionType.SlideDown, () => !_isJumping && !_isSlidingDown && !_isDead, SlideDownCoroutine());
+        }
+
+        private void HandleBufferedInput(InputAction.CallbackContext obj)
+        {
+            var input = _inputMappings[obj.action.id];
+            _inputBuffer.AddInput(input.type, input.bufferingTime);
+        }
+
+        private void ProcessBufferedInput(ActionType type, Func<bool> condition, IEnumerator actionCoroutine)
+        {
+            if (_inputBuffer.IsBuffered(type) && condition())
+            {
+                _inputBuffer.Consume(type);
+                StartCoroutine(actionCoroutine);
+            }
         }
 
         private void OnStateChanged(State newState)
         {
-            if (newState is not GameState)
+            bool isGameState = newState is GameState;
+            animator.speed = newState is PauseState ? 0 : 1;
+
+            foreach (var input in inputMappings)
             {
-                left.action.performed -= GoLeft;
-                right.action.performed -= GoRight;
-                jump.action.performed -= Jump;
-                slideDown.action.performed -= SlideDown;
-                if (newState is PauseState)
+                if (isGameState)
                 {
-                    animator.speed = 0;
+                    input.inputActionReference.action.performed += HandleBufferedInput;
+                    _inputMappings[input.inputActionReference.action.id] = input;
                 }
-                _inputBuffer.ClearInput();
-                return;
+                else  input.inputActionReference.action.performed -= HandleBufferedInput;
             }
-            animator.speed = 1;
-            left.action.performed += GoLeft;
-            right.action.performed += GoRight;
-            jump.action.performed += Jump;
-            slideDown.action.performed += SlideDown;
-            animator.SetTrigger("IsRunning");
-        }
 
-        private void SlideDown(InputAction.CallbackContext obj)
-        {
-            _inputBuffer.AddInput(ActionType.SlideDown, slidingDownBuffering);
-        }
-
-        private void ExecuteSlideDown()
-        {
-            _inputBuffer.Consume(ActionType.SlideDown);
-            StartCoroutine(SlideDownCoroutine());
-        }
-
-        private void SlideDownCheck()
-        {
-            if (_isJumping || !_canJump || _isDead || _isSlidingDown) return;
-            if (_inputBuffer.IsBuffered(ActionType.SlideDown)) ExecuteSlideDown();
+            if (isGameState) animator.SetTrigger("IsRunning");
+            else
+            {
+                _inputBuffer.ClearInput();
+                _inputMappings.Clear();
+            }
         }
 
         private void OnLifeCountChanged(float currentLife)
@@ -123,27 +120,6 @@ namespace Player
                 animator.SetTrigger("IsDead");
                 _isDead = true;
             }
-        }
-
-        /// <summary>
-        /// Handle Jump pressed
-        /// </summary>
-        /// <param name="obj"></param>
-        private void Jump(InputAction.CallbackContext obj)
-        {
-            _inputBuffer.AddInput(ActionType.Jump, jumpBuffering);
-        }
-
-        private void ExecuteJump()
-        {
-            _inputBuffer.Consume(ActionType.Jump);
-            StartCoroutine(JumpCoroutine());
-        }
-
-        private void JumpCheck()
-        {
-            if (_isJumping || !_canJump || _isDead || _isSlidingDown) return;
-            if (_inputBuffer.IsBuffered(ActionType.Jump)) ExecuteJump();
         }
 
         /// <summary>
@@ -172,6 +148,7 @@ namespace Player
             _isJumping = false;
             animator.SetBool("IsJumping", false);
             if (jumpCooldown.Value > 0f) StartCoroutine(JumpCooldownCoroutine());
+            else _canJump = true;
         }
 
         /// <summary>
@@ -189,44 +166,6 @@ namespace Player
         /// </summary>
         /// <returns>true if it can</returns>
         private bool CanSwitchLanes() => (canSwitchLanesInJump || !_isJumping) && !_isSwitchingLane && !_isDead;
-
-        /// <summary>
-        /// Handle Right Direction pressed
-        /// </summary>
-        /// <param name="obj"></param>
-        private void GoRight(InputAction.CallbackContext obj)
-        {
-            _inputBuffer.AddInput(ActionType.Right, translateBuffering);
-        }
-
-        private void CheckGoRight()
-        {
-            if (!CanSwitchLanes()) return;
-            if (_currentLane < lanes.Length - 1 && _inputBuffer.IsBuffered(ActionType.Right))
-            {
-                _inputBuffer.Consume(ActionType.Right);
-                StartCoroutine(SmoothLaneTransitionCoroutine(_currentLane + 1));
-            }
-        }
-
-        /// <summary>
-        /// Handle left direction pressed
-        /// </summary>
-        /// <param name="obj"></param>
-        private void GoLeft(InputAction.CallbackContext obj)
-        {
-            _inputBuffer.AddInput(ActionType.Left, translateBuffering);
-        }
-
-        private void CheckGoLeft()
-        {
-            if (!CanSwitchLanes()) return;
-            if (_currentLane > 0 && _inputBuffer.IsBuffered(ActionType.Left))
-            {
-                _inputBuffer.Consume(ActionType.Left);
-                StartCoroutine(SmoothLaneTransitionCoroutine(_currentLane - 1));
-            }
-        }
 
         /// <summary>
         /// Handle the transition beetween the lanes
