@@ -65,28 +65,31 @@ namespace Player
 
         private void Update()
         {
+            if (_isDead) return;
             // Handle translations
-            ProcessBufferedInput(ActionType.Left, () => CanSwitchLanes() && _currentLane > 0, SmoothLaneTransitionCoroutine(_currentLane - 1));
-            ProcessBufferedInput(ActionType.Right, () => CanSwitchLanes() && _currentLane < lanes.Length - 1, SmoothLaneTransitionCoroutine(_currentLane + 1));
+            ProcessBufferedInput(ActionType.Left, () => CanSwitchLanes() && _currentLane > 0, () => SmoothLaneTransitionCoroutine(_currentLane - 1));
+            ProcessBufferedInput(ActionType.Right, () => CanSwitchLanes() && _currentLane < lanes.Length - 1, () => SmoothLaneTransitionCoroutine(_currentLane + 1));
 
             // Handle Jumps
-            ProcessBufferedInput(ActionType.Jump, () => !_isJumping && _canJump && !_isDead && !_isSlidingDown, JumpCoroutine());
+            ProcessBufferedInput(ActionType.Jump, () => !_isJumping && _canJump && !_isSlidingDown, JumpCoroutine);
             // Handle SlideDown
-            ProcessBufferedInput(ActionType.SlideDown, () => !_isJumping && !_isSlidingDown && !_isDead, SlideDownCoroutine());
+            ProcessBufferedInput(ActionType.SlideDown, () => !_isJumping && !_isSlidingDown, SlideDownCoroutine);
         }
 
         private void HandleBufferedInput(InputAction.CallbackContext obj)
         {
-            var input = _inputMappings[obj.action.id];
-            _inputBuffer.AddInput(input.type, input.bufferingTime);
+            if (_inputMappings.TryGetValue(obj.action.id, out InputMapping input))
+            {
+                _inputBuffer.AddInput(input.type, input.bufferingTime);
+            }
         }
 
-        private void ProcessBufferedInput(ActionType type, Func<bool> condition, IEnumerator actionCoroutine)
+        private void ProcessBufferedInput(ActionType type, Func<bool> condition, Func<IEnumerator> actionCoroutine)
         {
             if (_inputBuffer.IsBuffered(type) && condition())
             {
                 _inputBuffer.Consume(type);
-                StartCoroutine(actionCoroutine);
+                StartCoroutine(actionCoroutine());
             }
         }
 
