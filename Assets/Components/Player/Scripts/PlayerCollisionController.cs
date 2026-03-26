@@ -5,6 +5,7 @@ using Components.StateMachine;
 using Components.StateMachine.States;
 using Library.References;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -18,13 +19,19 @@ namespace Player
         [Header("Layers Settings")]
         [SerializeField] private LayerMask collectableLayer;
         [SerializeField] private LayerMask obstacleLayer;
+        [SerializeField] private LayerMask projectileLayer;
 
         [Header("Damage Progression")]
         [SerializeField] private FloatReference distance;
-        [SerializeField, Tooltip("Damage values for each level")]
-        private float[] damageSteps = { 12f, 16f, 20f, 25f, 30f };
+        [FormerlySerializedAs("damageSteps")] [SerializeField, Tooltip("Damage values for each level")]
+        private float[] damageObstacleSteps = { 12f, 16f, 20f, 25f, 30f };
+        [FormerlySerializedAs("distanceThresholds")] [SerializeField, Tooltip("Distance thresholds to reach each damage step")]
+        private float[] distanceObstacleThresholds = { 0f, 500f, 1000f, 2000f, 4000f };
+        [SerializeField, Tooltip("Projectile Damage values for each level")]
+        private float[] damageProjectileSteps = { 10f, 15f, 20f };
         [SerializeField, Tooltip("Distance thresholds to reach each damage step")]
-        private float[] distanceThresholds = { 0f, 500f, 1000f, 2000f, 4000f };
+        private float[] distanceProjectileThresholds = { 0f, 2000f, 4000f };
+
 
         [Header("Invincibility")]
         [SerializeField, Tooltip("Invincibility time after obstacle hits in seconds")]
@@ -32,10 +39,12 @@ namespace Player
 
         private bool _isInvincible = false;
         private bool _isActive = false;
-        private int _currentDamageIndex;
         private bool _isSliding = false;
 
-        private float _obstacleDamage => damageSteps[_currentDamageIndex];
+        private int _currentObstacleDamageIndex;
+        private float _obstacleDamage => damageObstacleSteps[_currentObstacleDamageIndex];
+        private int _currentProjectileDamageIndex;
+        private float _projectileDamage => damageProjectileSteps[_currentObstacleDamageIndex];
 
         private Vector3 PlayerSpherePosition => transform.position + (_isSliding ? slidingCenter : sphereCenter);
 
@@ -48,11 +57,20 @@ namespace Player
 
         private void OnDistanceUpdate(float newDistance)
         {
-            if (_currentDamageIndex + 1 >= distanceThresholds.Length) return;
-            if (newDistance >= distanceThresholds[_currentDamageIndex + 1])
+            if (_currentObstacleDamageIndex + 1 < distanceObstacleThresholds.Length)
             {
-                _currentDamageIndex++;
-                Debug.Log($"New Damage = {_obstacleDamage}");
+                if (newDistance >= distanceObstacleThresholds[_currentObstacleDamageIndex + 1])
+                {
+                    _currentObstacleDamageIndex++;
+                }
+            }
+
+            if (_currentProjectileDamageIndex + 1 < damageProjectileSteps.Length)
+            {
+                if (newDistance >= distanceProjectileThresholds[_currentProjectileDamageIndex + 1])
+                {
+                    _currentProjectileDamageIndex++;
+                }
             }
         }
 
@@ -80,17 +98,30 @@ namespace Player
             if (_isInvincible || !_isActive) return;
             CheckObstacle();
             CheckCollectable();
+            CheckProjectile();
         }
 
-        private Collider[] _collectableHits = new Collider[4];
+        private readonly Collider[] _collidersHits = new Collider[4];
+
+        private void CheckProjectile()
+        {
+            int hitCount = Physics.OverlapSphereNonAlloc(PlayerSpherePosition, collectableSphereRadius, _collidersHits, projectileLayer);
+            if (hitCount > 0)
+            {
+                Events.UpdateLife?.Invoke(-_projectileDamage);
+                Destroy(_collidersHits[0].gameObject);
+                StartCoroutine(InvincibilityCoroutine());
+            }
+        }
+
 
         private void CheckCollectable()
         {
-            int hitCount = Physics.OverlapSphereNonAlloc(PlayerSpherePosition, collectableSphereRadius, _collectableHits, collectableLayer);
+            int hitCount = Physics.OverlapSphereNonAlloc(PlayerSpherePosition, collectableSphereRadius, _collidersHits, collectableLayer);
 
             for (int i = 0; i < hitCount; i++)
             {
-                if (_collectableHits[i].TryGetComponent<Collectable>(out var collectable))
+                if (_collidersHits[i].TryGetComponent<Collectable>(out var collectable))
                 {
                     collectable.OnCollect(gameObject);
                 }

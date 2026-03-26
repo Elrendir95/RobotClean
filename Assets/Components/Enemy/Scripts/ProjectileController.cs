@@ -1,4 +1,5 @@
 using System;
+using Components.EventSystem;
 using Library.References;
 using UnityEngine;
 
@@ -6,12 +7,12 @@ namespace Components.Enemy
 {
     public class ProjectileController : MonoBehaviour
     {
+        [Header("Projectile Settings")]
         [SerializeField] private FloatReference globalSpeed;
         [SerializeField] private float projectileSpeed = 5f;
 
         private Vector3 _direction;
         private Vector3 _targetPosition;
-        private float _damage = 10f;
 
         public void SetTarget(Vector3 target)
         {
@@ -19,12 +20,12 @@ namespace Components.Enemy
             _targetPosition = target;
         }
 
-        public void SetDamage(float damage)
+        public void Update()
         {
-
+            HandleMovement();
         }
 
-        public void Update()
+        private void HandleMovement()
         {
             float distanceThisFrame = (projectileSpeed + globalSpeed) * Time.deltaTime;
             float distanceRemaining = (_targetPosition - transform.position).magnitude;
@@ -37,5 +38,6 @@ namespace Components.Enemy
 
             transform.Translate(_direction * distanceThisFrame, Space.World);
         }
+
     }
 }

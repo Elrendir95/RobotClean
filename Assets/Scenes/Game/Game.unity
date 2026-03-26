@@ -492,6 +492,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5711902211253112337, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+      propertyPath: projectileLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 6892087631986890909, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
       propertyPath: jumpCooldown.ConstanteValue
       value: 0.06
