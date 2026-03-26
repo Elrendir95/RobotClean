@@ -630,7 +630,7 @@ MonoBehaviour:
   canSwitchLanesInJump: 1
   jumpCooldown:
     UseConstante: 1
-    ConstanteValue: 0.2
+    ConstanteValue: 0
     variable: {fileID: 0}
   jumpDuration: 0.9
   jumpHeight: 1.8
@@ -685,10 +685,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  jumpBuffering: 0.2
   slidingDownDuration:
     UseConstante: 1
     ConstanteValue: 0.9
     variable: {fileID: 0}
+  slidingDownBuffering: 0.2
   currentSpeed:
     UseConstante: 0
     ConstanteValue: 0
@@ -720,20 +722,31 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 512
+  projectileLayer:
+    serializedVersion: 2
+    m_Bits: 0
   distance:
     UseConstante: 0
     ConstanteValue: 0
     variable: {fileID: 11400000, guid: f24ce8835fa06ea4eb9be9e375793c90, type: 2}
-  damageSteps:
+  damageObstacleSteps:
   - 12
   - 16
   - 20
   - 25
   - 30
-  distanceThresholds:
+  distanceObstacleThresholds:
   - 0
   - 500
   - 1000
+  - 2000
+  - 4000
+  damageProjectileSteps:
+  - 10
+  - 15
+  - 20
+  distanceProjectileThresholds:
+  - 0
   - 2000
   - 4000
   invincibilityTime: 1.5

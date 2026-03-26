@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Library.References;
 using Components.EventSystem;
+using Components.InputBuffer;
 using Components.StateMachine;
 using Components.StateMachine.States;
 using UnityEngine;
@@ -19,13 +21,16 @@ namespace Player
         [SerializeField] private float laneTransitionSpeed = 0.12f;
         [SerializeField] private Transform[] lanes;
         [SerializeField] private bool canSwitchLanesInJump = true;
+        [SerializeField] private float translateBuffering = 0.2f;
         [Header("Jump Settings")]
         [SerializeField] private FloatReference jumpCooldown;
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
         [SerializeField] private AnimationCurve jumpCurve;
+        [SerializeField] private float jumpBuffering = 0.2f;
         [Header("Sliding Down Settings")]
         [SerializeField] private FloatReference slidingDownDuration;
+        [SerializeField] private float slidingDownBuffering = 0.2f;
         [Header("Speed")]
         [SerializeField] private FloatReference currentSpeed;
         [SerializeField] private FloatReference startSpeed;
@@ -43,9 +48,12 @@ namespace Player
         private bool _isSwitchingLane;
         private bool _isDead;
 
+        private InputBufferHandler _inputBuffer;
+
         private void Awake()
         {
             _groudY = transform.position.y;
+            _inputBuffer = new InputBufferHandler();
         }
 
         private void OnEnable()
@@ -60,6 +68,14 @@ namespace Player
             Events.OnStateChanged -= OnStateChanged;
         }
 
+        private void Update()
+        {
+            JumpCheck();
+            SlideDownCheck();
+            CheckGoLeft();
+            CheckGoRight();
+        }
+
         private void OnStateChanged(State newState)
         {
             if (newState is not GameState)
@@ -72,6 +88,7 @@ namespace Player
                 {
                     animator.speed = 0;
                 }
+                _inputBuffer.ClearInput();
                 return;
             }
             animator.speed = 1;
@@ -84,8 +101,19 @@ namespace Player
 
         private void SlideDown(InputAction.CallbackContext obj)
         {
-            if (_isJumping || _isDead || _isSlidingDown) return;
+            _inputBuffer.AddInput(ActionType.SlideDown, slidingDownBuffering);
+        }
+
+        private void ExecuteSlideDown()
+        {
+            _inputBuffer.Consume(ActionType.SlideDown);
             StartCoroutine(SlideDownCoroutine());
+        }
+
+        private void SlideDownCheck()
+        {
+            if (_isJumping || !_canJump || _isDead || _isSlidingDown) return;
+            if (_inputBuffer.IsBuffered(ActionType.SlideDown)) ExecuteSlideDown();
         }
 
         private void OnLifeCountChanged(float currentLife)
@@ -103,8 +131,19 @@ namespace Player
         /// <param name="obj"></param>
         private void Jump(InputAction.CallbackContext obj)
         {
-            if (_isJumping || !_canJump || _isDead || _isSlidingDown) return;
+            _inputBuffer.AddInput(ActionType.Jump, jumpBuffering);
+        }
+
+        private void ExecuteJump()
+        {
+            _inputBuffer.Consume(ActionType.Jump);
             StartCoroutine(JumpCoroutine());
+        }
+
+        private void JumpCheck()
+        {
+            if (_isJumping || !_canJump || _isDead || _isSlidingDown) return;
+            if (_inputBuffer.IsBuffered(ActionType.Jump)) ExecuteJump();
         }
 
         /// <summary>
@@ -132,7 +171,7 @@ namespace Player
             transform.position = new Vector3(transform.position.x, _groudY, transform.position.z);
             _isJumping = false;
             animator.SetBool("IsJumping", false);
-            StartCoroutine(JumpCooldownCoroutine());
+            if (jumpCooldown.Value > 0f) StartCoroutine(JumpCooldownCoroutine());
         }
 
         /// <summary>
@@ -157,9 +196,15 @@ namespace Player
         /// <param name="obj"></param>
         private void GoRight(InputAction.CallbackContext obj)
         {
+            _inputBuffer.AddInput(ActionType.Right, translateBuffering);
+        }
+
+        private void CheckGoRight()
+        {
             if (!CanSwitchLanes()) return;
-            if (_currentLane < lanes.Length - 1)
+            if (_currentLane < lanes.Length - 1 && _inputBuffer.IsBuffered(ActionType.Right))
             {
+                _inputBuffer.Consume(ActionType.Right);
                 StartCoroutine(SmoothLaneTransitionCoroutine(_currentLane + 1));
             }
         }
@@ -170,9 +215,15 @@ namespace Player
         /// <param name="obj"></param>
         private void GoLeft(InputAction.CallbackContext obj)
         {
+            _inputBuffer.AddInput(ActionType.Left, translateBuffering);
+        }
+
+        private void CheckGoLeft()
+        {
             if (!CanSwitchLanes()) return;
-            if (_currentLane > 0)
+            if (_currentLane > 0 && _inputBuffer.IsBuffered(ActionType.Left))
             {
+                _inputBuffer.Consume(ActionType.Left);
                 StartCoroutine(SmoothLaneTransitionCoroutine(_currentLane - 1));
             }
         }
