@@ -627,21 +627,16 @@ MonoBehaviour:
     bufferingTime: 0.2
   - type: 2
     inputActionReference: {fileID: -664118193429012108, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-    bufferingTime: 0.2
+    bufferingTime: 0.1
   - type: 3
     inputActionReference: {fileID: -7057999871340456199, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-    bufferingTime: 0.2
-  left: {fileID: -664118193429012108, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  right: {fileID: -7057999871340456199, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  jump: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  slideDown: {fileID: 8720778075690839944, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    bufferingTime: 0.1
   laneTransitionSpeed: 0.12
   lanes:
   - {fileID: 4668381177385421408}
   - {fileID: 4572919061800724140}
   - {fileID: 3306312555073743126}
   canSwitchLanesInJump: 1
-  translateBuffering: 0.2
   jumpCooldown:
     UseConstante: 1
     ConstanteValue: 0
@@ -699,12 +694,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  jumpBuffering: 0.2
   slidingDownDuration:
     UseConstante: 1
     ConstanteValue: 0.9
     variable: {fileID: 0}
-  slidingDownBuffering: 0.2
   currentSpeed:
     UseConstante: 0
     ConstanteValue: 0
