@@ -435,6 +435,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3817631769848583933, guid: 0e82dcfd8fc2cb941842c35d0250979e, type: 3}
+      propertyPath: increaseSpeedTime.ConstanteValue
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817631769848583933, guid: 0e82dcfd8fc2cb941842c35d0250979e, type: 3}
+      propertyPath: increaseSpeedAmount.ConstanteValue
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 6627126866331899703, guid: 0e82dcfd8fc2cb941842c35d0250979e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 350.34482
@@ -495,6 +503,10 @@ PrefabInstance:
     - target: {fileID: 5711902211253112337, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
       propertyPath: projectileLayer.m_Bits
       value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892087631986890909, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
+      propertyPath: jumpDuration
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 6892087631986890909, guid: 813f07da5e664efc193210c2b81c0297, type: 3}
       propertyPath: jumpCooldown.ConstanteValue
@@ -807,6 +819,10 @@ PrefabInstance:
     - target: {fileID: 2260349971587873276, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7009300096219453682, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
+      propertyPath: collectableDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8830411965791070222, guid: 29877a4415679d240bff1e9b5e3d7218, type: 3}
       propertyPath: m_Name

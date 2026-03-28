@@ -48,8 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Components.Enemy.EnemyController
   projectilePrefab: {fileID: 5323483638493221943, guid: d2771474231af784790d13e25a12521c, type: 3}
   spawnProjectilePosition: {fileID: 3837691672242769681}
-  projectileDelay: 1
+  projectileDelay: 1.5
   attackRange: 75
+  playerSafeZone: 5
   animator: {fileID: 1150843640319762636}
 --- !u!1 &5073723438011549612
 GameObject:
