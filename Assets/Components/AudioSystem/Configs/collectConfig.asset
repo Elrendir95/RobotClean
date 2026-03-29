@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a70526a16646a6852fa67d7a6ede16, type: 3}
   m_Name: collectConfig
   m_EditorClassIdentifier: Assembly-CSharp::Components.AudioSystem.AudioConfigSO
-  output: {fileID: 0}
+  output: {fileID: -4614051054392216977, guid: 9337d12661ff3f34e93321986bf11d6b, type: 2}
   loop: 0
   priority: 128
   volume: 0.6

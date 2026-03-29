@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e2660d7bab4a43b93b21e111dfc40b, type: 3}
   m_Name: runSFX
   m_EditorClassIdentifier: Assembly-CSharp::Components.AudioSystem.AudioSO
-  clip: {fileID: 8300000, guid: 59775b8036e63ab45923f61ccad46c7f, type: 3}
+  clip: {fileID: 8300000, guid: 74bea6ca40376df4fbaabf26e2ff50b1, type: 3}
   config: {fileID: 11400000, guid: 18199039935fe53469c4e933e3b50316, type: 2}
