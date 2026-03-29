@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c38ca8f4bd4236a17a1fed95ec3893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrashCollectable
+  collectSound: {fileID: 11400000, guid: 34d296b4c9426b84186d12415ab00b60, type: 2}
   lifeBonus: 1.5
 --- !u!1001 &1583837145060695172
 PrefabInstance:

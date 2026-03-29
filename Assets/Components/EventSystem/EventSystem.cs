@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEngine;
+using Components.AudioSystem;
 using Components.StateMachine;
 
 namespace Components.EventSystem
@@ -12,5 +14,8 @@ namespace Components.EventSystem
         public static Action<State> OnStateChanged;
         public static Action OnResumeGame;
         public static Action<ChunkController> OnChunkSpawned;
+        // Audio Events
+        public static Action<AudioSO> PlayAudio;
+        public static Action<AudioSO, Vector3> PlayAudioAt;
     }
 }

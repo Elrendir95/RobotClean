@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Components.AudioSystem;
 using Library.References;
 using Components.EventSystem;
 using Components.InputBuffer;
@@ -24,6 +25,7 @@ namespace Player
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
         [SerializeField] private AnimationCurve jumpCurve;
+        [SerializeField] private AudioSO jumpSound;
         [Header("Sliding Down Settings")]
         [SerializeField] private FloatReference slidingDownDuration;
         [Header("Speed")]
@@ -138,7 +140,7 @@ namespace Player
             _canJump = false;
             _isJumping = true;
             animator.SetBool("IsJumping", true);
-
+            Events.PlayAudio?.Invoke(jumpSound);
             while (jumpingTime < duration)
             {
                 // Mutiply by animator speed to pause the jump during pause

@@ -506,6 +506,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHitFeedback
   feedbackDelay: 0.21
   invincibleMaterial: {fileID: 2100000, guid: 2fde668c74776d44b9f2502d78f22740, type: 2}
+  hitSound: {fileID: 0}
+  invincibilityEndSound: {fileID: 0}
 --- !u!1 &2626500618946224074 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6582433627947093673, guid: 34c239b5a1bdebe49b06411fb8d51051, type: 3}
@@ -525,6 +527,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHitFeedback
   feedbackDelay: 0.21
   invincibleMaterial: {fileID: 2100000, guid: 2fde668c74776d44b9f2502d78f22740, type: 2}
+  hitSound: {fileID: 0}
+  invincibilityEndSound: {fileID: 0}
 --- !u!1 &5464656816398825503 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5405189764135310980, guid: 34c239b5a1bdebe49b06411fb8d51051, type: 3}
@@ -544,6 +548,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHitFeedback
   feedbackDelay: 0.21
   invincibleMaterial: {fileID: 2100000, guid: 2fde668c74776d44b9f2502d78f22740, type: 2}
+  hitSound: {fileID: 0}
+  invincibilityEndSound: {fileID: 0}
 --- !u!1 &6066235004816987113 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6123439192357387638, guid: 34c239b5a1bdebe49b06411fb8d51051, type: 3}
@@ -563,6 +569,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHitFeedback
   feedbackDelay: 0.21
   invincibleMaterial: {fileID: 2100000, guid: 2fde668c74776d44b9f2502d78f22740, type: 2}
+  hitSound: {fileID: 11400000, guid: 40cbbd19179225b49ab10364af484bac, type: 2}
+  invincibilityEndSound: {fileID: 11400000, guid: 3c8e58911ec398f4bbb3f06288388e75, type: 2}
 --- !u!1 &8089610300017636591 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8111364103985355380, guid: 34c239b5a1bdebe49b06411fb8d51051, type: 3}
@@ -582,6 +590,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHitFeedback
   feedbackDelay: 0.21
   invincibleMaterial: {fileID: 2100000, guid: 2fde668c74776d44b9f2502d78f22740, type: 2}
+  hitSound: {fileID: 0}
+  invincibilityEndSound: {fileID: 0}
 --- !u!1 &8239504116945438227 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8254484928212002960, guid: 34c239b5a1bdebe49b06411fb8d51051, type: 3}
@@ -601,6 +611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHitFeedback
   feedbackDelay: 0.21
   invincibleMaterial: {fileID: 2100000, guid: 2fde668c74776d44b9f2502d78f22740, type: 2}
+  hitSound: {fileID: 0}
+  invincibilityEndSound: {fileID: 0}
 --- !u!1 &8353013158590311474 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 34c239b5a1bdebe49b06411fb8d51051, type: 3}
@@ -694,6 +706,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  jumpSound: {fileID: 11400000, guid: 560c5215c69a42a4883e9b36a03e939a, type: 2}
   slidingDownDuration:
     UseConstante: 1
     ConstanteValue: 0.9

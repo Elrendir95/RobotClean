@@ -7,6 +7,6 @@ public class TrashCollectable : Collectable
     public override void OnCollect(GameObject collector)
     {
         Events.UpdateLife?.Invoke(lifeBonus);
-        Destroy(gameObject);
+        base.OnCollect(collector);
     }
 }
