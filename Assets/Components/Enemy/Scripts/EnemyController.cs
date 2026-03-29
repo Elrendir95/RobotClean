@@ -1,5 +1,6 @@
 using Components.StateMachine;
 using Components.StateMachine.States;
+using TreeEditor;
 using UnityEngine;
 
 namespace Components.Enemy
@@ -13,11 +14,11 @@ namespace Components.Enemy
         [SerializeField] private float playerSafeZone = 5f;
         [SerializeField] private Animator animator;
 
-        private int _currentDamageIndex;
-
         private Transform _player;
         private bool _isActive;
         private float _timer;
+
+        private static readonly int Throw = Animator.StringToHash("Throw");
 
         private void Start()
         {
@@ -33,6 +34,7 @@ namespace Components.Enemy
 
         private void ThrowProjectile()
         {
+            animator.SetTrigger(Throw);
             ProjectileController projectile = Instantiate(projectilePrefab, spawnProjectilePosition.position, Quaternion.identity);
             projectile.SetTarget(_player.position);
             projectile.transform.SetParent(null, true);
@@ -40,8 +42,10 @@ namespace Components.Enemy
 
         private void Update()
         {
-            if (!_isActive) return;
+            transform.LookAt(_player.position);
             if (transform.position.z <= _player.position.z + playerSafeZone) _isActive = false;
+            if (!_isActive) return;
+
             if (Vector3.Distance(transform.position, _player.position) > attackRange) return;
 
             _timer += Time.deltaTime;
