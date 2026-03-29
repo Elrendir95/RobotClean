@@ -49,21 +49,11 @@ namespace Components.Enemy
 
         private void OnChunkSpawned(ChunkController chunk)
         {
-            Debug.Log("OnChunkSpawned: Distance reached");
             if (chunk.TryGetComponent<EnemyChunkController>(out var component))
             {
-                Debug.Log("OnChunkSpawned: " + chunk);
-                Debug.Log("CurrentDistance: " + currentDistance.Value);
-                Debug.Log("DistancesIntervals: " + distancesIntervals[_distanceSpawnIndex]);
-                Debug.Log("CurrentDistance + Chunk.Z: " + (currentDistance.Value + chunk.transform.position.z));
                 if (!IsSpawnDistanceReached(chunk.transform.position.z)) return;
-                Debug.Log("OnChunkSpawned: Has Enemies");
                 SpawnEnemyOnChunk(component);
                 _currentDistance = 0;
-            }
-            else
-            {
-                Debug.Log("OnChunkSpawned: No Enemies");
             }
         }
 
