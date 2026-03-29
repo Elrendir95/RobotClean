@@ -44,7 +44,7 @@ namespace Player
         private int _currentObstacleDamageIndex;
         private float _obstacleDamage => damageObstacleSteps[_currentObstacleDamageIndex];
         private int _currentProjectileDamageIndex;
-        private float _projectileDamage => damageProjectileSteps[_currentObstacleDamageIndex];
+        private float _projectileDamage => damageProjectileSteps[_currentProjectileDamageIndex];
 
         private Vector3 PlayerSpherePosition => transform.position + (_isSliding ? slidingCenter : sphereCenter);
 
