@@ -15,7 +15,7 @@ MonoBehaviour:
   output: {fileID: 423322147987096367, guid: 9337d12661ff3f34e93321986bf11d6b, type: 2}
   loop: 1
   priority: 128
-  volume: 0.5
+  volume: 0.15
   pitch: 1
   randomizePitch: 0
   pitchRange: 0
