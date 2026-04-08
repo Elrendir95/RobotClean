@@ -16,6 +16,11 @@ namespace Components.AudioSystem
 
         private void Awake()
         {
+            for (int i = 0; i < minAudioSources; i++)
+            {
+                _disabledAudioSource.Add(NewAudioSource());
+            }
+
             Events.PlayAudio += PlayAudio;
             Events.PlayAudioAt += PlayAudioAt;
         }
@@ -24,14 +29,6 @@ namespace Components.AudioSystem
         {
             Events.PlayAudio -= PlayAudio;
             Events.PlayAudioAt -= PlayAudioAt;
-        }
-
-        private void Start()
-        {
-            for (int i = 0; i < minAudioSources; i++)
-            {
-                _disabledAudioSource.Add(NewAudioSource());
-            }
         }
 
         private AudioSource NewAudioSource(bool active = false)
@@ -66,7 +63,7 @@ namespace Components.AudioSystem
                 return audioSource;
             }
 
-            audioSource = NewAudioSource();
+            audioSource = NewAudioSource(true);
             if (audioSource != null)
             {
                 _activeAudioSource.Add(audioSource);
@@ -95,6 +92,7 @@ namespace Components.AudioSystem
             sfx.config.ApplyToSource(audioSource);
             audioSource.clip = sfx.clip;
             audioSource.Play();
+            Debug.Log($"Playing {sfx.name} on audio source {audioSource.gameObject.name}");
             StartCoroutine(DisableAudioSourceCoroutine(audioSource));
         }
 
