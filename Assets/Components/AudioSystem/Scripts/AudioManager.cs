@@ -99,7 +99,6 @@ namespace Components.AudioSystem
             }
             audioSource.clip = sfx.clip;
             audioSource.Play();
-            Debug.Log($"Playing {sfx.name} on audio source {audioSource.gameObject.name}");
             StartCoroutine(DisableAudioSourceCoroutine(audioSource));
         }
 
