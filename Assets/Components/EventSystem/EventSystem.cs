@@ -17,5 +17,6 @@ namespace Components.EventSystem
         // Audio Events
         public static Action<AudioSO> PlayAudio;
         public static Action<AudioSO, Vector3> PlayAudioAt;
+        public static Action StopAllLoops;
     }
 }

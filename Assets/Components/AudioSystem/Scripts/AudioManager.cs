@@ -13,6 +13,7 @@ namespace Components.AudioSystem
         private int _audioSourcesCount;
         private readonly List<AudioSource> _activeAudioSource = new();
         private readonly List<AudioSource> _disabledAudioSource = new();
+        private readonly List<AudioSource> _loopingAudioSource = new();
 
         private void Awake()
         {
@@ -23,12 +24,14 @@ namespace Components.AudioSystem
 
             Events.PlayAudio += PlayAudio;
             Events.PlayAudioAt += PlayAudioAt;
+            Events.StopAllLoops += StopAllLoops;
         }
 
         private void OnDestroy()
         {
             Events.PlayAudio -= PlayAudio;
             Events.PlayAudioAt -= PlayAudioAt;
+            Events.StopAllLoops -= StopAllLoops;
         }
 
         private AudioSource NewAudioSource(bool active = false)
@@ -90,6 +93,10 @@ namespace Components.AudioSystem
         private void Play(AudioSO sfx, AudioSource audioSource, float duration = -1f)
         {
             sfx.config.ApplyToSource(audioSource);
+            if (sfx.config.loop)
+            {
+                _loopingAudioSource.Add(audioSource);
+            }
             audioSource.clip = sfx.clip;
             audioSource.Play();
             Debug.Log($"Playing {sfx.name} on audio source {audioSource.gameObject.name}");
@@ -131,6 +138,15 @@ namespace Components.AudioSystem
             {
                 audioSource.transform.position = location;
                 Play(sfx, audioSource, duration);
+            }
+        }
+
+        private void StopAllLoops()
+        {
+            for (int i = _loopingAudioSource.Count - 1; i >= 0; i--)
+            {
+                _loopingAudioSource[i].Stop();
+                _loopingAudioSource.RemoveAt(i);
             }
         }
     }

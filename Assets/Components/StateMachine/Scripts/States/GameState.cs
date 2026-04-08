@@ -1,4 +1,5 @@
-﻿using Components.EventSystem;
+﻿using Components.AudioSystem;
+using Components.EventSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,7 @@ namespace Components.StateMachine.States
         public override void Enter()
         {
             Events.OnLifeCountChanged += OnLifeCountChanged;
+            Events.PlayAudio?.Invoke(ScriptableObjectDatabase.Get<AudioSO>("GameMusicLoop"));
         }
 
         private void OnLifeCountChanged(float lifeCount)
@@ -35,6 +37,7 @@ namespace Components.StateMachine.States
         public override void Exit()
         {
             Events.OnLifeCountChanged -= OnLifeCountChanged;
+            Events.StopAllLoops?.Invoke();
         }
     }
 }
