@@ -1833,6 +1833,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1985517931}
   - component: {fileID: 1985517932}
+  - component: {fileID: 1985517933}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -1877,6 +1878,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Components.MainMenu.UIMainMenuController
   highScoreWindow: {fileID: 2023368733}
   highScoreText: {fileID: 94295007}
+--- !u!114 &1985517933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985517930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba05563879b2430ea606e9ca8f8cea92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.MainMenu.AudioMainMenuController
+  clickSound: {fileID: 11400000, guid: bbc5c615d8fb14a4d88b68330f3fa9d7, type: 2}
+  musicLoop: {fileID: 11400000, guid: f0e93b2f385ee1845a47b8e756905130, type: 2}
 --- !u!1 &2023368733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,6 +1976,10 @@ PrefabInstance:
     - target: {fileID: 6307759259204974417, guid: e5a212eb89b14ea4cb4ba68fbac5565b, type: 3}
       propertyPath: m_Name
       value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7146618026415795568, guid: e5a212eb89b14ea4cb4ba68fbac5565b, type: 3}
+      propertyPath: minAudioSources
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7971529073018245388, guid: e5a212eb89b14ea4cb4ba68fbac5565b, type: 3}
       propertyPath: m_LocalPosition.x
