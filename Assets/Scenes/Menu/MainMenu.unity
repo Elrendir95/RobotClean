@@ -202,6 +202,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1985517933}
+        m_TargetAssemblyTypeName: Components.MainMenu.AudioMainMenuController, Assembly-CSharp
+        m_MethodName: PlayClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1985517932}
         m_TargetAssemblyTypeName: Components.MainMenu.UIMainMenuController, Assembly-CSharp
         m_MethodName: NewGame
@@ -927,6 +939,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1985517933}
+        m_TargetAssemblyTypeName: Components.MainMenu.AudioMainMenuController, Assembly-CSharp
+        m_MethodName: PlayClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1985517932}
         m_TargetAssemblyTypeName: Components.MainMenu.UIMainMenuController, Assembly-CSharp
         m_MethodName: QuitGame
@@ -1979,7 +2003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7146618026415795568, guid: e5a212eb89b14ea4cb4ba68fbac5565b, type: 3}
       propertyPath: minAudioSources
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7971529073018245388, guid: e5a212eb89b14ea4cb4ba68fbac5565b, type: 3}
       propertyPath: m_LocalPosition.x
