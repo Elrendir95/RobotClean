@@ -34,7 +34,6 @@ namespace Components.StateMachine.States
             if (Timer > 0f)
             {
                 var newIntTimer = Mathf.FloorToInt(Timer);
-                Debug.Log($"CountDown {Timer} : {_intTimer} != {newIntTimer}");
                 if (_intTimer != newIntTimer)
                 {
                     PlayTickSFX();
