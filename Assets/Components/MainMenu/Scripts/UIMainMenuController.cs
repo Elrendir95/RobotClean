@@ -1,4 +1,6 @@
-﻿using Components.SaveSystem;
+﻿using System;
+using System.Collections;
+using Components.SaveSystem;
 using Components.SceneLoader;
 using TMPro;
 using UnityEngine;
@@ -9,6 +11,7 @@ namespace Components.MainMenu
     {
         [SerializeField] private GameObject highScoreWindow;
         [SerializeField] private TMP_Text highScoreText;
+        [SerializeField] private float execDelay = 0.4f;
 
         private SaveData _saveData;
 
@@ -19,14 +22,21 @@ namespace Components.MainMenu
             highScoreWindow.SetActive(_saveData.highScore > 0);
         }
 
+        IEnumerator ExecuteDelayCoroutine(Action action)
+        {
+            yield return new WaitForSeconds(execDelay);
+            action();
+        }
+
         public void NewGame()
         {
-            SceneLoaderService.LoadGame();
+            StartCoroutine(ExecuteDelayCoroutine(SceneLoaderService.LoadGame));
+
         }
 
         public void QuitGame()
         {
-            SceneLoaderService.QuitGame();
+            StartCoroutine(ExecuteDelayCoroutine(SceneLoaderService.QuitGame));
         }
     }
 }
