@@ -19,8 +19,10 @@ public class PlayerHitFeedback : MonoBehaviour
     {
         _playHitSound = hitSound != null;
         _playInvincibilityEndSound = invincibilityEndSound != null;
+
         _meshRenderer = GetComponent<Renderer>();
         _baseMaterial = _meshRenderer.sharedMaterial;
+
         Events.OnPlayerInvincible += HandleOnPlayerInvincible;
     }
 
@@ -29,24 +31,39 @@ public class PlayerHitFeedback : MonoBehaviour
         Events.OnPlayerInvincible -= HandleOnPlayerInvincible;
     }
 
+    /// <summary>
+    /// Handle OnPlayerInvincible Events, This is triggered
+    /// when the player become invincible after a hit
+    /// </summary>
+    /// <param name="isInvincible"></param>
     private void HandleOnPlayerInvincible(bool isInvincible)
     {
+        // Stop all Coroutines to avoid multiple coroutine at the same time
         StopAllCoroutines();
-        if (isInvincible)
+
+        if (isInvincible) // is now invincible, so just got hit
         {
+            // Play HitSound if one is set
             if (_playHitSound) Events.PlayAudio?.Invoke(hitSound);
             _isInvincible = true;
+            // Start the blinking effect
             StartCoroutine(HitFeedbackCoroutine());
         }
-        else if (_isInvincible)
+        else if (_isInvincible) // just get out of invincible state
         {
             _isInvincible = false;
+            // restore base material
             _meshRenderer.sharedMaterial = _baseMaterial;
+            // play invincibility end sound if is set
             if (_playInvincibilityEndSound) Events.PlayAudio?.Invoke(invincibilityEndSound);
         }
     }
 
-    IEnumerator HitFeedbackCoroutine()
+    /// <summary>
+    /// Coroutine that update the material of the player to make it blinking
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator HitFeedbackCoroutine()
     {
         var waitDelay = new WaitForSeconds(feedbackDelay);
         while (true)

@@ -1,23 +1,33 @@
-using System;
 using Components.AudioSystem;
 using Components.EventSystem;
 using UnityEngine;
 
-public abstract class Collectable : MonoBehaviour
+namespace Components.Collectible
 {
-    [SerializeField] private AudioSO collectSound;
-
-    private void Start()
+    /// <summary>
+    /// Parent Class for all Object that are collectable
+    /// </summary>
+    public abstract class Collectable : MonoBehaviour
     {
-        if (gameObject.layer != LayerMask.NameToLayer("Collectable"))
+        [SerializeField] private AudioSO collectSound;
+
+        private void Start()
         {
-            Debug.LogError($"{gameObject.name} collectable not affected on the correct layer");
+            if (gameObject.layer != LayerMask.NameToLayer("Collectable"))
+            {
+                // Log and error if the Collectable is on the expected Layer
+                Debug.LogError($"{gameObject.name} collectable not affected on the correct layer");
+            }
         }
-    }
 
-    public virtual void OnCollect(GameObject collector)
-    {
-        Events.PlayAudio?.Invoke(collectSound);
-        Destroy(gameObject);
+        /// <summary>
+        /// Executed when collected by the "collector"
+        /// </summary>
+        /// <param name="collector">the GameObject that have collected the Collectable</param>
+        public virtual void OnCollect(GameObject collector)
+        {
+            Events.PlayAudio?.Invoke(collectSound);
+            Destroy(gameObject);
+        }
     }
 }

@@ -15,26 +15,28 @@ namespace Components.AudioSystem
 
 #if UNITY_EDITOR
         private AudioSource _previewSource;
+        // Methode used from the Inspector to Test the sound configuration
+
         public void TestSound()
         {
             if (clip == null || config == null) return;
             StopTest();
 
+            // Create a temporary GameObject
             GameObject go = new GameObject("AudioPreview_TEMP");
-
+            // Add an AudioSource
             _previewSource = go.AddComponent<AudioSource>();
-
+            // Update it
             UpdatePreview();
-
+            // Play the Sound
             _previewSource.Play();
         }
 
         public void StopTest()
         {
-            GameObject oldPreview = GameObject.Find("AudioPreview_TEMP");
-            if (oldPreview != null)
+            if (_previewSource != null)
             {
-                DestroyImmediate(oldPreview);
+                DestroyImmediate(_previewSource.gameObject);
             }
         }
 
@@ -44,6 +46,7 @@ namespace Components.AudioSystem
             {
                 config.ApplyToSource(_previewSource);
                 _previewSource.clip = clip;
+                // Force the Spatial Blend to 0 in preview to be sure we can hear it
                 _previewSource.spatialBlend = 0;
                 _previewSource.loop = true;
             }

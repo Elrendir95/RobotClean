@@ -1,6 +1,6 @@
-﻿using System;
-using Components.EventSystem;
+﻿using Components.EventSystem;
 using System.Collections;
+using Components.Collectible;
 using Components.StateMachine;
 using Components.StateMachine.States;
 using Library.References;

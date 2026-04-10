@@ -22,6 +22,8 @@ namespace Components.SceneLoader
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBGL
+            UnityEngine.Application.OpenURL("about:blank");
 #else
             UnityEngine.Application.Quit();
 #endif

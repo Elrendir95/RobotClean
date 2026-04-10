@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Components.Collectible;
 using Components.EventSystem;
 using Components.StateMachine;
 using Components.StateMachine.States;

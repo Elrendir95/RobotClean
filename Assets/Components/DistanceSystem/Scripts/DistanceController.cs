@@ -11,10 +11,12 @@ namespace Components
 
         private void Start()
         {
+            // initialize the references, in case of previous ru
             runDistance.Value = 0;
         }
         private void FixedUpdate()
         {
+            // At each fixed update increment the distance
             runDistance.Value += runtimeSpeed.Value * Time.fixedDeltaTime;
         }
     }

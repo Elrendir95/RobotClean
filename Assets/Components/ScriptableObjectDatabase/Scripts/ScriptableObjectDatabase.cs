@@ -41,7 +41,7 @@ namespace Components
         }
 
         /// <summary>
-        ///
+        /// Return a Scriptable Object from the database by its name and type
         /// </summary>
         /// <param name="name"></param>
         /// <typeparam name="T"></typeparam>

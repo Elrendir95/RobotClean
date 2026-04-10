@@ -47,10 +47,16 @@ namespace Components.Enemy
             _lastDistanceUpdate = distance;
         }
 
+        /// <summary>
+        /// Handle OnChunkSoawned
+        /// </summary>
+        /// <param name="chunk"></param>
         private void OnChunkSpawned(ChunkController chunk)
         {
+            // Check if the Chunk has a EnemyChunkController
             if (chunk.TryGetComponent<EnemyChunkController>(out var component))
             {
+                // If the distances is reached Spawn a enemy
                 if (!IsSpawnDistanceReached(chunk.transform.position.z)) return;
                 SpawnEnemyOnChunk(component);
                 _currentDistance = 0;
@@ -59,8 +65,10 @@ namespace Components.Enemy
 
         private void SpawnEnemyOnChunk(EnemyChunkController chunk)
         {
+            // Get a random spawn point
             Transform spawnPoint = chunk.EnemySpawnPoints[Random.Range(0, chunk.EnemySpawnPoints.Length)];
-
+            // Instantiate the enemy with the spawnPoint has parent,
+            // in order to have the enemy moving with the Chunk
             Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPoint);
         }
     }

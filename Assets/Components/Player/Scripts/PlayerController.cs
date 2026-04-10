@@ -10,41 +10,57 @@ using Components.StateMachine.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace Components.Player
 {
     public class PlayerController : MonoBehaviour
     {
         [Header("Inputs")]
         [SerializeField] private List<InputMapping> inputMappings;
+
         [Header("Lane Switch Settings")]
         [SerializeField] private float laneTransitionSpeed = 0.12f;
         [SerializeField] private Transform[] lanes;
         [SerializeField] private bool canSwitchLanesInJump = true;
+
         [Header("Jump Settings")]
         [SerializeField] private FloatReference jumpCooldown;
         [SerializeField] private float jumpDuration = 0.9f;
         [SerializeField][Tooltip("Height in meters")] private float jumpHeight = 1.8f;
         [SerializeField] private AnimationCurve jumpCurve;
         [SerializeField] private AudioSO jumpSound;
+
         [Header("Sliding Down Settings")]
         [SerializeField] private FloatReference slidingDownDuration;
+
         [Header("Speed")]
         [SerializeField] private FloatReference currentSpeed;
         [SerializeField] private FloatReference startSpeed;
+
         [Header("Components")]
         [SerializeField] private Animator animator;
+
+        // Cache of animations Index
+        private static readonly int IsDead = Animator.StringToHash("IsDead");
+        private static readonly int IsRunning = Animator.StringToHash("IsRunning");
+        private static readonly int IsJumping = Animator.StringToHash("IsJumping");
+        private static readonly int IsSlidingDown = Animator.StringToHash("IsSlidingDown");
 
         // Jumping States
         private bool _isJumping;
         private bool _canJump = true;
         private float _groudY; // Saved ground positions
 
+        // SlidingDown States
         private bool _isSlidingDown;
 
+        // Lanes States
         private int _currentLane = 1;
         private bool _isSwitchingLane;
+
+        // Dead flag
         private bool _isDead;
 
+        // Inputs
         private readonly InputBufferHandler _inputBuffer= new();
         private readonly Dictionary<Guid, InputMapping> _inputMappings = new();
 
@@ -69,8 +85,14 @@ namespace Player
         {
             if (_isDead) return;
             // Handle translations
-            ProcessBufferedInput(ActionType.Left, () => CanSwitchLanes() && _currentLane > 0, () => SmoothLaneTransitionCoroutine(_currentLane - 1));
-            ProcessBufferedInput(ActionType.Right, () => CanSwitchLanes() && _currentLane < lanes.Length - 1, () => SmoothLaneTransitionCoroutine(_currentLane + 1));
+            ProcessBufferedInput(ActionType.Left,
+                () => CanSwitchLanes() && _currentLane > 0,
+                        // Use of () => to only allocate the IEnumerator when needed
+            () => SmoothLaneTransitionCoroutine(_currentLane - 1));
+            ProcessBufferedInput(ActionType.Right,
+                () => CanSwitchLanes() && _currentLane < lanes.Length - 1,
+                        // Use of () => to only allocate the IEnumerator when needed
+                () => SmoothLaneTransitionCoroutine(_currentLane + 1));
 
             // Handle Jumps
             ProcessBufferedInput(ActionType.Jump, () => !_isJumping && _canJump && !_isSlidingDown, JumpCoroutine);
@@ -78,14 +100,26 @@ namespace Player
             ProcessBufferedInput(ActionType.SlideDown, () => !_isJumping && !_isSlidingDown, SlideDownCoroutine);
         }
 
+        /// <summary>
+        /// Handling all Inputs using InputBuffering
+        /// </summary>
+        /// <param name="obj"></param>
         private void HandleBufferedInput(InputAction.CallbackContext obj)
         {
+            // Try to get the Input informations using the Guid of the InputAction
             if (_inputMappings.TryGetValue(obj.action.id, out InputMapping input))
             {
+                // Add the Inputs in the buffer for the configured time
                 _inputBuffer.AddInput(input.type, input.bufferingTime);
             }
         }
 
+        /// <summary>
+        /// Generic method to process bufferd inputs
+        /// </summary>
+        /// <param name="type">The action type</param>
+        /// <param name="condition">Function that test if the all condition are meets</param>
+        /// <param name="actionCoroutine">The coroutine that will execute the Action</param>
         private void ProcessBufferedInput(ActionType type, Func<bool> condition, Func<IEnumerator> actionCoroutine)
         {
             if (_inputBuffer.IsBuffered(type) && condition())
@@ -95,6 +129,11 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// Handle OnStateChanged Events,
+        /// Enable or Disable inputs depending of the GameState and Start Running animations
+        /// </summary>
+        /// <param name="newState"></param>
         private void OnStateChanged(State newState)
         {
             bool isGameState = newState is GameState;
@@ -104,13 +143,17 @@ namespace Player
             {
                 if (isGameState)
                 {
-                    input.inputActionReference.action.performed += HandleBufferedInput;
+                    // Set the inputMapping dictionary to find the Input information when it will be triggered
+                    // using the id (Guid) of the InputAction
                     _inputMappings[input.inputActionReference.action.id] = input;
+                    // All inputs will trigger the generic methode HandleBufferedInput
+                    input.inputActionReference.action.performed += HandleBufferedInput;
                 }
+                // Need to unsubscribe when not in gameState
                 else  input.inputActionReference.action.performed -= HandleBufferedInput;
             }
 
-            if (isGameState) animator.SetTrigger("IsRunning");
+            if (isGameState) animator.SetTrigger(IsRunning);
             else
             {
                 _inputBuffer.ClearInput();
@@ -118,11 +161,15 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// Handle Life changes, trigger death when reaching 0
+        /// </summary>
+        /// <param name="currentLife"></param>
         private void OnLifeCountChanged(float currentLife)
         {
             if (currentLife <= 0 && !_isDead)
             {
-                animator.SetTrigger("IsDead");
+                animator.SetTrigger(IsDead);
                 _isDead = true;
             }
         }
@@ -139,7 +186,7 @@ namespace Player
 
             _canJump = false;
             _isJumping = true;
-            animator.SetBool("IsJumping", true);
+            animator.SetBool(IsJumping, true);
             Events.PlayAudio?.Invoke(jumpSound);
             while (jumpingTime < duration)
             {
@@ -151,7 +198,7 @@ namespace Player
             }
             transform.position = new Vector3(transform.position.x, _groudY, transform.position.z);
             _isJumping = false;
-            animator.SetBool("IsJumping", false);
+            animator.SetBool(IsJumping, false);
             if (jumpCooldown.Value > 0f) StartCoroutine(JumpCooldownCoroutine());
             else _canJump = true;
         }
@@ -194,10 +241,11 @@ namespace Player
             _isSwitchingLane = false;
         }
 
+
         private IEnumerator SlideDownCoroutine()
         {
             _isSlidingDown = true;
-            animator.SetBool("IsSlidingDown", true);
+            animator.SetBool(IsSlidingDown, true);
             Events.OnPlayerSlidingDown?.Invoke(true);
 
             var slideTimer = 0f;
@@ -210,7 +258,7 @@ namespace Player
             }
 
             _isSlidingDown = false;
-            animator.SetBool("IsSlidingDown", false);
+            animator.SetBool(IsSlidingDown, false);
             Events.OnPlayerSlidingDown?.Invoke(false);
         }
 

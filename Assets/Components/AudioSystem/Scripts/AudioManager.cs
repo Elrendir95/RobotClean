@@ -66,6 +66,7 @@ namespace Components.AudioSystem
                 return audioSource;
             }
 
+            // No AudioSource available create a new AudioSource
             audioSource = NewAudioSource(true);
             if (audioSource != null)
             {
@@ -78,7 +79,8 @@ namespace Components.AudioSystem
         {
             if (duration <= 0f)
             {
-                yield return new WaitWhile(() => audioSource.isPlaying);
+                // Wait until AudioSource reached the End of the Audio clip
+                yield return new WaitUntil(() => audioSource.time >= audioSource.clip.length);
             }
             else
             {
@@ -90,6 +92,12 @@ namespace Components.AudioSystem
             _disabledAudioSource.Add(audioSource);
         }
 
+        /// <summary>
+        /// Play the AudioSO on the given audioSource
+        /// </summary>
+        /// <param name="sfx"></param>
+        /// <param name="audioSource"></param>
+        /// <param name="duration"></param>
         private void Play(AudioSO sfx, AudioSource audioSource, float duration = -1f)
         {
             sfx.config.ApplyToSource(audioSource);
@@ -137,6 +145,22 @@ namespace Components.AudioSystem
             {
                 audioSource.transform.position = location;
                 Play(sfx, audioSource, duration);
+            }
+        }
+
+        private void PauseAllLoops()
+        {
+            foreach (var audioSource in _loopingAudioSource)
+            {
+                audioSource.Pause();
+            }
+        }
+
+        private void ResumeAllLoops()
+        {
+            foreach (var audioSource in _loopingAudioSource)
+            {
+                audioSource.UnPause();
             }
         }
 

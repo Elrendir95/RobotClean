@@ -15,23 +15,30 @@ public class AudioSOEditor : Editor
 
         if (audio.config != null)
         {
+            // Displauy AudioSO.config when Set
             GUILayout.Label("Audio Settings", EditorStyles.boldLabel);
 
-            Editor.CreateCachedEditor(audio.config, null, ref _cachedConfigEditor);
+            // Create Editor for the audio.config
+            CreateCachedEditor(audio.config, null, ref _cachedConfigEditor);
 
             EditorGUI.BeginChangeCheck();
 
+            // Add the audio.config Editor on the Inspector
             _cachedConfigEditor.OnInspectorGUI();
 
             if (EditorGUI.EndChangeCheck())
             {
+                // If changes are detected update the AudioSO preview
                 audio.UpdatePreview();
             }
         }
         else
         {
+            // Add a text to remind to select au AudioConfigSO
             EditorGUILayout.HelpBox("Select an AudioConfigSO.", MessageType.Info);
         }
+
+        // Display the buttons
         DrawDebugActions(audio);
     }
 

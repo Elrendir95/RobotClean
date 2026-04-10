@@ -9,8 +9,10 @@ namespace Components.EventSystem
     {
         public static Action<float> OnLifeCountChanged;
         public static Action<float> UpdateLife;
+        // Player
         public static Action<bool> OnPlayerInvincible;
         public static Action<bool> OnPlayerSlidingDown;
+        // Game States Events
         public static Action<State> OnStateChanged;
         public static Action OnResumeGame;
         public static Action<ChunkController> OnChunkSpawned;

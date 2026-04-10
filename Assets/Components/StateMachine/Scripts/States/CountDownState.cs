@@ -18,6 +18,7 @@ namespace Components.StateMachine.States
 
         public override void Enter()
         {
+            // Get the AudioSO to play from the DB
             _tickSFX = ScriptableObjectDatabase.Get<AudioSO>("countdownTickSFX");
             _goSFX =  ScriptableObjectDatabase.Get<AudioSO>("countdownEndSFX");
 
@@ -33,6 +34,7 @@ namespace Components.StateMachine.States
 
             if (Timer > 0f)
             {
+                // Check if integer value changed
                 var newIntTimer = Mathf.FloorToInt(Timer);
                 if (_intTimer != newIntTimer)
                 {

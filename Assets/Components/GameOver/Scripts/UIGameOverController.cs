@@ -6,13 +6,14 @@ using Components.SaveSystem;
 using Components.SceneLoader;
 using Library.References;
 using TMPro;
+using UnityEngine.Serialization;
 
 namespace Components.GameOver
 {
     public class UIGameOverController : MonoBehaviour
     {
-        [Header("Globa")]
-        [SerializeField] private GameObject _gameOverPanel;
+        [FormerlySerializedAs("_gameOverPanel")]
+        [SerializeField] private GameObject gameOverPanel;
         [Header("High Score Settings")]
         [SerializeField] private TMP_Text runScoreText;
         [SerializeField] private GameObject newHighScorePanel;
@@ -22,7 +23,7 @@ namespace Components.GameOver
 
         private void Awake()
         {
-            _gameOverPanel.SetActive(false);
+            gameOverPanel.SetActive(false);
             Events.OnStateChanged += OnStateChanged;
         }
 
@@ -40,12 +41,12 @@ namespace Components.GameOver
         {
             if (newState is not GameOverState)
             {
-                _gameOverPanel.SetActive(false);
+                gameOverPanel.SetActive(false);
                 return;
             }
 
             HandleHighScore();
-            _gameOverPanel.SetActive(true);
+            gameOverPanel.SetActive(true);
         }
 
         private void HandleHighScore()
@@ -54,7 +55,9 @@ namespace Components.GameOver
 
             if (score.Value > _saveData.highScore)
             {
+                // Display that is the new High Score
                 newHighScorePanel.SetActive(true);
+                // Save the new HighScore
                 _saveData.highScore = Mathf.FloorToInt(score.Value);
                 SaveService.Save(_saveData);
             }

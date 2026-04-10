@@ -18,6 +18,10 @@ namespace Components.AudioSystem
         public float minDistance;
         public float maxDistance = 500f;
 
+        /// <summary>
+        /// Apply all the configuration from the AudioSO to the AudioSource
+        /// </summary>
+        /// <param name="source"></param>
         public void ApplyToSource(AudioSource source)
         {
             source.loop = loop;

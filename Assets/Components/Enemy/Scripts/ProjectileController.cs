@@ -27,15 +27,21 @@ namespace Components.Enemy
 
         private void HandleMovement()
         {
+            // Compute the distance that should be done this frame by
+            // adding the current speed to the projectile speed
+            // otherwise chunks could move faster than the projectile...
             float distanceThisFrame = (projectileSpeed + globalSpeed) * Time.deltaTime;
+
             float distanceRemaining = (_targetPosition - transform.position).magnitude;
 
             if (distanceRemaining <= distanceThisFrame)
             {
+                // TODO add Events.PlayAudioAt()
                 Destroy(gameObject);
                 return;
             }
 
+            // Actually move the projectile
             transform.Translate(_direction * distanceThisFrame, Space.World);
         }
 

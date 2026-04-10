@@ -31,20 +31,28 @@ namespace Components.Enemy
             _isActive = state is GameState;
         }
 
+        /// <summary>
+        /// Throw the Projectile toward the player
+        /// </summary>
         private void ThrowProjectile()
         {
             animator.SetTrigger(Throw);
             ProjectileController projectile = Instantiate(projectilePrefab, spawnProjectilePosition.position, Quaternion.identity);
             projectile.SetTarget(_player.position);
+            // Make sur the projectile is not attached to the chunk
+            // to avoid weird effects
             projectile.transform.SetParent(null, true);
         }
 
         private void Update()
         {
+            // Set the rotation of the enemy to face the player
             transform.LookAt(_player.position);
+            // Test if the player has overtake
             if (transform.position.z <= _player.position.z + playerSafeZone) _isActive = false;
             if (!_isActive) return;
 
+            // Test if in the range
             if (Vector3.Distance(transform.position, _player.position) > attackRange) return;
 
             _timer += Time.deltaTime;

@@ -1,12 +1,19 @@
 ﻿using Components.EventSystem;
 using UnityEngine;
 
-public class TrashCollectable : Collectable
+namespace Components.Collectible
 {
-    [SerializeField] private float lifeBonus = 4f;
-    public override void OnCollect(GameObject collector)
+    /// <summary>
+    /// Standard Collectable Trash, that give back some life
+    /// </summary>
+    public class TrashCollectable : Collectable
     {
-        Events.UpdateLife?.Invoke(lifeBonus);
-        base.OnCollect(collector);
+        [SerializeField] private float lifeBonus = 4f;
+
+        public override void OnCollect(GameObject collector)
+        {
+            Events.UpdateLife?.Invoke(lifeBonus);
+            base.OnCollect(collector);
+        }
     }
 }
