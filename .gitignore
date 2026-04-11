@@ -35,7 +35,7 @@
 .vs/
 
 # JetBrains directory
-.vs/
+.idea/
 
 # Gradle cache directory
 .gradle/
