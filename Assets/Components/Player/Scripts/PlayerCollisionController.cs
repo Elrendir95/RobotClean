@@ -133,8 +133,8 @@ namespace Player
             // If we are invincible do an early return
             if (_isInvincible) return;
 
-            Collider[] hitColliders = Physics.OverlapSphere(PlayerSpherePosition, obstacleSphereRadius, obstacleLayer);
-            if (hitColliders.Length > 0)
+            int hitCount = Physics.OverlapSphereNonAlloc(PlayerSpherePosition, obstacleSphereRadius, _collidersHits, obstacleLayer);
+            if (hitCount > 0)
             {
                 Events.UpdateLife?.Invoke(-_obstacleDamage);
                 StartCoroutine(InvincibilityCoroutine());
