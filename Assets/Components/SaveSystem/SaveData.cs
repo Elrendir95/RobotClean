@@ -6,7 +6,7 @@ namespace Components.SaveSystem
     public class SaveData
     {
         public int highScore;
-        //TODO Add Components count
+        public int electronicsComponents;
         //TODO Add Skills levels
     }
 }

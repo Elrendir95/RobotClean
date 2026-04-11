@@ -125,6 +125,10 @@ namespace Player
                 {
                     collectable.OnCollect(gameObject);
                 }
+                else
+                {
+                    Debug.LogError($"No Collectable Behaviour on  collectable {_collidersHits[i].name}");
+                }
             }
         }
 

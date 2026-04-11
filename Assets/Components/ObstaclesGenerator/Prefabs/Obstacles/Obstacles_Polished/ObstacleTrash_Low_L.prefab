@@ -65,6 +65,7 @@ Transform:
   - {fileID: 6125514948215630436}
   - {fileID: 8880429746156554952}
   - {fileID: 7768970233956386300}
+  - {fileID: 6320122016120456895}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1782909253149626332
@@ -81,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleController
   endAnchor: {fileID: 8880429746156554952}
   safePath: {fileID: 7768970233956386300}
+  electronicsSpawn: {fileID: 6320122016120456895}
 --- !u!65 &5966859111062613113
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -102,6 +104,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5779266, y: 0.83860934, z: 0.7146063}
   m_Center: {x: -2.05, y: 0.32278055, z: 0.26374006}
+--- !u!1 &6025104246093337010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6320122016120456895}
+  m_Layer: 0
+  m_Name: Eletronics
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6320122016120456895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6025104246093337010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.5, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2927585719278689124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7070422664759075212
 GameObject:
   m_ObjectHideFlags: 0

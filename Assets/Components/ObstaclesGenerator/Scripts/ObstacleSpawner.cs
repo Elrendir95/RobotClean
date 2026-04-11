@@ -12,12 +12,15 @@ public class ObstacleSpawner : ChunkSpawner
     [Header("Collectables Settings")]
     [SerializeField] private Collectable[] collectablesToSpawn;
     [SerializeField, Tooltip("Distance between obstacles in meters")] private float collectableDistance;
+    [SerializeField] private ElectronicsCollectable[] electronicsCollectibles;
+    [SerializeField] private float electronicsDistance = 30f;
 
     private GameState _gameState;
     private bool _isInGameState;
     private int _currentObstacleIndex;
     private ObstacleController _lastObstacle;
     private float _lastCollectibleDistance;
+    private float _electronicsLastDistance;
 
     private void Awake()
     {
@@ -71,6 +74,7 @@ public class ObstacleSpawner : ChunkSpawner
 
         if (collectableDistance <= 0f) return newChunk;
 
+        SpawnElectronicsCollectible(obstacleChunk);
         SpawnCollectible(obstacleChunk);
         return obstacleChunk;
     }
@@ -96,7 +100,24 @@ public class ObstacleSpawner : ChunkSpawner
             collectable.transform.SetParent(obstacleChunk.transform, true);
             currentDistance += collectableDistance;
         }
+
+        _electronicsLastDistance += toEnd;
+
         _lastCollectibleDistance = collectableDistance - (toEnd - (currentDistance - collectableDistance));
         _lastObstacle = obstacleChunk;
+    }
+
+    /// <summary>
+    /// Spawn a random electronics to collect
+    /// </summary>
+    /// <param name="obstacleChunk"></param>
+    private void SpawnElectronicsCollectible(ObstacleController obstacleChunk)
+    {
+        if (_electronicsLastDistance < electronicsDistance) return;
+
+        var electronics = Instantiate(electronicsCollectibles[Random.Range(0, electronicsCollectibles.Length)], obstacleChunk.ElectronicsSpawnPosition, Quaternion.identity);
+        electronics.transform.SetParent(obstacleChunk.transform, true);
+
+        _electronicsLastDistance = 0f;
     }
 }

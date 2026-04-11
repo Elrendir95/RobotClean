@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2570895301604894465}
   - component: {fileID: 3760070763303282444}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Obstacle_BigL_Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,6 +196,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5334278467027217754}
   - {fileID: 6131365427212230583}
   - {fileID: 5678373233532026928}
   - {fileID: 2786310524968772105}
@@ -216,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleController
   endAnchor: {fileID: 2142377752833019188}
   safePath: {fileID: 6044869781313011377}
+  electronicsSpawn: {fileID: 5334278467027217754}
 --- !u!1 &3524870828331600165
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +345,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4105569813986289282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4527759857509201415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5334278467027217754}
+  m_Layer: 9
+  m_Name: Electronics
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5334278467027217754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4527759857509201415}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.5, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2570895301604894465}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4774086064632973778
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +419,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2786310524968772105}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SafePath
   m_TagString: Untagged
   m_Icon: {fileID: 0}

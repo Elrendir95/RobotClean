@@ -76,3 +76,6 @@ MonoBehaviour:
   collectablesToSpawn:
   - {fileID: 696927818049514086, guid: 03ffd48e54869e44786479e1d005ce46, type: 3}
   collectableDistance: 5
+  electronicsCollectibles:
+  - {fileID: 1414097858878213230, guid: da4e663a580199b4295598dfa919b0c0, type: 3}
+  electronicsDistance: 30

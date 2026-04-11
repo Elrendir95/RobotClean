@@ -9,8 +9,12 @@ namespace Components.MainMenu
 {
     public class UIMainMenuController :  MonoBehaviour
     {
+        [Header("High Score")]
         [SerializeField] private GameObject highScoreWindow;
         [SerializeField] private TMP_Text highScoreText;
+        [Header("Electronics parts")]
+        [SerializeField] private TMP_Text electronicsText;
+        [Header("Action delay")]
         [SerializeField] private float execDelay = 0.4f;
 
         private SaveData _saveData;
@@ -22,6 +26,7 @@ namespace Components.MainMenu
             _saveData = SaveService.Load();
             highScoreText.text = _saveData.highScore.ToString();
             highScoreWindow.SetActive(_saveData.highScore > 0);
+            electronicsText.text = _saveData.electronicsComponents.ToString();
         }
 
         /// <summary>
