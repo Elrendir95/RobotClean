@@ -50,17 +50,18 @@ namespace Components.Skills
         public void BuySkill(string skillName)
         {
             var skillToImprove = ScriptableObjectDatabase.Get<Skill>(skillName);
-            if (_saveData.electronicsComponents > skillToImprove.NextLevel.Cost)
-            {
-                var skill = GetSkillFromSaveData(skillName);
-                _saveData.skills.Remove(skill);
-                skill.Level++;
-                _saveData.skills.Add(skill);
-                _saveData.electronicsComponents -= skillToImprove.NextLevel.Cost;
-                skillToImprove.SetLevel(skill.Level);
-                SaveService.Save(_saveData);
-                _skillCards[skillName].Setup(skillToImprove);
-            }
+
+            if (_saveData.electronicsComponents <= skillToImprove.NextLevel.Cost) return;
+
+            var skill = GetSkillFromSaveData(skillName);
+            _saveData.skills.Remove(skill);
+            skill.Level++;
+            _saveData.skills.Add(skill);
+            _saveData.electronicsComponents -= skillToImprove.NextLevel.Cost;
+            skillToImprove.SetLevel(skill.Level);
+            SaveService.Save(_saveData);
+            _skillCards[skillName].Setup(skillToImprove);
+            Events.UpdateElectronicsUI?.Invoke(_saveData.electronicsComponents);
         }
     }
 }

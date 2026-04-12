@@ -23,5 +23,6 @@ namespace Components.EventSystem
         public static Action StopAllLoops;
         // Skill
         public static Action<string> BuySkill;
+        public static Action<int> UpdateElectronicsUI;
     }
 }

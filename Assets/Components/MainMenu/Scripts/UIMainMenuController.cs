@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Components.EventSystem;
 using Components.SaveSystem;
 using Components.SceneLoader;
 using TMPro;
@@ -21,12 +22,18 @@ namespace Components.MainMenu
 
         private void Start()
         {
+            Events.UpdateElectronicsUI += UpdateElectronicsUI;
             // Initialize timeScale to 1, in case of we used Pause menu
             Time.timeScale = 1;
             _saveData = SaveService.Load();
             highScoreText.text = _saveData.highScore.ToString();
             highScoreWindow.SetActive(_saveData.highScore > 0);
             electronicsText.text = _saveData.electronicsComponents.ToString();
+        }
+
+        private void UpdateElectronicsUI(int electronics)
+        {
+            electronicsText.text = electronics.ToString();
         }
 
         /// <summary>
