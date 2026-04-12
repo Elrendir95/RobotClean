@@ -23,7 +23,7 @@ namespace Components.Skills
             skillName.text = skill.DisplayName;
             skillDescription.text = skill.Description;
             skillLevel.text = $"Level : {skill.Level}";
-            skillValue.text = $"Bonus : {skill.DisplayValue}";
+            skillValue.text = skill.Level > 0 ? $"Bonus : {skill.DisplayValue}" : "";
             nextSkillLevel.text = $"Next Level: {skill.NextLevel.Level}";
             nextSkillValue.text = $"Next Bonus: {skill.NextLevel.DisplayValue}";
             cost.text = $"Cost: {skill.NextLevel.Cost}";
