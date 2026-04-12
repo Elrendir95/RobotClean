@@ -20,7 +20,6 @@ namespace Components.Collectible
 
         public override void OnCollect(GameObject collector)
         {
-            Debug.Log($"Collected TrashCollectable: {collector.name} give {lifeBonus} + {_healthBonus.Value} life");
             Events.UpdateLife?.Invoke(lifeBonus + _healthBonus.Value);
             base.OnCollect(collector);
         }

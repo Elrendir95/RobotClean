@@ -13,8 +13,6 @@ namespace Components.SaveSystem
         {
             string json = JsonUtility.ToJson(saveData);
             File.WriteAllText(FilePath, json);
-
-            Debug.Log("Saved " + saveData.highScore);
         }
 
         public static SaveData Load()
