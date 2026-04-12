@@ -23,6 +23,8 @@ namespace Components.LifeSystem
             _fillImage = slider.fillRect.gameObject.GetComponent<Image>();
             _lifeColor = _fillImage.color;
             _lifeCount.OnValueChanged.AddListener(OnLifeChanged);
+            // Make sure we update the Lifebar at awake
+            OnLifeChanged(_lifeCount.Value);
         }
 
         private void OnDestroy()
