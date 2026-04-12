@@ -10,15 +10,22 @@ namespace Components.LifeSystem
         [Header("Life References")]
         [SerializeField, Tooltip("Player Current life references")] private FloatReference _lifeCount;
         [SerializeField, Tooltip("Player Max life references")] private FloatReference _maxLifeCount;
+        [SerializeField] private float lifeWarningThreshold = 30f;
+        [SerializeField] private Color lifeWarningColor;
         [Header("UI References")]
         [SerializeField, Tooltip("UI elements references")] private Slider slider;
 
-        private void OnEnable()
+        private Image _fillImage;
+        private Color _lifeColor;
+
+        void Start()
         {
+            _fillImage = slider.fillRect.gameObject.GetComponent<Image>();
+            _lifeColor = _fillImage.color;
             _lifeCount.OnValueChanged.AddListener(OnLifeChanged);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _lifeCount.OnValueChanged.RemoveListener(OnLifeChanged);
         }
@@ -26,6 +33,7 @@ namespace Components.LifeSystem
         private void OnLifeChanged(float currentLife)
         {
             slider.value = currentLife / _maxLifeCount.Value;
+            _fillImage.color = (currentLife < lifeWarningThreshold) ? lifeWarningColor : _lifeColor;
         }
     }
 }

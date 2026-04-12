@@ -392,6 +392,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3511042723806916960, guid: 6f866846f8cde3b448f8b549331c8baf, type: 3}
+      propertyPath: fillImage
+      value: 
+      objectReference: {fileID: 1349848845}
+    - target: {fileID: 3511042723806916960, guid: 6f866846f8cde3b448f8b549331c8baf, type: 3}
+      propertyPath: lifeWarningColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3511042723806916960, guid: 6f866846f8cde3b448f8b549331c8baf, type: 3}
+      propertyPath: lifeWarningColor.b
+      value: 0.080317095
+      objectReference: {fileID: 0}
+    - target: {fileID: 3511042723806916960, guid: 6f866846f8cde3b448f8b549331c8baf, type: 3}
+      propertyPath: lifeWarningColor.g
+      value: 0.080317095
+      objectReference: {fileID: 0}
+    - target: {fileID: 3511042723806916960, guid: 6f866846f8cde3b448f8b549331c8baf, type: 3}
+      propertyPath: lifeWarningColor.r
+      value: 0.8238993
+      objectReference: {fileID: 0}
     - target: {fileID: 3664594124812333020, guid: 6f866846f8cde3b448f8b549331c8baf, type: 3}
       propertyPath: m_Color.a
       value: 0.19607843
@@ -430,6 +450,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1753461753946540110, guid: 6f866846f8cde3b448f8b549331c8baf, type: 3}
   m_PrefabInstance: {fileID: 1349848843}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1349848845 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5437977535797499347, guid: 6f866846f8cde3b448f8b549331c8baf, type: 3}
+  m_PrefabInstance: {fileID: 1349848843}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &1395636422
 GameObject:
   m_ObjectHideFlags: 0
