@@ -15,22 +15,24 @@ namespace Components.Skills
         [SerializeField] private TMP_Text cost;
         [SerializeField] private GameObject nextInfoWindow;
 
+        private Skill _skill;
 
         public void Setup(Skill skill)
         {
-            skillName.text = skill.name;
+            _skill = skill;
+            skillName.text = skill.DisplayName;
             skillDescription.text = skill.Description;
             skillLevel.text = $"Level : {skill.Level}";
-            skillValue.text = $"Bonus : {skill.Value}";
+            skillValue.text = $"Bonus : {skill.DisplayValue}";
             nextSkillLevel.text = $"Next Level: {skill.NextLevel.Level}";
-            nextSkillValue.text = $"Next Bonus: {skill.NextLevel.Value}";
+            nextSkillValue.text = $"Next Bonus: {skill.NextLevel.DisplayValue}";
             cost.text = $"Cost: {skill.NextLevel.Cost}";
             nextInfoWindow.SetActive(skill.NextLevel.Cost > 0);
         }
 
         public void BuySkill()
         {
-            Events.BuySkill(skillName.text);
+            Events.BuySkill(_skill.name);
         }
     }
 }

@@ -10,11 +10,9 @@ namespace Components.Skills
     {
         [SerializeField] private UISkillCard skillCard;
         [SerializeField] private GameObject content;
-        [SerializeField] private float cardOffset = 20f;
 
         private SaveData _saveData;
-        private Dictionary<string, Skill> _skills = new();
-        private Dictionary<string, UISkillCard> _skillCards = new();
+        private readonly Dictionary<string, UISkillCard> _skillCards = new();
 
         private int GetSkillLevelFromSaveData(string skillName)
         {
@@ -45,7 +43,6 @@ namespace Components.Skills
                 skill.SetLevel(GetSkillLevelFromSaveData(skill.name));
                 var card = Instantiate(skillCard, content.transform, false);
                 card.Setup(skill);
-                _skills.Add(skill.name,skill);
                 _skillCards.Add(skill.name, card);
             }
         }

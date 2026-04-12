@@ -1,4 +1,5 @@
 ﻿using Components.EventSystem;
+using Components.Skills;
 using UnityEngine;
 
 namespace Components.Collectible
@@ -10,9 +11,17 @@ namespace Components.Collectible
     {
         [SerializeField] private float lifeBonus = 4f;
 
+        private Skill _healthBonus;
+
+        private void Start()
+        {
+            _healthBonus = ScriptableObjectDatabase.Get<Skill>("HealthSkill");
+        }
+
         public override void OnCollect(GameObject collector)
         {
-            Events.UpdateLife?.Invoke(lifeBonus);
+            Debug.Log($"Collected TrashCollectable: {collector.name} give {lifeBonus} + {_healthBonus.Value} life");
+            Events.UpdateLife?.Invoke(lifeBonus + _healthBonus.Value);
             base.OnCollect(collector);
         }
     }

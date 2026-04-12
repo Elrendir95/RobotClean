@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Library.References;
 using Components.EventSystem;
+using Components.Skills;
 using Components.StateMachine;
 using Components.StateMachine.States;
 using UnityEngine;
@@ -18,6 +19,8 @@ namespace Components.LifeSystem
         private bool _isInvincible;
         private Coroutine _coroutine;
         private GameState _gameState;
+        private Skill _maxLifeSkill;
+        private Skill _OptimisationSkill;
 
         private void OnEnable()
         {
@@ -35,6 +38,18 @@ namespace Components.LifeSystem
 
         private void Start()
         {
+            _maxLifeSkill = ScriptableObjectDatabase.Get<Skill>("MaxLifeSkill");
+            if (_maxLifeSkill != null)
+            {
+                maxLifeCount.Value += _maxLifeSkill.Value;
+            }
+
+            _OptimisationSkill = ScriptableObjectDatabase.Get<Skill>("OptimisationSkill");
+            if (_OptimisationSkill == null)
+            {
+                _OptimisationSkill = ScriptableObject.CreateInstance<Skill>();
+            }
+
             lifeCount.Value = maxLifeCount.Value;
         }
 
@@ -69,7 +84,7 @@ namespace Components.LifeSystem
 
                 if (_isInvincible) continue;
 
-                UpdateLife(-lifeDecreaseAmount.Value);
+                UpdateLife(-lifeDecreaseAmount.Value - _OptimisationSkill.Value);
 
                 delay = lifeDecreaseRate.Value;
             }

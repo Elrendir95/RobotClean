@@ -1,6 +1,9 @@
-﻿using Components.EventSystem;
+﻿using System;
+using Components.EventSystem;
 using System.Collections;
+using Components;
 using Components.Collectible;
+using Components.Skills;
 using Components.StateMachine;
 using Components.StateMachine.States;
 using Library.References;
@@ -42,17 +45,26 @@ namespace Player
         private bool _isSliding = false;
 
         private int _currentObstacleDamageIndex;
-        private float _obstacleDamage => damageObstacleSteps[_currentObstacleDamageIndex];
+        private float _obstacleDamage => damageObstacleSteps[_currentObstacleDamageIndex] * _armor.Value;
         private int _currentProjectileDamageIndex;
-        private float _projectileDamage => damageProjectileSteps[_currentProjectileDamageIndex];
+        private float _projectileDamage => damageProjectileSteps[_currentProjectileDamageIndex] * _armor.Value;
 
         private Vector3 PlayerSpherePosition => transform.position + (_isSliding ? slidingCenter : sphereCenter);
+
+        private Skill _armor;
 
         private void Awake()
         {
             Events.OnStateChanged += OnStateChanged;
             Events.OnPlayerSlidingDown += OnPlayerSlidingDown;
             distance.OnValueChanged.AddListener(OnDistanceUpdate);
+        }
+
+        private void Start()
+        {
+            // Get the Armor Skill
+            _armor = ScriptableObjectDatabase.Get<Skill>("ArmorSkill");
+            Debug.Log($"Armor Bonus Value : {_armor.Value}");
         }
 
         private void OnDistanceUpdate(float newDistance)

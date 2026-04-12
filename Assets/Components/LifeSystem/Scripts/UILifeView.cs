@@ -18,7 +18,7 @@ namespace Components.LifeSystem
         private Image _fillImage;
         private Color _lifeColor;
 
-        void Start()
+        void Awake()
         {
             _fillImage = slider.fillRect.gameObject.GetComponent<Image>();
             _lifeColor = _fillImage.color;

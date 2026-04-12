@@ -7,7 +7,8 @@ namespace Components.Skills
     public struct SkillLevel
     {
         public int Level;
-        public int Value;
+        public float Value;
+        public string DisplayValue;
         [FormerlySerializedAs("NextLevelCost")] public int Cost;
     }
 }

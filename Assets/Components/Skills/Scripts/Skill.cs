@@ -5,6 +5,7 @@ namespace Components.Skills
     [CreateAssetMenu(menuName = "Components/Skill")]
     public class Skill : ScriptableObject
     {
+        [SerializeField] private string displayName;
         [SerializeField] private string description;
         [SerializeField] private int level;
         [SerializeField] private SkillLevel[] skillLevels;
@@ -15,9 +16,11 @@ namespace Components.Skills
             level = setLevel;
         }
 
+        public string DisplayName => displayName;
         public string Description => description;
         public int Level => level;
-        public int Value => skillLevels[level].Value;
+        public float Value => skillLevels[level].Value;
+        public string DisplayValue => skillLevels[level].DisplayValue;
         public SkillLevel NextLevel => (level + 1 < skillLevels.Length) ? skillLevels[level + 1] : new SkillLevel();
     }
 }
