@@ -21,5 +21,7 @@ namespace Components.EventSystem
         public static Action<AudioSO> PlayAudio;
         public static Action<AudioSO, Vector3> PlayAudioAt;
         public static Action StopAllLoops;
+        // Skill
+        public static Action<string> BuySkill;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Components.SaveSystem
 {
@@ -7,6 +8,6 @@ namespace Components.SaveSystem
     {
         public int highScore;
         public int electronicsComponents;
-        //TODO Add Skills levels
+        public List<SaveSkill> skills = new ();
     }
 }

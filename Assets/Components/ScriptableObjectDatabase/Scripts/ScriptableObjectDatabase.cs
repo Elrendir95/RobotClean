@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Components.AudioSystem;
+using Components.Skills;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -17,6 +18,7 @@ namespace Components
             Database.Clear();
 
             Register<AudioSO>();
+            Register<Skill>();
         }
 
         private static void Register<T>() where T : Object
