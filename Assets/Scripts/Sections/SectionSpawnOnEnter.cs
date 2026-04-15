@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Sections
 {
+    /// <summary>
+    /// Deprecated, this was used in early builds to demonstrate to the GD
+    /// </summary>
     public class SectionSpawnOnEnter : MonoBehaviour
     {
         private bool _spawned = false;

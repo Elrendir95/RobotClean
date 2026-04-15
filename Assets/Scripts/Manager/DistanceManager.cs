@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Manager
 {
+    /// <summary>
+    /// Deprecated, this was used in early builds to demonstrate to the GD
+    /// </summary>
     public class DistanceManager : MonoBehaviour
     {
         [Header("Settings")]

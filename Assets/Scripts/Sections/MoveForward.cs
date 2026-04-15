@@ -1,10 +1,11 @@
-﻿using System;
-using Library.Variables;
+﻿using Library.Variables;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Sections
 {
+    /// <summary>
+    /// Deprecated, this was used in early builds to demonstrate to the GD
+    /// </summary>
     public class MoveForward : MonoBehaviour
     {
         [Header("Settings")]

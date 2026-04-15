@@ -6,6 +6,10 @@ using UnityEngine.InputSystem;
 
 namespace Manager
 {
+    /// <summary>
+    /// Deprecated, this was used in early builds to demonstrate to the GD and
+    /// test speed values by providing a developments build
+    /// </summary>
     public class SpeedManager : MonoBehaviour
     {
         [Header("Settings")]

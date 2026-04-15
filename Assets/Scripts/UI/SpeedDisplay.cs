@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace UI
 {
+    /// <summary>
+    /// Deprecated, this was used in early builds to demonstrate to the GD
+    /// </summary>
     public class SpeedDisplay : MonoBehaviour
     {
         [Header("Settings")]
