@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Components.EventSystem;
 using Components.SaveSystem;
@@ -43,20 +42,21 @@ namespace Components.Skills
         private int GetSkillLevelFromSaveData(string skillName)
         {
             // Look for the skill Level in the SaveData, return 0 if not found, the level otherwise
-            return _saveData.skills.FirstOrDefault(s => s.Name == skillName)?.Level ?? 0;
+            return _saveData.skills.FirstOrDefault(s => s.Name == skillName).Level;
         }
 
         private SaveSkill GetSkillFromSaveData(string skillName)
         {
             // Get the first skill matching the name from the save
             var skill = _saveData.skills.FirstOrDefault(s => s.Name == skillName);
-            if (skill == null)
+
+            // If we did not find the skill, initialize the data
+            if (string.IsNullOrEmpty(skill.Name))
             {
-                // No saved information, create a new one
-                skill = new SaveSkill();
                 skill.Name = skillName;
                 skill.Level = 0;
             }
+
             return skill;
         }
 
