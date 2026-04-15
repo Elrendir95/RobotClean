@@ -66,7 +66,7 @@ namespace Components.Skills
             var skillToImprove = ScriptableObjectDatabase.Get<Skill>(skillName);
 
             // Check if the player can afford the next level
-            if (_saveData.electronicsComponents <= skillToImprove.NextLevel.Cost) return;
+            if (_saveData.electronicsComponents < skillToImprove.NextLevel.Cost) return;
 
             // Update the save data
             var skill = GetSkillFromSaveData(skillName);
