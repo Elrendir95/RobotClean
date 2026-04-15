@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HealthSkill
   m_EditorClassIdentifier: Assembly-CSharp::Components.Skills.Skill
   displayName: Trash Efficiency
-  description: Improve the efficiency of convertir trashes into energy
+  description: Improve the efficiency of converting trashes into energy
   level: 0
   skillLevels:
   - Level: 0

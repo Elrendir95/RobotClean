@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4062494ee924011863a7925360c810e, type: 3}
   m_Name: ArmorSkill
   m_EditorClassIdentifier: Assembly-CSharp::Components.Skills.Skill
-  displayName: Amor
-  description: Reduce amount of damage on colision
-  level: 3
+  displayName: Armor
+  description: Reduce amount of damage on collision
+  level: 2
   skillLevels:
   - Level: 0
     Value: 1
