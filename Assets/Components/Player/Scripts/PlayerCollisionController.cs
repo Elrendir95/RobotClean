@@ -45,8 +45,10 @@ namespace Player
         private bool _isSliding = false;
 
         private int _currentObstacleDamageIndex;
+        // Getter for the current obstacle damages, multiply by the armor value
         private float _obstacleDamage => damageObstacleSteps[_currentObstacleDamageIndex] * _armor.Value;
         private int _currentProjectileDamageIndex;
+        // Getter for the current projectile damages, multiply by the armor value
         private float _projectileDamage => damageProjectileSteps[_currentProjectileDamageIndex] * _armor.Value;
 
         private Vector3 PlayerSpherePosition => transform.position + (_isSliding ? slidingCenter : sphereCenter);
@@ -64,9 +66,13 @@ namespace Player
         {
             // Get the Armor Skill
             _armor = ScriptableObjectDatabase.Get<Skill>("ArmorSkill");
-            Debug.Log($"Armor Bonus Value : {_armor.Value}");
         }
 
+        /// <summary>
+        /// Monitor changes on distance References, and update damages indexes when
+        /// new steps have been reached
+        /// </summary>
+        /// <param name="newDistance"></param>
         private void OnDistanceUpdate(float newDistance)
         {
             if (_currentObstacleDamageIndex + 1 < distanceObstacleThresholds.Length)
@@ -106,7 +112,7 @@ namespace Player
 
         private void Update()
         {
-            // If we are invincible can't Collect, and can't hit an other obstacle
+            // If we are invincible can't Collect, and can't hit another obstacle
             if (_isInvincible || !_isActive) return;
             CheckObstacle();
             CheckCollectable();
@@ -115,6 +121,9 @@ namespace Player
 
         private readonly Collider[] _collidersHits = new Collider[4];
 
+        /// <summary>
+        /// Check collision with the projectiles, and handle their damaged
+        /// </summary>
         private void CheckProjectile()
         {
             int hitCount = Physics.OverlapSphereNonAlloc(PlayerSpherePosition, collectableSphereRadius, _collidersHits, projectileLayer);
@@ -126,7 +135,9 @@ namespace Player
             }
         }
 
-
+        /// <summary>
+        /// Check collision with collectable and call the OnCollect of the collectable
+        /// </summary>
         private void CheckCollectable()
         {
             int hitCount = Physics.OverlapSphereNonAlloc(PlayerSpherePosition, collectableSphereRadius, _collidersHits, collectableLayer);
@@ -139,16 +150,17 @@ namespace Player
                 }
                 else
                 {
+                    // Error logs in case we forget to add the Collectable behavior on an elements on the collectableLayer
                     Debug.LogError($"No Collectable Behaviour on  collectable {_collidersHits[i].name}");
                 }
             }
         }
 
+        /// <summary>
+        /// Check the collision with obstacles, and trigger damage and invincibility on hit
+        /// </summary>
         private void CheckObstacle()
         {
-            // If we are invincible do an early return
-            if (_isInvincible) return;
-
             int hitCount = Physics.OverlapSphereNonAlloc(PlayerSpherePosition, obstacleSphereRadius, _collidersHits, obstacleLayer);
             if (hitCount > 0)
             {
@@ -157,6 +169,10 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// Coroutine that handle the invincibility period
+        /// </summary>
+        /// <returns></returns>
         IEnumerator InvincibilityCoroutine()
         {
             _isInvincible = true;
